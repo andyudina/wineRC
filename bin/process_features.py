@@ -5,6 +5,7 @@ from scipy import sparse
 import numpy
 
 from settings import TARANTOOL_CONNCTION
+NEIGHBOURS_TRESHOLD = 0.5
 
 def _find_non_word_feature(header):
     print(header)
@@ -38,7 +39,12 @@ def _merge_features(count_features, word_features):
  
 def _find_neighbours(x, y):
     nbrs = NearestNeighbors(n_neighbors=2, algorithm='ball_tree').fit(x)
-    print(nbrs.kneighbors_graph(x).toarray())
+    neighbours = nbrs.kneighbors_graph(x).toarray()
+    for i, _ in enumerate(neighbours):
+        for j, _ in enumerate(neighbours[i]):
+            if (neighbours[i][j] > NEIGHBOURS_TRESHOLD and i != j):
+                print(i, '-', j, '-', neighbours[i][j]) 
+                print(y[i], ' - ', y[j])
      
 def process_features():
     tnt = tarantool.connect(**TARANTOOL_CONNCTION)
