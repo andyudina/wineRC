@@ -2,3 +2,4 @@ tarantool
 beautifulsoup4
 requests
 nltk
+sklearn

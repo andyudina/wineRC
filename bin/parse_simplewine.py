@@ -6,7 +6,7 @@ import requests
 import tarantool
 from bs4 import BeautifulSoup as bs
 
-from settings import DOMAIN, TARANTOOL_CONNCTION
+from settings import DOMAIN, TARANTOOL_CONNCTION, CHUNK_LENGTH
 
 CATALOG_PATH = '/catalog/vino/'
 CRAWLER_MAX_WORKERS = 10

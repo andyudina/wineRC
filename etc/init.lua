@@ -6,6 +6,7 @@ box.cfg {
 
 wine = require 'wine'
 catalog = require 'catalog'
+feature = require 'feature'
 
 box.schema.user.create('root', {if_not_exists = true, password='1234'})
 box.schema.user.grant('root', 'read,write,execute', 'universe', nil, {if_not_exists = true})
