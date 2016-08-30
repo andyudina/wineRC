@@ -1,0 +1,3 @@
+tarantool
+beautifulsoup4
+requests
