@@ -6,14 +6,13 @@ import requests
 import tarantool
 from bs4 import BeautifulSoup as bs
 
-from settings import DOMAIN
+from settings import DOMAIN, TARANTOOL_CONNCTION
 
 CATALOG_PATH = '/catalog/vino/'
 CRAWLER_MAX_WORKERS = 10
 SUCCESS_STATUS_CODES = [200, 202, ]
 MAX_PAGE = 10
 
-TARANTOOL_PORT = 3311 
 TNT_INSERT_CHUNK = 2
 class SimpleWineCrawler:
     def __init__(self):
@@ -22,7 +21,7 @@ class SimpleWineCrawler:
  
     def _connect2tarantool(self):
         # its ok to fall here --> without connection to storage no need to parse data
-        return tarantool.connect(user='root', password='1234', host='localhost', port=TARANTOOL_PORT)
+        return tarantool.connect(**TARANTOOL_CONNCTION)
         
     @asyncio.coroutine    
     def crawl(self):

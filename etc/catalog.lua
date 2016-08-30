@@ -1,4 +1,4 @@
-catalog = box.schema.space.catalog
+catalog = box.space.catalog
 if not catalog then
     catalog = box.schema.space.create('catalog')
     catalog_primary = catalog:create_index('primary', {type = 'tree', parts = {1, 'STR'}})
