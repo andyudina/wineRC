@@ -13,12 +13,23 @@ if not feature_name then
 end
 -- 1: name: str
 
-local function insert_feature(args) 
+prepared_feature = box.space.prepared_feature
+if not prepared_feature then
+    prepared_feature = box.schema.space.create('prepared_feature')
+    prepared_feature_primary = prepared_feature:create_index('primary', {type = 'tree', parts = {1, 'STR'}})
+end
+-- 1: name: str
+-- 2: features ...
+
+local function insert_feature(args, space)
     if #args == 0 then
         return
     end
+    if space == nil then
+        space = 'feature' -- for backwords compability
+    end
     for _, tuple in pairs(args) do
-        box.space['feature']:insert(tuple)
+        box.space[space]:insert(tuple)
     end
 end
 

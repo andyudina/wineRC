@@ -1,5 +1,5 @@
 import tarantool
-from sklearn import preprocessing, feature_extraction
+from sklearn import preprocessing, feature_extraction, cluster, metrics
 from sklearn.neighbors import NearestNeighbors
 from scipy import sparse
 import numpy
@@ -8,7 +8,6 @@ from settings import TARANTOOL_CONNCTION
 NEIGHBOURS_TRESHOLD = 0.5
 
 def _find_non_word_feature(header):
-    print(header)
     for i, name in enumerate(header):
         if name.startswith('word'):
             return i
@@ -20,7 +19,6 @@ def _split2feature_types(features):
     
     # find non-word features number:
     non_word_feature_len = _find_non_word_feature(header)
-    print(non_word_feature_len)
     
     np_body = numpy.array(body)
     return numpy.split(np_body, [1, non_word_feature_len], axis=1)
@@ -33,8 +31,6 @@ def _tfidf(features):
     return tfidf.fit_transform(features)
     
 def _merge_features(count_features, word_features):
-    print(count_features.shape)
-    print(word_features.shape)
     return sparse.hstack([count_features, word_features])
  
 def _find_neighbours(x, y):
@@ -45,7 +41,65 @@ def _find_neighbours(x, y):
             if (neighbours[i][j] > NEIGHBOURS_TRESHOLD and i != j):
                 print(i, '-', j, '-', neighbours[i][j]) 
                 print(y[i], ' - ', y[j])
+
+def _save_processed_features2tnt(y, x, tnt):
+    y = y.tolist()
+    x = x.toarray()
+    for i, name in enumerate(y):
+        tuple_ = list(name) + list(x[i])
+        try:
+            tnt.call('feature.insert_feature', [[tuple_, ], 'prepared_feature'])
+        except tarantool.error.DatabaseError as e:
+            print(e)
+            pass #its ok to loose some wines
+
+def _evaluate_clustering(x, labels):
+    return metrics.silhouette_score(x, labels, metric='euclidean')
+   
+def _test_cluster_algorithms(x, y):
+    # KMeans/Agglomerative
+    for n_clusters in range(2, 11):
+        kmeans_model = cluster.KMeans(n_clusters=n_clusters).fit(x)
+        print('kmeans accuracy for # clusters{}: {}'.format(n_clusters, _evaluate_clustering(x, kmeans_model.labels_)))
+        agglomerationg_model = cluster.AgglomerativeClustering(n_clusters=n_clusters).fit(x.toarray())
+        print('agglomerationg accuracy for # clusters{}: {}'.format(
+            n_clusters, 
+            _evaluate_clustering(x, agglomerationg_model.labels_)))
+        
+    # AffinityPropagation 
+    for dumping_factor in range(5, 10):
+        dumping_factor = float(dumping_factor) / 10
+        model = cluster.AffinityPropagation(damping=dumping_factor).fit(x)
+        print('affinity propagation accuracy for dumping: {} == {}'.format(
+            dumping_factor,  
+            _evaluate_clustering(x, model.labels_)))
+            
+    #MeanShift
+    model = cluster.MeanShift().fit(x.toarray())
+    print('meanshoft accuracy for dumping: {}'.format(
+           _evaluate_clustering(x, model.labels_)))
      
+    #DBSCAN
+    for eps in range(1, 5):
+        eps = float(eps) / 10
+        for min_samples in range(5, 20):
+            model = cluster.DBSCAN(eps=eps).fit(x)
+            n_clusters_ = len(set(model.labels_)) - (1 if -1 in model.labels_ else 0)
+            print('dbscan N clusters: {} 4 min_samples = {}'.format(n_clusters_, min_samples))
+            if n_clusters_ == 0: continue
+            print('dbscan accuracy for eps: {} and min_samples == {}'.format(
+                eps,  
+                _evaluate_clustering(x, min_samples, model.labels_)))
+            
+    #Birch
+    for threshold in range(1, 7):
+        threshold = float(threshold) / 10
+        model = cluster.Birch(threshold=threshold).fit(x)
+        
+        print('birch accuracy for threshold: {} == {}'.format(
+            threshold,  
+            _evaluate_clustering(x, model.labels_)))
+                            
 def process_features():
     tnt = tarantool.connect(**TARANTOOL_CONNCTION)
     features = tnt.call('feature.get_feature_table', [[]]).data
@@ -56,8 +110,12 @@ def process_features():
     _scale_count_features(count_features)
     word_features = _tfidf(word_features)
     x = _merge_features(count_features, word_features)
-    print(x)
-    _find_neighbours(x, y)    
+    _save_processed_features2tnt(y, x, tnt)
+    
+    _test_cluster_algorithms(x, y)
+    
+    #_test_feature_extraction_algorithms(x, y)
+    #_find_neighbours(x, y)    
 
 if __name__ == '__main__':
     process_features()
