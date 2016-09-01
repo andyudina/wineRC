@@ -1,0 +1,1683 @@
+
+
+ FEATURES SELECTED WITH: FeatureAgglomeration: 6
+kmeans accuracy for # clusters2: 0.87143574608
+agglomerationg accuracy for # clusters2: 0.87143574608
+kmeans accuracy for # clusters3: 0.877188541705
+agglomerationg accuracy for # clusters3: 0.877188541705
+kmeans accuracy for # clusters4: 0.823300810089
+agglomerationg accuracy for # clusters4: 0.823300810089
+kmeans accuracy for # clusters5: 0.846110133951
+agglomerationg accuracy for # clusters5: 0.846110133951
+kmeans accuracy for # clusters6: 0.527469288572
+agglomerationg accuracy for # clusters6: 0.572507982735
+kmeans accuracy for # clusters7: 0.496867148044
+agglomerationg accuracy for # clusters7: 0.466673347597
+kmeans accuracy for # clusters8: 0.523133147199
+agglomerationg accuracy for # clusters8: 0.457534142222
+kmeans accuracy for # clusters9: 0.503327785986
+agglomerationg accuracy for # clusters9: 0.500873267924
+kmeans accuracy for # clusters10: 0.489085747361
+agglomerationg accuracy for # clusters10: 0.486635381451
+affinity propagation accuracy for dumping: 0.5 == 0.457047258112
+affinity propagation accuracy for dumping: 0.6 == 0.457047258112
+affinity propagation accuracy for dumping: 0.7 == 0.457047258112
+affinity propagation accuracy for dumping: 0.8 == 0.457047258112
+affinity propagation accuracy for dumping: 0.9 == 0.336355739966
+meanshoft accuracy for dumping: 0.801368758136
+dbscan N clusters: 4 for min_samples = 5
+dbscan accuracy for eps: 0.1 and min_samples == 5
+dbscan N clusters: 4 for min_samples = 6
+dbscan accuracy for eps: 0.1 and min_samples == 6
+dbscan N clusters: 4 for min_samples = 7
+dbscan accuracy for eps: 0.1 and min_samples == 7
+dbscan N clusters: 4 for min_samples = 8
+dbscan accuracy for eps: 0.1 and min_samples == 8
+dbscan N clusters: 4 for min_samples = 9
+dbscan accuracy for eps: 0.1 and min_samples == 9
+dbscan N clusters: 4 for min_samples = 10
+dbscan accuracy for eps: 0.1 and min_samples == 10
+dbscan N clusters: 4 for min_samples = 11
+dbscan accuracy for eps: 0.1 and min_samples == 11
+dbscan N clusters: 4 for min_samples = 12
+dbscan accuracy for eps: 0.1 and min_samples == 12
+dbscan N clusters: 4 for min_samples = 13
+dbscan accuracy for eps: 0.1 and min_samples == 13
+dbscan N clusters: 4 for min_samples = 14
+dbscan accuracy for eps: 0.1 and min_samples == 14
+dbscan N clusters: 4 for min_samples = 15
+dbscan accuracy for eps: 0.1 and min_samples == 15
+dbscan N clusters: 4 for min_samples = 16
+dbscan accuracy for eps: 0.1 and min_samples == 16
+dbscan N clusters: 4 for min_samples = 17
+dbscan accuracy for eps: 0.1 and min_samples == 17
+dbscan N clusters: 4 for min_samples = 18
+dbscan accuracy for eps: 0.1 and min_samples == 18
+dbscan N clusters: 4 for min_samples = 19
+dbscan accuracy for eps: 0.1 and min_samples == 19
+dbscan N clusters: 1 for min_samples = 5
+dbscan accuracy for eps: 0.2 and min_samples == 5
+dbscan N clusters: 1 for min_samples = 6
+dbscan accuracy for eps: 0.2 and min_samples == 6
+dbscan N clusters: 1 for min_samples = 7
+dbscan accuracy for eps: 0.2 and min_samples == 7
+dbscan N clusters: 1 for min_samples = 8
+dbscan accuracy for eps: 0.2 and min_samples == 8
+dbscan N clusters: 1 for min_samples = 9
+dbscan accuracy for eps: 0.2 and min_samples == 9
+dbscan N clusters: 1 for min_samples = 10
+dbscan accuracy for eps: 0.2 and min_samples == 10
+dbscan N clusters: 1 for min_samples = 11
+dbscan accuracy for eps: 0.2 and min_samples == 11
+dbscan N clusters: 1 for min_samples = 12
+dbscan accuracy for eps: 0.2 and min_samples == 12
+dbscan N clusters: 1 for min_samples = 13
+dbscan accuracy for eps: 0.2 and min_samples == 13
+dbscan N clusters: 1 for min_samples = 14
+dbscan accuracy for eps: 0.2 and min_samples == 14
+dbscan N clusters: 1 for min_samples = 15
+dbscan accuracy for eps: 0.2 and min_samples == 15
+dbscan N clusters: 1 for min_samples = 16
+dbscan accuracy for eps: 0.2 and min_samples == 16
+dbscan N clusters: 1 for min_samples = 17
+dbscan accuracy for eps: 0.2 and min_samples == 17
+dbscan N clusters: 1 for min_samples = 18
+dbscan accuracy for eps: 0.2 and min_samples == 18
+dbscan N clusters: 1 for min_samples = 19
+dbscan accuracy for eps: 0.2 and min_samples == 19
+dbscan N clusters: 1 for min_samples = 5
+dbscan accuracy for eps: 0.3 and min_samples == 5
+dbscan N clusters: 1 for min_samples = 6
+dbscan accuracy for eps: 0.3 and min_samples == 6
+dbscan N clusters: 1 for min_samples = 7
+dbscan accuracy for eps: 0.3 and min_samples == 7
+dbscan N clusters: 1 for min_samples = 8
+dbscan accuracy for eps: 0.3 and min_samples == 8
+dbscan N clusters: 1 for min_samples = 9
+dbscan accuracy for eps: 0.3 and min_samples == 9
+dbscan N clusters: 1 for min_samples = 10
+dbscan accuracy for eps: 0.3 and min_samples == 10
+dbscan N clusters: 1 for min_samples = 11
+dbscan accuracy for eps: 0.3 and min_samples == 11
+dbscan N clusters: 1 for min_samples = 12
+dbscan accuracy for eps: 0.3 and min_samples == 12
+dbscan N clusters: 1 for min_samples = 13
+dbscan accuracy for eps: 0.3 and min_samples == 13
+dbscan N clusters: 1 for min_samples = 14
+dbscan accuracy for eps: 0.3 and min_samples == 14
+dbscan N clusters: 1 for min_samples = 15
+dbscan accuracy for eps: 0.3 and min_samples == 15
+dbscan N clusters: 1 for min_samples = 16
+dbscan accuracy for eps: 0.3 and min_samples == 16
+dbscan N clusters: 1 for min_samples = 17
+dbscan accuracy for eps: 0.3 and min_samples == 17
+dbscan N clusters: 1 for min_samples = 18
+dbscan accuracy for eps: 0.3 and min_samples == 18
+dbscan N clusters: 1 for min_samples = 19
+dbscan accuracy for eps: 0.3 and min_samples == 19
+dbscan N clusters: 1 for min_samples = 5
+dbscan accuracy for eps: 0.4 and min_samples == 5
+dbscan N clusters: 1 for min_samples = 6
+dbscan accuracy for eps: 0.4 and min_samples == 6
+dbscan N clusters: 1 for min_samples = 7
+dbscan accuracy for eps: 0.4 and min_samples == 7
+dbscan N clusters: 1 for min_samples = 8
+dbscan accuracy for eps: 0.4 and min_samples == 8
+dbscan N clusters: 1 for min_samples = 9
+dbscan accuracy for eps: 0.4 and min_samples == 9
+dbscan N clusters: 1 for min_samples = 10
+dbscan accuracy for eps: 0.4 and min_samples == 10
+dbscan N clusters: 1 for min_samples = 11
+dbscan accuracy for eps: 0.4 and min_samples == 11
+dbscan N clusters: 1 for min_samples = 12
+dbscan accuracy for eps: 0.4 and min_samples == 12
+dbscan N clusters: 1 for min_samples = 13
+dbscan accuracy for eps: 0.4 and min_samples == 13
+dbscan N clusters: 1 for min_samples = 14
+dbscan accuracy for eps: 0.4 and min_samples == 14
+dbscan N clusters: 1 for min_samples = 15
+dbscan accuracy for eps: 0.4 and min_samples == 15
+dbscan N clusters: 1 for min_samples = 16
+dbscan accuracy for eps: 0.4 and min_samples == 16
+dbscan N clusters: 1 for min_samples = 17
+dbscan accuracy for eps: 0.4 and min_samples == 17
+dbscan N clusters: 1 for min_samples = 18
+dbscan accuracy for eps: 0.4 and min_samples == 18
+dbscan N clusters: 1 for min_samples = 19
+dbscan accuracy for eps: 0.4 and min_samples == 19
+birch accuracy for threshold: 0.1 == 0.877188541705
+birch accuracy for threshold: 0.2 == 0.877188541705
+birch accuracy for threshold: 0.3 == 0.877188541705
+birch accuracy for threshold: 0.4 == 0.877188541705
+birch accuracy for threshold: 0.5 == 0.877188541705
+birch accuracy for threshold: 0.6 == 0.877188541705
+
+
+ FEATURES SELECTED WITH: FeatureAgglomeration: 7
+kmeans accuracy for # clusters2: 0.849260212729
+agglomerationg accuracy for # clusters2: 0.849260212729
+kmeans accuracy for # clusters3: 0.854770378319
+agglomerationg accuracy for # clusters3: 0.854770378319
+kmeans accuracy for # clusters4: 0.830201922937
+agglomerationg accuracy for # clusters4: 0.830201922937
+kmeans accuracy for # clusters5: 0.823166103625
+agglomerationg accuracy for # clusters5: 0.823166103625
+kmeans accuracy for # clusters6: 0.845778591659
+agglomerationg accuracy for # clusters6: 0.845778591659
+kmeans accuracy for # clusters7: 0.525242867231
+agglomerationg accuracy for # clusters7: 0.570163626433
+kmeans accuracy for # clusters8: 0.496822462588
+agglomerationg accuracy for # clusters8: 0.480083087396
+kmeans accuracy for # clusters9: 0.521531729316
+agglomerationg accuracy for # clusters9: 0.47222828579
+kmeans accuracy for # clusters10: 0.502754429736
+agglomerationg accuracy for # clusters10: 0.504484435291
+affinity propagation accuracy for dumping: 0.5 == 0.492492364019
+affinity propagation accuracy for dumping: 0.6 == 0.489736993511
+affinity propagation accuracy for dumping: 0.7 == 0.489736993511
+affinity propagation accuracy for dumping: 0.8 == 0.489736993511
+affinity propagation accuracy for dumping: 0.9 == 0.481203359947
+meanshoft accuracy for dumping: 0.801215006795
+dbscan N clusters: 4 for min_samples = 5
+dbscan accuracy for eps: 0.1 and min_samples == 5
+dbscan N clusters: 4 for min_samples = 6
+dbscan accuracy for eps: 0.1 and min_samples == 6
+dbscan N clusters: 4 for min_samples = 7
+dbscan accuracy for eps: 0.1 and min_samples == 7
+dbscan N clusters: 4 for min_samples = 8
+dbscan accuracy for eps: 0.1 and min_samples == 8
+dbscan N clusters: 4 for min_samples = 9
+dbscan accuracy for eps: 0.1 and min_samples == 9
+dbscan N clusters: 4 for min_samples = 10
+dbscan accuracy for eps: 0.1 and min_samples == 10
+dbscan N clusters: 4 for min_samples = 11
+dbscan accuracy for eps: 0.1 and min_samples == 11
+dbscan N clusters: 4 for min_samples = 12
+dbscan accuracy for eps: 0.1 and min_samples == 12
+dbscan N clusters: 4 for min_samples = 13
+dbscan accuracy for eps: 0.1 and min_samples == 13
+dbscan N clusters: 4 for min_samples = 14
+dbscan accuracy for eps: 0.1 and min_samples == 14
+dbscan N clusters: 4 for min_samples = 15
+dbscan accuracy for eps: 0.1 and min_samples == 15
+dbscan N clusters: 4 for min_samples = 16
+dbscan accuracy for eps: 0.1 and min_samples == 16
+dbscan N clusters: 4 for min_samples = 17
+dbscan accuracy for eps: 0.1 and min_samples == 17
+dbscan N clusters: 4 for min_samples = 18
+dbscan accuracy for eps: 0.1 and min_samples == 18
+dbscan N clusters: 4 for min_samples = 19
+dbscan accuracy for eps: 0.1 and min_samples == 19
+dbscan N clusters: 1 for min_samples = 5
+dbscan accuracy for eps: 0.2 and min_samples == 5
+dbscan N clusters: 1 for min_samples = 6
+dbscan accuracy for eps: 0.2 and min_samples == 6
+dbscan N clusters: 1 for min_samples = 7
+dbscan accuracy for eps: 0.2 and min_samples == 7
+dbscan N clusters: 1 for min_samples = 8
+dbscan accuracy for eps: 0.2 and min_samples == 8
+dbscan N clusters: 1 for min_samples = 9
+dbscan accuracy for eps: 0.2 and min_samples == 9
+dbscan N clusters: 1 for min_samples = 10
+dbscan accuracy for eps: 0.2 and min_samples == 10
+dbscan N clusters: 1 for min_samples = 11
+dbscan accuracy for eps: 0.2 and min_samples == 11
+dbscan N clusters: 1 for min_samples = 12
+dbscan accuracy for eps: 0.2 and min_samples == 12
+dbscan N clusters: 1 for min_samples = 13
+dbscan accuracy for eps: 0.2 and min_samples == 13
+dbscan N clusters: 1 for min_samples = 14
+dbscan accuracy for eps: 0.2 and min_samples == 14
+dbscan N clusters: 1 for min_samples = 15
+dbscan accuracy for eps: 0.2 and min_samples == 15
+dbscan N clusters: 1 for min_samples = 16
+dbscan accuracy for eps: 0.2 and min_samples == 16
+dbscan N clusters: 1 for min_samples = 17
+dbscan accuracy for eps: 0.2 and min_samples == 17
+dbscan N clusters: 1 for min_samples = 18
+dbscan accuracy for eps: 0.2 and min_samples == 18
+dbscan N clusters: 1 for min_samples = 19
+dbscan accuracy for eps: 0.2 and min_samples == 19
+dbscan N clusters: 1 for min_samples = 5
+dbscan accuracy for eps: 0.3 and min_samples == 5
+dbscan N clusters: 1 for min_samples = 6
+dbscan accuracy for eps: 0.3 and min_samples == 6
+dbscan N clusters: 1 for min_samples = 7
+dbscan accuracy for eps: 0.3 and min_samples == 7
+dbscan N clusters: 1 for min_samples = 8
+dbscan accuracy for eps: 0.3 and min_samples == 8
+dbscan N clusters: 1 for min_samples = 9
+dbscan accuracy for eps: 0.3 and min_samples == 9
+dbscan N clusters: 1 for min_samples = 10
+dbscan accuracy for eps: 0.3 and min_samples == 10
+dbscan N clusters: 1 for min_samples = 11
+dbscan accuracy for eps: 0.3 and min_samples == 11
+dbscan N clusters: 1 for min_samples = 12
+dbscan accuracy for eps: 0.3 and min_samples == 12
+dbscan N clusters: 1 for min_samples = 13
+dbscan accuracy for eps: 0.3 and min_samples == 13
+dbscan N clusters: 1 for min_samples = 14
+dbscan accuracy for eps: 0.3 and min_samples == 14
+dbscan N clusters: 1 for min_samples = 15
+dbscan accuracy for eps: 0.3 and min_samples == 15
+dbscan N clusters: 1 for min_samples = 16
+dbscan accuracy for eps: 0.3 and min_samples == 16
+dbscan N clusters: 1 for min_samples = 17
+dbscan accuracy for eps: 0.3 and min_samples == 17
+dbscan N clusters: 1 for min_samples = 18
+dbscan accuracy for eps: 0.3 and min_samples == 18
+dbscan N clusters: 1 for min_samples = 19
+dbscan accuracy for eps: 0.3 and min_samples == 19
+dbscan N clusters: 1 for min_samples = 5
+dbscan accuracy for eps: 0.4 and min_samples == 5
+dbscan N clusters: 1 for min_samples = 6
+dbscan accuracy for eps: 0.4 and min_samples == 6
+dbscan N clusters: 1 for min_samples = 7
+dbscan accuracy for eps: 0.4 and min_samples == 7
+dbscan N clusters: 1 for min_samples = 8
+dbscan accuracy for eps: 0.4 and min_samples == 8
+dbscan N clusters: 1 for min_samples = 9
+dbscan accuracy for eps: 0.4 and min_samples == 9
+dbscan N clusters: 1 for min_samples = 10
+dbscan accuracy for eps: 0.4 and min_samples == 10
+dbscan N clusters: 1 for min_samples = 11
+dbscan accuracy for eps: 0.4 and min_samples == 11
+dbscan N clusters: 1 for min_samples = 12
+dbscan accuracy for eps: 0.4 and min_samples == 12
+dbscan N clusters: 1 for min_samples = 13
+dbscan accuracy for eps: 0.4 and min_samples == 13
+dbscan N clusters: 1 for min_samples = 14
+dbscan accuracy for eps: 0.4 and min_samples == 14
+dbscan N clusters: 1 for min_samples = 15
+dbscan accuracy for eps: 0.4 and min_samples == 15
+dbscan N clusters: 1 for min_samples = 16
+dbscan accuracy for eps: 0.4 and min_samples == 16
+dbscan N clusters: 1 for min_samples = 17
+dbscan accuracy for eps: 0.4 and min_samples == 17
+dbscan N clusters: 1 for min_samples = 18
+dbscan accuracy for eps: 0.4 and min_samples == 18
+dbscan N clusters: 1 for min_samples = 19
+dbscan accuracy for eps: 0.4 and min_samples == 19
+birch accuracy for threshold: 0.1 == 0.854770378319
+birch accuracy for threshold: 0.2 == 0.854770378319
+birch accuracy for threshold: 0.3 == 0.854770378319
+birch accuracy for threshold: 0.4 == 0.854770378319
+birch accuracy for threshold: 0.5 == 0.854770378319
+birch accuracy for threshold: 0.6 == 0.854770378319
+
+
+ FEATURES SELECTED WITH: FeatureAgglomeration: 4
+kmeans accuracy for # clusters2: 0.906781585857
+agglomerationg accuracy for # clusters2: 0.906781585857
+kmeans accuracy for # clusters3: 0.912923201702
+agglomerationg accuracy for # clusters3: 0.912923201702
+kmeans accuracy for # clusters4: 0.541415930458
+agglomerationg accuracy for # clusters4: 0.58037800743
+kmeans accuracy for # clusters5: 0.514667499703
+agglomerationg accuracy for # clusters5: 0.473762115183
+kmeans accuracy for # clusters6: 0.544568729916
+agglomerationg accuracy for # clusters6: 0.470584622754
+kmeans accuracy for # clusters7: 0.527029785625
+agglomerationg accuracy for # clusters7: 0.487730437461
+kmeans accuracy for # clusters8: 0.502511615682
+agglomerationg accuracy for # clusters8: 0.475491891505
+kmeans accuracy for # clusters9: 0.490478097693
+agglomerationg accuracy for # clusters9: 0.469428151962
+kmeans accuracy for # clusters10: 0.476157992557
+agglomerationg accuracy for # clusters10: 0.465365520819
+affinity propagation accuracy for dumping: 0.5 == 0.490741612425
+affinity propagation accuracy for dumping: 0.6 == 0.49081104321
+affinity propagation accuracy for dumping: 0.7 == 0.490741612425
+affinity propagation accuracy for dumping: 0.8 == 0.490741612425
+affinity propagation accuracy for dumping: 0.9 == 0.412833248472
+meanshoft accuracy for dumping: 0.912923201702
+dbscan N clusters: 2 for min_samples = 5
+dbscan accuracy for eps: 0.1 and min_samples == 5
+dbscan N clusters: 2 for min_samples = 6
+dbscan accuracy for eps: 0.1 and min_samples == 6
+dbscan N clusters: 2 for min_samples = 7
+dbscan accuracy for eps: 0.1 and min_samples == 7
+dbscan N clusters: 2 for min_samples = 8
+dbscan accuracy for eps: 0.1 and min_samples == 8
+dbscan N clusters: 2 for min_samples = 9
+dbscan accuracy for eps: 0.1 and min_samples == 9
+dbscan N clusters: 2 for min_samples = 10
+dbscan accuracy for eps: 0.1 and min_samples == 10
+dbscan N clusters: 2 for min_samples = 11
+dbscan accuracy for eps: 0.1 and min_samples == 11
+dbscan N clusters: 2 for min_samples = 12
+dbscan accuracy for eps: 0.1 and min_samples == 12
+dbscan N clusters: 2 for min_samples = 13
+dbscan accuracy for eps: 0.1 and min_samples == 13
+dbscan N clusters: 2 for min_samples = 14
+dbscan accuracy for eps: 0.1 and min_samples == 14
+dbscan N clusters: 2 for min_samples = 15
+dbscan accuracy for eps: 0.1 and min_samples == 15
+dbscan N clusters: 2 for min_samples = 16
+dbscan accuracy for eps: 0.1 and min_samples == 16
+dbscan N clusters: 2 for min_samples = 17
+dbscan accuracy for eps: 0.1 and min_samples == 17
+dbscan N clusters: 2 for min_samples = 18
+dbscan accuracy for eps: 0.1 and min_samples == 18
+dbscan N clusters: 2 for min_samples = 19
+dbscan accuracy for eps: 0.1 and min_samples == 19
+dbscan N clusters: 1 for min_samples = 5
+dbscan accuracy for eps: 0.2 and min_samples == 5
+dbscan N clusters: 1 for min_samples = 6
+dbscan accuracy for eps: 0.2 and min_samples == 6
+dbscan N clusters: 1 for min_samples = 7
+dbscan accuracy for eps: 0.2 and min_samples == 7
+dbscan N clusters: 1 for min_samples = 8
+dbscan accuracy for eps: 0.2 and min_samples == 8
+dbscan N clusters: 1 for min_samples = 9
+dbscan accuracy for eps: 0.2 and min_samples == 9
+dbscan N clusters: 1 for min_samples = 10
+dbscan accuracy for eps: 0.2 and min_samples == 10
+dbscan N clusters: 1 for min_samples = 11
+dbscan accuracy for eps: 0.2 and min_samples == 11
+dbscan N clusters: 1 for min_samples = 12
+dbscan accuracy for eps: 0.2 and min_samples == 12
+dbscan N clusters: 1 for min_samples = 13
+dbscan accuracy for eps: 0.2 and min_samples == 13
+dbscan N clusters: 1 for min_samples = 14
+dbscan accuracy for eps: 0.2 and min_samples == 14
+dbscan N clusters: 1 for min_samples = 15
+dbscan accuracy for eps: 0.2 and min_samples == 15
+dbscan N clusters: 1 for min_samples = 16
+dbscan accuracy for eps: 0.2 and min_samples == 16
+dbscan N clusters: 1 for min_samples = 17
+dbscan accuracy for eps: 0.2 and min_samples == 17
+dbscan N clusters: 1 for min_samples = 18
+dbscan accuracy for eps: 0.2 and min_samples == 18
+dbscan N clusters: 1 for min_samples = 19
+dbscan accuracy for eps: 0.2 and min_samples == 19
+dbscan N clusters: 1 for min_samples = 5
+dbscan accuracy for eps: 0.3 and min_samples == 5
+dbscan N clusters: 1 for min_samples = 6
+dbscan accuracy for eps: 0.3 and min_samples == 6
+dbscan N clusters: 1 for min_samples = 7
+dbscan accuracy for eps: 0.3 and min_samples == 7
+dbscan N clusters: 1 for min_samples = 8
+dbscan accuracy for eps: 0.3 and min_samples == 8
+dbscan N clusters: 1 for min_samples = 9
+dbscan accuracy for eps: 0.3 and min_samples == 9
+dbscan N clusters: 1 for min_samples = 10
+dbscan accuracy for eps: 0.3 and min_samples == 10
+dbscan N clusters: 1 for min_samples = 11
+dbscan accuracy for eps: 0.3 and min_samples == 11
+dbscan N clusters: 1 for min_samples = 12
+dbscan accuracy for eps: 0.3 and min_samples == 12
+dbscan N clusters: 1 for min_samples = 13
+dbscan accuracy for eps: 0.3 and min_samples == 13
+dbscan N clusters: 1 for min_samples = 14
+dbscan accuracy for eps: 0.3 and min_samples == 14
+dbscan N clusters: 1 for min_samples = 15
+dbscan accuracy for eps: 0.3 and min_samples == 15
+dbscan N clusters: 1 for min_samples = 16
+dbscan accuracy for eps: 0.3 and min_samples == 16
+dbscan N clusters: 1 for min_samples = 17
+dbscan accuracy for eps: 0.3 and min_samples == 17
+dbscan N clusters: 1 for min_samples = 18
+dbscan accuracy for eps: 0.3 and min_samples == 18
+dbscan N clusters: 1 for min_samples = 19
+dbscan accuracy for eps: 0.3 and min_samples == 19
+dbscan N clusters: 1 for min_samples = 5
+dbscan accuracy for eps: 0.4 and min_samples == 5
+dbscan N clusters: 1 for min_samples = 6
+dbscan accuracy for eps: 0.4 and min_samples == 6
+dbscan N clusters: 1 for min_samples = 7
+dbscan accuracy for eps: 0.4 and min_samples == 7
+dbscan N clusters: 1 for min_samples = 8
+dbscan accuracy for eps: 0.4 and min_samples == 8
+dbscan N clusters: 1 for min_samples = 9
+dbscan accuracy for eps: 0.4 and min_samples == 9
+dbscan N clusters: 1 for min_samples = 10
+dbscan accuracy for eps: 0.4 and min_samples == 10
+dbscan N clusters: 1 for min_samples = 11
+dbscan accuracy for eps: 0.4 and min_samples == 11
+dbscan N clusters: 1 for min_samples = 12
+dbscan accuracy for eps: 0.4 and min_samples == 12
+dbscan N clusters: 1 for min_samples = 13
+dbscan accuracy for eps: 0.4 and min_samples == 13
+dbscan N clusters: 1 for min_samples = 14
+dbscan accuracy for eps: 0.4 and min_samples == 14
+dbscan N clusters: 1 for min_samples = 15
+dbscan accuracy for eps: 0.4 and min_samples == 15
+dbscan N clusters: 1 for min_samples = 16
+dbscan accuracy for eps: 0.4 and min_samples == 16
+dbscan N clusters: 1 for min_samples = 17
+dbscan accuracy for eps: 0.4 and min_samples == 17
+dbscan N clusters: 1 for min_samples = 18
+dbscan accuracy for eps: 0.4 and min_samples == 18
+dbscan N clusters: 1 for min_samples = 19
+dbscan accuracy for eps: 0.4 and min_samples == 19
+birch accuracy for threshold: 0.1 == 0.912923201702
+birch accuracy for threshold: 0.2 == 0.912923201702
+birch accuracy for threshold: 0.3 == 0.912923201702
+birch accuracy for threshold: 0.4 == 0.912923201702
+birch accuracy for threshold: 0.5 == 0.912923201702
+birch accuracy for threshold: 0.6 == 0.912923201702
+
+
+ FEATURES SELECTED WITH: FeatureAgglomeration: 5
+kmeans accuracy for # clusters2: 0.890113064293
+agglomerationg accuracy for # clusters2: 0.890113064293
+kmeans accuracy for # clusters3: 0.896072798261
+agglomerationg accuracy for # clusters3: 0.896072798261
+kmeans accuracy for # clusters4: 0.852571301865
+agglomerationg accuracy for # clusters4: 0.852571301865
+kmeans accuracy for # clusters5: 0.542545441231
+agglomerationg accuracy for # clusters5: 0.584531238271
+kmeans accuracy for # clusters6: 0.518499895726
+agglomerationg accuracy for # clusters6: 0.519657321645
+kmeans accuracy for # clusters7: 0.549074912919
+agglomerationg accuracy for # clusters7: 0.549074912919
+kmeans accuracy for # clusters8: 0.533968976953
+agglomerationg accuracy for # clusters8: 0.501205441482
+kmeans accuracy for # clusters9: 0.518278803791
+agglomerationg accuracy for # clusters9: 0.485517306627
+kmeans accuracy for # clusters10: 0.493802685754
+agglomerationg accuracy for # clusters10: 0.481765305683
+affinity propagation accuracy for dumping: 0.5 == 0.491426460673
+affinity propagation accuracy for dumping: 0.6 == 0.49194883412
+affinity propagation accuracy for dumping: 0.7 == 0.491426460673
+affinity propagation accuracy for dumping: 0.8 == 0.491426460673
+affinity propagation accuracy for dumping: 0.9 == 0.852571301865
+meanshoft accuracy for dumping: 0.825008606156
+dbscan N clusters: 3 for min_samples = 5
+dbscan accuracy for eps: 0.1 and min_samples == 5
+dbscan N clusters: 3 for min_samples = 6
+dbscan accuracy for eps: 0.1 and min_samples == 6
+dbscan N clusters: 3 for min_samples = 7
+dbscan accuracy for eps: 0.1 and min_samples == 7
+dbscan N clusters: 3 for min_samples = 8
+dbscan accuracy for eps: 0.1 and min_samples == 8
+dbscan N clusters: 3 for min_samples = 9
+dbscan accuracy for eps: 0.1 and min_samples == 9
+dbscan N clusters: 3 for min_samples = 10
+dbscan accuracy for eps: 0.1 and min_samples == 10
+dbscan N clusters: 3 for min_samples = 11
+dbscan accuracy for eps: 0.1 and min_samples == 11
+dbscan N clusters: 3 for min_samples = 12
+dbscan accuracy for eps: 0.1 and min_samples == 12
+dbscan N clusters: 3 for min_samples = 13
+dbscan accuracy for eps: 0.1 and min_samples == 13
+dbscan N clusters: 3 for min_samples = 14
+dbscan accuracy for eps: 0.1 and min_samples == 14
+dbscan N clusters: 3 for min_samples = 15
+dbscan accuracy for eps: 0.1 and min_samples == 15
+dbscan N clusters: 3 for min_samples = 16
+dbscan accuracy for eps: 0.1 and min_samples == 16
+dbscan N clusters: 3 for min_samples = 17
+dbscan accuracy for eps: 0.1 and min_samples == 17
+dbscan N clusters: 3 for min_samples = 18
+dbscan accuracy for eps: 0.1 and min_samples == 18
+dbscan N clusters: 3 for min_samples = 19
+dbscan accuracy for eps: 0.1 and min_samples == 19
+dbscan N clusters: 1 for min_samples = 5
+dbscan accuracy for eps: 0.2 and min_samples == 5
+dbscan N clusters: 1 for min_samples = 6
+dbscan accuracy for eps: 0.2 and min_samples == 6
+dbscan N clusters: 1 for min_samples = 7
+dbscan accuracy for eps: 0.2 and min_samples == 7
+dbscan N clusters: 1 for min_samples = 8
+dbscan accuracy for eps: 0.2 and min_samples == 8
+dbscan N clusters: 1 for min_samples = 9
+dbscan accuracy for eps: 0.2 and min_samples == 9
+dbscan N clusters: 1 for min_samples = 10
+dbscan accuracy for eps: 0.2 and min_samples == 10
+dbscan N clusters: 1 for min_samples = 11
+dbscan accuracy for eps: 0.2 and min_samples == 11
+dbscan N clusters: 1 for min_samples = 12
+dbscan accuracy for eps: 0.2 and min_samples == 12
+dbscan N clusters: 1 for min_samples = 13
+dbscan accuracy for eps: 0.2 and min_samples == 13
+dbscan N clusters: 1 for min_samples = 14
+dbscan accuracy for eps: 0.2 and min_samples == 14
+dbscan N clusters: 1 for min_samples = 15
+dbscan accuracy for eps: 0.2 and min_samples == 15
+dbscan N clusters: 1 for min_samples = 16
+dbscan accuracy for eps: 0.2 and min_samples == 16
+dbscan N clusters: 1 for min_samples = 17
+dbscan accuracy for eps: 0.2 and min_samples == 17
+dbscan N clusters: 1 for min_samples = 18
+dbscan accuracy for eps: 0.2 and min_samples == 18
+dbscan N clusters: 1 for min_samples = 19
+dbscan accuracy for eps: 0.2 and min_samples == 19
+dbscan N clusters: 1 for min_samples = 5
+dbscan accuracy for eps: 0.3 and min_samples == 5
+dbscan N clusters: 1 for min_samples = 6
+dbscan accuracy for eps: 0.3 and min_samples == 6
+dbscan N clusters: 1 for min_samples = 7
+dbscan accuracy for eps: 0.3 and min_samples == 7
+dbscan N clusters: 1 for min_samples = 8
+dbscan accuracy for eps: 0.3 and min_samples == 8
+dbscan N clusters: 1 for min_samples = 9
+dbscan accuracy for eps: 0.3 and min_samples == 9
+dbscan N clusters: 1 for min_samples = 10
+dbscan accuracy for eps: 0.3 and min_samples == 10
+dbscan N clusters: 1 for min_samples = 11
+dbscan accuracy for eps: 0.3 and min_samples == 11
+dbscan N clusters: 1 for min_samples = 12
+dbscan accuracy for eps: 0.3 and min_samples == 12
+dbscan N clusters: 1 for min_samples = 13
+dbscan accuracy for eps: 0.3 and min_samples == 13
+dbscan N clusters: 1 for min_samples = 14
+dbscan accuracy for eps: 0.3 and min_samples == 14
+dbscan N clusters: 1 for min_samples = 15
+dbscan accuracy for eps: 0.3 and min_samples == 15
+dbscan N clusters: 1 for min_samples = 16
+dbscan accuracy for eps: 0.3 and min_samples == 16
+dbscan N clusters: 1 for min_samples = 17
+dbscan accuracy for eps: 0.3 and min_samples == 17
+dbscan N clusters: 1 for min_samples = 18
+dbscan accuracy for eps: 0.3 and min_samples == 18
+dbscan N clusters: 1 for min_samples = 19
+dbscan accuracy for eps: 0.3 and min_samples == 19
+dbscan N clusters: 1 for min_samples = 5
+dbscan accuracy for eps: 0.4 and min_samples == 5
+dbscan N clusters: 1 for min_samples = 6
+dbscan accuracy for eps: 0.4 and min_samples == 6
+dbscan N clusters: 1 for min_samples = 7
+dbscan accuracy for eps: 0.4 and min_samples == 7
+dbscan N clusters: 1 for min_samples = 8
+dbscan accuracy for eps: 0.4 and min_samples == 8
+dbscan N clusters: 1 for min_samples = 9
+dbscan accuracy for eps: 0.4 and min_samples == 9
+dbscan N clusters: 1 for min_samples = 10
+dbscan accuracy for eps: 0.4 and min_samples == 10
+dbscan N clusters: 1 for min_samples = 11
+dbscan accuracy for eps: 0.4 and min_samples == 11
+dbscan N clusters: 1 for min_samples = 12
+dbscan accuracy for eps: 0.4 and min_samples == 12
+dbscan N clusters: 1 for min_samples = 13
+dbscan accuracy for eps: 0.4 and min_samples == 13
+dbscan N clusters: 1 for min_samples = 14
+dbscan accuracy for eps: 0.4 and min_samples == 14
+dbscan N clusters: 1 for min_samples = 15
+dbscan accuracy for eps: 0.4 and min_samples == 15
+dbscan N clusters: 1 for min_samples = 16
+dbscan accuracy for eps: 0.4 and min_samples == 16
+dbscan N clusters: 1 for min_samples = 17
+dbscan accuracy for eps: 0.4 and min_samples == 17
+dbscan N clusters: 1 for min_samples = 18
+dbscan accuracy for eps: 0.4 and min_samples == 18
+dbscan N clusters: 1 for min_samples = 19
+dbscan accuracy for eps: 0.4 and min_samples == 19
+birch accuracy for threshold: 0.1 == 0.896072798261
+birch accuracy for threshold: 0.2 == 0.896072798261
+birch accuracy for threshold: 0.3 == 0.896072798261
+birch accuracy for threshold: 0.4 == 0.896072798261
+birch accuracy for threshold: 0.5 == 0.896072798261
+birch accuracy for threshold: 0.6 == 0.896072798261
+
+
+ FEATURES SELECTED WITH: FeatureAgglomeration: 2
+kmeans accuracy for # clusters2: 0.55541885257
+agglomerationg accuracy for # clusters2: 0.558587490498
+kmeans accuracy for # clusters3: 0.525706870432
+agglomerationg accuracy for # clusters3: 0.55155299615
+kmeans accuracy for # clusters4: 0.554911009166
+agglomerationg accuracy for # clusters4: 0.480296576469
+kmeans accuracy for # clusters5: 0.535110170512
+agglomerationg accuracy for # clusters5: 0.527115390861
+kmeans accuracy for # clusters6: 0.506519125564
+agglomerationg accuracy for # clusters6: 0.507071690663
+kmeans accuracy for # clusters7: 0.492738058555
+agglomerationg accuracy for # clusters7: 0.484372536077
+kmeans accuracy for # clusters8: 0.480438507114
+agglomerationg accuracy for # clusters8: 0.521977433768
+kmeans accuracy for # clusters9: 0.517512715184
+agglomerationg accuracy for # clusters9: 0.516010355083
+kmeans accuracy for # clusters10: 0.530241214962
+agglomerationg accuracy for # clusters10: 0.529301508562
+affinity propagation accuracy for dumping: 0.5 == 0.463799315362
+affinity propagation accuracy for dumping: 0.6 == 0.473023504917
+affinity propagation accuracy for dumping: 0.7 == 0.472969864347
+affinity propagation accuracy for dumping: 0.8 == 0.491548156563
+affinity propagation accuracy for dumping: 0.9 == 0.491548156563
+meanshoft accuracy for dumping: 0.556639191807
+dbscan N clusters: 2 for min_samples = 5
+dbscan accuracy for eps: 0.1 and min_samples == 5
+dbscan N clusters: 2 for min_samples = 6
+dbscan accuracy for eps: 0.1 and min_samples == 6
+dbscan N clusters: 2 for min_samples = 7
+dbscan accuracy for eps: 0.1 and min_samples == 7
+dbscan N clusters: 2 for min_samples = 8
+dbscan accuracy for eps: 0.1 and min_samples == 8
+dbscan N clusters: 2 for min_samples = 9
+dbscan accuracy for eps: 0.1 and min_samples == 9
+dbscan N clusters: 2 for min_samples = 10
+dbscan accuracy for eps: 0.1 and min_samples == 10
+dbscan N clusters: 2 for min_samples = 11
+dbscan accuracy for eps: 0.1 and min_samples == 11
+dbscan N clusters: 2 for min_samples = 12
+dbscan accuracy for eps: 0.1 and min_samples == 12
+dbscan N clusters: 2 for min_samples = 13
+dbscan accuracy for eps: 0.1 and min_samples == 13
+dbscan N clusters: 2 for min_samples = 14
+dbscan accuracy for eps: 0.1 and min_samples == 14
+dbscan N clusters: 2 for min_samples = 15
+dbscan accuracy for eps: 0.1 and min_samples == 15
+dbscan N clusters: 2 for min_samples = 16
+dbscan accuracy for eps: 0.1 and min_samples == 16
+dbscan N clusters: 2 for min_samples = 17
+dbscan accuracy for eps: 0.1 and min_samples == 17
+dbscan N clusters: 2 for min_samples = 18
+dbscan accuracy for eps: 0.1 and min_samples == 18
+dbscan N clusters: 2 for min_samples = 19
+dbscan accuracy for eps: 0.1 and min_samples == 19
+dbscan N clusters: 1 for min_samples = 5
+dbscan accuracy for eps: 0.2 and min_samples == 5
+dbscan N clusters: 1 for min_samples = 6
+dbscan accuracy for eps: 0.2 and min_samples == 6
+dbscan N clusters: 1 for min_samples = 7
+dbscan accuracy for eps: 0.2 and min_samples == 7
+dbscan N clusters: 1 for min_samples = 8
+dbscan accuracy for eps: 0.2 and min_samples == 8
+dbscan N clusters: 1 for min_samples = 9
+dbscan accuracy for eps: 0.2 and min_samples == 9
+dbscan N clusters: 1 for min_samples = 10
+dbscan accuracy for eps: 0.2 and min_samples == 10
+dbscan N clusters: 1 for min_samples = 11
+dbscan accuracy for eps: 0.2 and min_samples == 11
+dbscan N clusters: 1 for min_samples = 12
+dbscan accuracy for eps: 0.2 and min_samples == 12
+dbscan N clusters: 1 for min_samples = 13
+dbscan accuracy for eps: 0.2 and min_samples == 13
+dbscan N clusters: 1 for min_samples = 14
+dbscan accuracy for eps: 0.2 and min_samples == 14
+dbscan N clusters: 1 for min_samples = 15
+dbscan accuracy for eps: 0.2 and min_samples == 15
+dbscan N clusters: 1 for min_samples = 16
+dbscan accuracy for eps: 0.2 and min_samples == 16
+dbscan N clusters: 1 for min_samples = 17
+dbscan accuracy for eps: 0.2 and min_samples == 17
+dbscan N clusters: 1 for min_samples = 18
+dbscan accuracy for eps: 0.2 and min_samples == 18
+dbscan N clusters: 1 for min_samples = 19
+dbscan accuracy for eps: 0.2 and min_samples == 19
+dbscan N clusters: 1 for min_samples = 5
+dbscan accuracy for eps: 0.3 and min_samples == 5
+dbscan N clusters: 1 for min_samples = 6
+dbscan accuracy for eps: 0.3 and min_samples == 6
+dbscan N clusters: 1 for min_samples = 7
+dbscan accuracy for eps: 0.3 and min_samples == 7
+dbscan N clusters: 1 for min_samples = 8
+dbscan accuracy for eps: 0.3 and min_samples == 8
+dbscan N clusters: 1 for min_samples = 9
+dbscan accuracy for eps: 0.3 and min_samples == 9
+dbscan N clusters: 1 for min_samples = 10
+dbscan accuracy for eps: 0.3 and min_samples == 10
+dbscan N clusters: 1 for min_samples = 11
+dbscan accuracy for eps: 0.3 and min_samples == 11
+dbscan N clusters: 1 for min_samples = 12
+dbscan accuracy for eps: 0.3 and min_samples == 12
+dbscan N clusters: 1 for min_samples = 13
+dbscan accuracy for eps: 0.3 and min_samples == 13
+dbscan N clusters: 1 for min_samples = 14
+dbscan accuracy for eps: 0.3 and min_samples == 14
+dbscan N clusters: 1 for min_samples = 15
+dbscan accuracy for eps: 0.3 and min_samples == 15
+dbscan N clusters: 1 for min_samples = 16
+dbscan accuracy for eps: 0.3 and min_samples == 16
+dbscan N clusters: 1 for min_samples = 17
+dbscan accuracy for eps: 0.3 and min_samples == 17
+dbscan N clusters: 1 for min_samples = 18
+dbscan accuracy for eps: 0.3 and min_samples == 18
+dbscan N clusters: 1 for min_samples = 19
+dbscan accuracy for eps: 0.3 and min_samples == 19
+dbscan N clusters: 1 for min_samples = 5
+dbscan accuracy for eps: 0.4 and min_samples == 5
+dbscan N clusters: 1 for min_samples = 6
+dbscan accuracy for eps: 0.4 and min_samples == 6
+dbscan N clusters: 1 for min_samples = 7
+dbscan accuracy for eps: 0.4 and min_samples == 7
+dbscan N clusters: 1 for min_samples = 8
+dbscan accuracy for eps: 0.4 and min_samples == 8
+dbscan N clusters: 1 for min_samples = 9
+dbscan accuracy for eps: 0.4 and min_samples == 9
+dbscan N clusters: 1 for min_samples = 10
+dbscan accuracy for eps: 0.4 and min_samples == 10
+dbscan N clusters: 1 for min_samples = 11
+dbscan accuracy for eps: 0.4 and min_samples == 11
+dbscan N clusters: 1 for min_samples = 12
+dbscan accuracy for eps: 0.4 and min_samples == 12
+dbscan N clusters: 1 for min_samples = 13
+dbscan accuracy for eps: 0.4 and min_samples == 13
+dbscan N clusters: 1 for min_samples = 14
+dbscan accuracy for eps: 0.4 and min_samples == 14
+dbscan N clusters: 1 for min_samples = 15
+dbscan accuracy for eps: 0.4 and min_samples == 15
+dbscan N clusters: 1 for min_samples = 16
+dbscan accuracy for eps: 0.4 and min_samples == 16
+dbscan N clusters: 1 for min_samples = 17
+dbscan accuracy for eps: 0.4 and min_samples == 17
+dbscan N clusters: 1 for min_samples = 18
+dbscan accuracy for eps: 0.4 and min_samples == 18
+dbscan N clusters: 1 for min_samples = 19
+dbscan accuracy for eps: 0.4 and min_samples == 19
+birch accuracy for threshold: 0.1 == 0.46240381556
+birch accuracy for threshold: 0.2 == 0.551822602803
+birch accuracy for threshold: 0.3 == 0.520863082777
+birch accuracy for threshold: 0.4 == 0.542605313529
+birch accuracy for threshold: 0.5 == 0.55541885257
+birch accuracy for threshold: 0.6 == 0.587640852146
+
+
+ FEATURES SELECTED WITH: FeatureAgglomeration: 3
+kmeans accuracy for # clusters2: 0.922567389612
+agglomerationg accuracy for # clusters2: 0.922567389612
+kmeans accuracy for # clusters3: 0.548433443338
+agglomerationg accuracy for # clusters3: 0.551088877568
+kmeans accuracy for # clusters4: 0.5194828209
+agglomerationg accuracy for # clusters4: 0.545931017303
+kmeans accuracy for # clusters5: 0.549277807882
+agglomerationg accuracy for # clusters5: 0.471005628902
+kmeans accuracy for # clusters6: 0.525817632204
+agglomerationg accuracy for # clusters6: 0.517508935401
+kmeans accuracy for # clusters7: 0.501336849527
+agglomerationg accuracy for # clusters7: 0.499319813958
+kmeans accuracy for # clusters8: 0.481171002577
+agglomerationg accuracy for # clusters8: 0.522748982995
+kmeans accuracy for # clusters9: 0.474982924296
+agglomerationg accuracy for # clusters9: 0.513614744343
+kmeans accuracy for # clusters10: 0.501887391072
+agglomerationg accuracy for # clusters10: 0.507426666062
+affinity propagation accuracy for dumping: 0.5 == 0.452709077098
+affinity propagation accuracy for dumping: 0.6 == 0.50977582906
+affinity propagation accuracy for dumping: 0.7 == 0.524510231485
+affinity propagation accuracy for dumping: 0.8 == 0.524510231485
+affinity propagation accuracy for dumping: 0.9 == 0
+meanshoft accuracy for dumping: 0.567194201652
+dbscan N clusters: 2 for min_samples = 5
+dbscan accuracy for eps: 0.1 and min_samples == 5
+dbscan N clusters: 2 for min_samples = 6
+dbscan accuracy for eps: 0.1 and min_samples == 6
+dbscan N clusters: 2 for min_samples = 7
+dbscan accuracy for eps: 0.1 and min_samples == 7
+dbscan N clusters: 2 for min_samples = 8
+dbscan accuracy for eps: 0.1 and min_samples == 8
+dbscan N clusters: 2 for min_samples = 9
+dbscan accuracy for eps: 0.1 and min_samples == 9
+dbscan N clusters: 2 for min_samples = 10
+dbscan accuracy for eps: 0.1 and min_samples == 10
+dbscan N clusters: 2 for min_samples = 11
+dbscan accuracy for eps: 0.1 and min_samples == 11
+dbscan N clusters: 2 for min_samples = 12
+dbscan accuracy for eps: 0.1 and min_samples == 12
+dbscan N clusters: 2 for min_samples = 13
+dbscan accuracy for eps: 0.1 and min_samples == 13
+dbscan N clusters: 2 for min_samples = 14
+dbscan accuracy for eps: 0.1 and min_samples == 14
+dbscan N clusters: 2 for min_samples = 15
+dbscan accuracy for eps: 0.1 and min_samples == 15
+dbscan N clusters: 2 for min_samples = 16
+dbscan accuracy for eps: 0.1 and min_samples == 16
+dbscan N clusters: 2 for min_samples = 17
+dbscan accuracy for eps: 0.1 and min_samples == 17
+dbscan N clusters: 2 for min_samples = 18
+dbscan accuracy for eps: 0.1 and min_samples == 18
+dbscan N clusters: 2 for min_samples = 19
+dbscan accuracy for eps: 0.1 and min_samples == 19
+dbscan N clusters: 1 for min_samples = 5
+dbscan accuracy for eps: 0.2 and min_samples == 5
+dbscan N clusters: 1 for min_samples = 6
+dbscan accuracy for eps: 0.2 and min_samples == 6
+dbscan N clusters: 1 for min_samples = 7
+dbscan accuracy for eps: 0.2 and min_samples == 7
+dbscan N clusters: 1 for min_samples = 8
+dbscan accuracy for eps: 0.2 and min_samples == 8
+dbscan N clusters: 1 for min_samples = 9
+dbscan accuracy for eps: 0.2 and min_samples == 9
+dbscan N clusters: 1 for min_samples = 10
+dbscan accuracy for eps: 0.2 and min_samples == 10
+dbscan N clusters: 1 for min_samples = 11
+dbscan accuracy for eps: 0.2 and min_samples == 11
+dbscan N clusters: 1 for min_samples = 12
+dbscan accuracy for eps: 0.2 and min_samples == 12
+dbscan N clusters: 1 for min_samples = 13
+dbscan accuracy for eps: 0.2 and min_samples == 13
+dbscan N clusters: 1 for min_samples = 14
+dbscan accuracy for eps: 0.2 and min_samples == 14
+dbscan N clusters: 1 for min_samples = 15
+dbscan accuracy for eps: 0.2 and min_samples == 15
+dbscan N clusters: 1 for min_samples = 16
+dbscan accuracy for eps: 0.2 and min_samples == 16
+dbscan N clusters: 1 for min_samples = 17
+dbscan accuracy for eps: 0.2 and min_samples == 17
+dbscan N clusters: 1 for min_samples = 18
+dbscan accuracy for eps: 0.2 and min_samples == 18
+dbscan N clusters: 1 for min_samples = 19
+dbscan accuracy for eps: 0.2 and min_samples == 19
+dbscan N clusters: 1 for min_samples = 5
+dbscan accuracy for eps: 0.3 and min_samples == 5
+dbscan N clusters: 1 for min_samples = 6
+dbscan accuracy for eps: 0.3 and min_samples == 6
+dbscan N clusters: 1 for min_samples = 7
+dbscan accuracy for eps: 0.3 and min_samples == 7
+dbscan N clusters: 1 for min_samples = 8
+dbscan accuracy for eps: 0.3 and min_samples == 8
+dbscan N clusters: 1 for min_samples = 9
+dbscan accuracy for eps: 0.3 and min_samples == 9
+dbscan N clusters: 1 for min_samples = 10
+dbscan accuracy for eps: 0.3 and min_samples == 10
+dbscan N clusters: 1 for min_samples = 11
+dbscan accuracy for eps: 0.3 and min_samples == 11
+dbscan N clusters: 1 for min_samples = 12
+dbscan accuracy for eps: 0.3 and min_samples == 12
+dbscan N clusters: 1 for min_samples = 13
+dbscan accuracy for eps: 0.3 and min_samples == 13
+dbscan N clusters: 1 for min_samples = 14
+dbscan accuracy for eps: 0.3 and min_samples == 14
+dbscan N clusters: 1 for min_samples = 15
+dbscan accuracy for eps: 0.3 and min_samples == 15
+dbscan N clusters: 1 for min_samples = 16
+dbscan accuracy for eps: 0.3 and min_samples == 16
+dbscan N clusters: 1 for min_samples = 17
+dbscan accuracy for eps: 0.3 and min_samples == 17
+dbscan N clusters: 1 for min_samples = 18
+dbscan accuracy for eps: 0.3 and min_samples == 18
+dbscan N clusters: 1 for min_samples = 19
+dbscan accuracy for eps: 0.3 and min_samples == 19
+dbscan N clusters: 1 for min_samples = 5
+dbscan accuracy for eps: 0.4 and min_samples == 5
+dbscan N clusters: 1 for min_samples = 6
+dbscan accuracy for eps: 0.4 and min_samples == 6
+dbscan N clusters: 1 for min_samples = 7
+dbscan accuracy for eps: 0.4 and min_samples == 7
+dbscan N clusters: 1 for min_samples = 8
+dbscan accuracy for eps: 0.4 and min_samples == 8
+dbscan N clusters: 1 for min_samples = 9
+dbscan accuracy for eps: 0.4 and min_samples == 9
+dbscan N clusters: 1 for min_samples = 10
+dbscan accuracy for eps: 0.4 and min_samples == 10
+dbscan N clusters: 1 for min_samples = 11
+dbscan accuracy for eps: 0.4 and min_samples == 11
+dbscan N clusters: 1 for min_samples = 12
+dbscan accuracy for eps: 0.4 and min_samples == 12
+dbscan N clusters: 1 for min_samples = 13
+dbscan accuracy for eps: 0.4 and min_samples == 13
+dbscan N clusters: 1 for min_samples = 14
+dbscan accuracy for eps: 0.4 and min_samples == 14
+dbscan N clusters: 1 for min_samples = 15
+dbscan accuracy for eps: 0.4 and min_samples == 15
+dbscan N clusters: 1 for min_samples = 16
+dbscan accuracy for eps: 0.4 and min_samples == 16
+dbscan N clusters: 1 for min_samples = 17
+dbscan accuracy for eps: 0.4 and min_samples == 17
+dbscan N clusters: 1 for min_samples = 18
+dbscan accuracy for eps: 0.4 and min_samples == 18
+dbscan N clusters: 1 for min_samples = 19
+dbscan accuracy for eps: 0.4 and min_samples == 19
+birch accuracy for threshold: 0.1 == 0.5869970393
+birch accuracy for threshold: 0.2 == 0.551088877568
+birch accuracy for threshold: 0.3 == 0.549710807097
+birch accuracy for threshold: 0.4 == 0.561715376759
+birch accuracy for threshold: 0.5 == 0.548433443338
+birch accuracy for threshold: 0.6 == 0.582968970462
+
+
+ FEATURES SELECTED WITH: FeatureAgglomeration: 8
+kmeans accuracy for # clusters2: 0.8348693373
+agglomerationg accuracy for # clusters2: 0.8348693373
+kmeans accuracy for # clusters3: 0.840234357501
+agglomerationg accuracy for # clusters3: 0.840234357501
+kmeans accuracy for # clusters4: 0.842700833063
+agglomerationg accuracy for # clusters4: 0.842700833063
+kmeans accuracy for # clusters5: 0.821728082507
+agglomerationg accuracy for # clusters5: 0.821728082507
+kmeans accuracy for # clusters6: 0.815080786065
+agglomerationg accuracy for # clusters6: 0.815080786065
+kmeans accuracy for # clusters7: 0.837608513821
+agglomerationg accuracy for # clusters7: 0.837608513821
+kmeans accuracy for # clusters8: 0.565232006841
+agglomerationg accuracy for # clusters8: 0.565232006841
+kmeans accuracy for # clusters9: 0.490385920298
+agglomerationg accuracy for # clusters9: 0.470260775348
+kmeans accuracy for # clusters10: 0.51584782186
+agglomerationg accuracy for # clusters10: 0.462406441122
+affinity propagation accuracy for dumping: 0.5 == 0.486475043233
+affinity propagation accuracy for dumping: 0.6 == 0.484115161736
+affinity propagation accuracy for dumping: 0.7 == 0.484115161736
+affinity propagation accuracy for dumping: 0.8 == 0.484115161736
+affinity propagation accuracy for dumping: 0.9 == 0.770371463834
+meanshoft accuracy for dumping: 0.793549276813
+dbscan N clusters: 4 for min_samples = 5
+dbscan accuracy for eps: 0.1 and min_samples == 5
+dbscan N clusters: 4 for min_samples = 6
+dbscan accuracy for eps: 0.1 and min_samples == 6
+dbscan N clusters: 4 for min_samples = 7
+dbscan accuracy for eps: 0.1 and min_samples == 7
+dbscan N clusters: 4 for min_samples = 8
+dbscan accuracy for eps: 0.1 and min_samples == 8
+dbscan N clusters: 4 for min_samples = 9
+dbscan accuracy for eps: 0.1 and min_samples == 9
+dbscan N clusters: 4 for min_samples = 10
+dbscan accuracy for eps: 0.1 and min_samples == 10
+dbscan N clusters: 4 for min_samples = 11
+dbscan accuracy for eps: 0.1 and min_samples == 11
+dbscan N clusters: 4 for min_samples = 12
+dbscan accuracy for eps: 0.1 and min_samples == 12
+dbscan N clusters: 4 for min_samples = 13
+dbscan accuracy for eps: 0.1 and min_samples == 13
+dbscan N clusters: 4 for min_samples = 14
+dbscan accuracy for eps: 0.1 and min_samples == 14
+dbscan N clusters: 4 for min_samples = 15
+dbscan accuracy for eps: 0.1 and min_samples == 15
+dbscan N clusters: 4 for min_samples = 16
+dbscan accuracy for eps: 0.1 and min_samples == 16
+dbscan N clusters: 4 for min_samples = 17
+dbscan accuracy for eps: 0.1 and min_samples == 17
+dbscan N clusters: 4 for min_samples = 18
+dbscan accuracy for eps: 0.1 and min_samples == 18
+dbscan N clusters: 4 for min_samples = 19
+dbscan accuracy for eps: 0.1 and min_samples == 19
+dbscan N clusters: 1 for min_samples = 5
+dbscan accuracy for eps: 0.2 and min_samples == 5
+dbscan N clusters: 1 for min_samples = 6
+dbscan accuracy for eps: 0.2 and min_samples == 6
+dbscan N clusters: 1 for min_samples = 7
+dbscan accuracy for eps: 0.2 and min_samples == 7
+dbscan N clusters: 1 for min_samples = 8
+dbscan accuracy for eps: 0.2 and min_samples == 8
+dbscan N clusters: 1 for min_samples = 9
+dbscan accuracy for eps: 0.2 and min_samples == 9
+dbscan N clusters: 1 for min_samples = 10
+dbscan accuracy for eps: 0.2 and min_samples == 10
+dbscan N clusters: 1 for min_samples = 11
+dbscan accuracy for eps: 0.2 and min_samples == 11
+dbscan N clusters: 1 for min_samples = 12
+dbscan accuracy for eps: 0.2 and min_samples == 12
+dbscan N clusters: 1 for min_samples = 13
+dbscan accuracy for eps: 0.2 and min_samples == 13
+dbscan N clusters: 1 for min_samples = 14
+dbscan accuracy for eps: 0.2 and min_samples == 14
+dbscan N clusters: 1 for min_samples = 15
+dbscan accuracy for eps: 0.2 and min_samples == 15
+dbscan N clusters: 1 for min_samples = 16
+dbscan accuracy for eps: 0.2 and min_samples == 16
+dbscan N clusters: 1 for min_samples = 17
+dbscan accuracy for eps: 0.2 and min_samples == 17
+dbscan N clusters: 1 for min_samples = 18
+dbscan accuracy for eps: 0.2 and min_samples == 18
+dbscan N clusters: 1 for min_samples = 19
+dbscan accuracy for eps: 0.2 and min_samples == 19
+dbscan N clusters: 1 for min_samples = 5
+dbscan accuracy for eps: 0.3 and min_samples == 5
+dbscan N clusters: 1 for min_samples = 6
+dbscan accuracy for eps: 0.3 and min_samples == 6
+dbscan N clusters: 1 for min_samples = 7
+dbscan accuracy for eps: 0.3 and min_samples == 7
+dbscan N clusters: 1 for min_samples = 8
+dbscan accuracy for eps: 0.3 and min_samples == 8
+dbscan N clusters: 1 for min_samples = 9
+dbscan accuracy for eps: 0.3 and min_samples == 9
+dbscan N clusters: 1 for min_samples = 10
+dbscan accuracy for eps: 0.3 and min_samples == 10
+dbscan N clusters: 1 for min_samples = 11
+dbscan accuracy for eps: 0.3 and min_samples == 11
+dbscan N clusters: 1 for min_samples = 12
+dbscan accuracy for eps: 0.3 and min_samples == 12
+dbscan N clusters: 1 for min_samples = 13
+dbscan accuracy for eps: 0.3 and min_samples == 13
+dbscan N clusters: 1 for min_samples = 14
+dbscan accuracy for eps: 0.3 and min_samples == 14
+dbscan N clusters: 1 for min_samples = 15
+dbscan accuracy for eps: 0.3 and min_samples == 15
+dbscan N clusters: 1 for min_samples = 16
+dbscan accuracy for eps: 0.3 and min_samples == 16
+dbscan N clusters: 1 for min_samples = 17
+dbscan accuracy for eps: 0.3 and min_samples == 17
+dbscan N clusters: 1 for min_samples = 18
+dbscan accuracy for eps: 0.3 and min_samples == 18
+dbscan N clusters: 1 for min_samples = 19
+dbscan accuracy for eps: 0.3 and min_samples == 19
+dbscan N clusters: 1 for min_samples = 5
+dbscan accuracy for eps: 0.4 and min_samples == 5
+dbscan N clusters: 1 for min_samples = 6
+dbscan accuracy for eps: 0.4 and min_samples == 6
+dbscan N clusters: 1 for min_samples = 7
+dbscan accuracy for eps: 0.4 and min_samples == 7
+dbscan N clusters: 1 for min_samples = 8
+dbscan accuracy for eps: 0.4 and min_samples == 8
+dbscan N clusters: 1 for min_samples = 9
+dbscan accuracy for eps: 0.4 and min_samples == 9
+dbscan N clusters: 1 for min_samples = 10
+dbscan accuracy for eps: 0.4 and min_samples == 10
+dbscan N clusters: 1 for min_samples = 11
+dbscan accuracy for eps: 0.4 and min_samples == 11
+dbscan N clusters: 1 for min_samples = 12
+dbscan accuracy for eps: 0.4 and min_samples == 12
+dbscan N clusters: 1 for min_samples = 13
+dbscan accuracy for eps: 0.4 and min_samples == 13
+dbscan N clusters: 1 for min_samples = 14
+dbscan accuracy for eps: 0.4 and min_samples == 14
+dbscan N clusters: 1 for min_samples = 15
+dbscan accuracy for eps: 0.4 and min_samples == 15
+dbscan N clusters: 1 for min_samples = 16
+dbscan accuracy for eps: 0.4 and min_samples == 16
+dbscan N clusters: 1 for min_samples = 17
+dbscan accuracy for eps: 0.4 and min_samples == 17
+dbscan N clusters: 1 for min_samples = 18
+dbscan accuracy for eps: 0.4 and min_samples == 18
+dbscan N clusters: 1 for min_samples = 19
+dbscan accuracy for eps: 0.4 and min_samples == 19
+birch accuracy for threshold: 0.1 == 0.840234357501
+birch accuracy for threshold: 0.2 == 0.840234357501
+birch accuracy for threshold: 0.3 == 0.840234357501
+birch accuracy for threshold: 0.4 == 0.840234357501
+birch accuracy for threshold: 0.5 == 0.840234357501
+birch accuracy for threshold: 0.6 == 0.840234357501
+
+
+ FEATURES SELECTED WITH: FeatureAgglomeration: 9
+kmeans accuracy for # clusters2: 0.821706300441
+agglomerationg accuracy for # clusters2: 0.817905736685
+kmeans accuracy for # clusters3: 0.826948084331
+agglomerationg accuracy for # clusters3: 0.82402028402
+kmeans accuracy for # clusters4: 0.831192614371
+agglomerationg accuracy for # clusters4: 0.830207449814
+kmeans accuracy for # clusters5: 0.834877645448
+agglomerationg accuracy for # clusters5: 0.836336897992
+kmeans accuracy for # clusters6: 0.838077449529
+agglomerationg accuracy for # clusters6: 0.822475110961
+kmeans accuracy for # clusters7: 0.826872499153
+agglomerationg accuracy for # clusters7: 0.826872499153
+kmeans accuracy for # clusters8: 0.825297917055
+agglomerationg accuracy for # clusters8: 0.825297917055
+kmeans accuracy for # clusters9: 0.548619853764
+agglomerationg accuracy for # clusters9: 0.548619853764
+kmeans accuracy for # clusters10: 0.476702381465
+agglomerationg accuracy for # clusters10: 0.45457436184
+affinity propagation accuracy for dumping: 0.5 == 0.488815160332
+affinity propagation accuracy for dumping: 0.6 == 0.488815160332
+affinity propagation accuracy for dumping: 0.7 == 0.488815160332
+affinity propagation accuracy for dumping: 0.8 == 0.488815160332
+affinity propagation accuracy for dumping: 0.9 == 0.788096822559
+meanshoft accuracy for dumping: 0.793224642928
+dbscan N clusters: 4 for min_samples = 5
+dbscan accuracy for eps: 0.1 and min_samples == 5
+dbscan N clusters: 4 for min_samples = 6
+dbscan accuracy for eps: 0.1 and min_samples == 6
+dbscan N clusters: 4 for min_samples = 7
+dbscan accuracy for eps: 0.1 and min_samples == 7
+dbscan N clusters: 4 for min_samples = 8
+dbscan accuracy for eps: 0.1 and min_samples == 8
+dbscan N clusters: 4 for min_samples = 9
+dbscan accuracy for eps: 0.1 and min_samples == 9
+dbscan N clusters: 4 for min_samples = 10
+dbscan accuracy for eps: 0.1 and min_samples == 10
+dbscan N clusters: 4 for min_samples = 11
+dbscan accuracy for eps: 0.1 and min_samples == 11
+dbscan N clusters: 4 for min_samples = 12
+dbscan accuracy for eps: 0.1 and min_samples == 12
+dbscan N clusters: 4 for min_samples = 13
+dbscan accuracy for eps: 0.1 and min_samples == 13
+dbscan N clusters: 4 for min_samples = 14
+dbscan accuracy for eps: 0.1 and min_samples == 14
+dbscan N clusters: 4 for min_samples = 15
+dbscan accuracy for eps: 0.1 and min_samples == 15
+dbscan N clusters: 4 for min_samples = 16
+dbscan accuracy for eps: 0.1 and min_samples == 16
+dbscan N clusters: 4 for min_samples = 17
+dbscan accuracy for eps: 0.1 and min_samples == 17
+dbscan N clusters: 4 for min_samples = 18
+dbscan accuracy for eps: 0.1 and min_samples == 18
+dbscan N clusters: 4 for min_samples = 19
+dbscan accuracy for eps: 0.1 and min_samples == 19
+dbscan N clusters: 1 for min_samples = 5
+dbscan accuracy for eps: 0.2 and min_samples == 5
+dbscan N clusters: 1 for min_samples = 6
+dbscan accuracy for eps: 0.2 and min_samples == 6
+dbscan N clusters: 1 for min_samples = 7
+dbscan accuracy for eps: 0.2 and min_samples == 7
+dbscan N clusters: 1 for min_samples = 8
+dbscan accuracy for eps: 0.2 and min_samples == 8
+dbscan N clusters: 1 for min_samples = 9
+dbscan accuracy for eps: 0.2 and min_samples == 9
+dbscan N clusters: 1 for min_samples = 10
+dbscan accuracy for eps: 0.2 and min_samples == 10
+dbscan N clusters: 1 for min_samples = 11
+dbscan accuracy for eps: 0.2 and min_samples == 11
+dbscan N clusters: 1 for min_samples = 12
+dbscan accuracy for eps: 0.2 and min_samples == 12
+dbscan N clusters: 1 for min_samples = 13
+dbscan accuracy for eps: 0.2 and min_samples == 13
+dbscan N clusters: 1 for min_samples = 14
+dbscan accuracy for eps: 0.2 and min_samples == 14
+dbscan N clusters: 1 for min_samples = 15
+dbscan accuracy for eps: 0.2 and min_samples == 15
+dbscan N clusters: 1 for min_samples = 16
+dbscan accuracy for eps: 0.2 and min_samples == 16
+dbscan N clusters: 1 for min_samples = 17
+dbscan accuracy for eps: 0.2 and min_samples == 17
+dbscan N clusters: 1 for min_samples = 18
+dbscan accuracy for eps: 0.2 and min_samples == 18
+dbscan N clusters: 1 for min_samples = 19
+dbscan accuracy for eps: 0.2 and min_samples == 19
+dbscan N clusters: 1 for min_samples = 5
+dbscan accuracy for eps: 0.3 and min_samples == 5
+dbscan N clusters: 1 for min_samples = 6
+dbscan accuracy for eps: 0.3 and min_samples == 6
+dbscan N clusters: 1 for min_samples = 7
+dbscan accuracy for eps: 0.3 and min_samples == 7
+dbscan N clusters: 1 for min_samples = 8
+dbscan accuracy for eps: 0.3 and min_samples == 8
+dbscan N clusters: 1 for min_samples = 9
+dbscan accuracy for eps: 0.3 and min_samples == 9
+dbscan N clusters: 1 for min_samples = 10
+dbscan accuracy for eps: 0.3 and min_samples == 10
+dbscan N clusters: 1 for min_samples = 11
+dbscan accuracy for eps: 0.3 and min_samples == 11
+dbscan N clusters: 1 for min_samples = 12
+dbscan accuracy for eps: 0.3 and min_samples == 12
+dbscan N clusters: 1 for min_samples = 13
+dbscan accuracy for eps: 0.3 and min_samples == 13
+dbscan N clusters: 1 for min_samples = 14
+dbscan accuracy for eps: 0.3 and min_samples == 14
+dbscan N clusters: 1 for min_samples = 15
+dbscan accuracy for eps: 0.3 and min_samples == 15
+dbscan N clusters: 1 for min_samples = 16
+dbscan accuracy for eps: 0.3 and min_samples == 16
+dbscan N clusters: 1 for min_samples = 17
+dbscan accuracy for eps: 0.3 and min_samples == 17
+dbscan N clusters: 1 for min_samples = 18
+dbscan accuracy for eps: 0.3 and min_samples == 18
+dbscan N clusters: 1 for min_samples = 19
+dbscan accuracy for eps: 0.3 and min_samples == 19
+dbscan N clusters: 1 for min_samples = 5
+dbscan accuracy for eps: 0.4 and min_samples == 5
+dbscan N clusters: 1 for min_samples = 6
+dbscan accuracy for eps: 0.4 and min_samples == 6
+dbscan N clusters: 1 for min_samples = 7
+dbscan accuracy for eps: 0.4 and min_samples == 7
+dbscan N clusters: 1 for min_samples = 8
+dbscan accuracy for eps: 0.4 and min_samples == 8
+dbscan N clusters: 1 for min_samples = 9
+dbscan accuracy for eps: 0.4 and min_samples == 9
+dbscan N clusters: 1 for min_samples = 10
+dbscan accuracy for eps: 0.4 and min_samples == 10
+dbscan N clusters: 1 for min_samples = 11
+dbscan accuracy for eps: 0.4 and min_samples == 11
+dbscan N clusters: 1 for min_samples = 12
+dbscan accuracy for eps: 0.4 and min_samples == 12
+dbscan N clusters: 1 for min_samples = 13
+dbscan accuracy for eps: 0.4 and min_samples == 13
+dbscan N clusters: 1 for min_samples = 14
+dbscan accuracy for eps: 0.4 and min_samples == 14
+dbscan N clusters: 1 for min_samples = 15
+dbscan accuracy for eps: 0.4 and min_samples == 15
+dbscan N clusters: 1 for min_samples = 16
+dbscan accuracy for eps: 0.4 and min_samples == 16
+dbscan N clusters: 1 for min_samples = 17
+dbscan accuracy for eps: 0.4 and min_samples == 17
+dbscan N clusters: 1 for min_samples = 18
+dbscan accuracy for eps: 0.4 and min_samples == 18
+dbscan N clusters: 1 for min_samples = 19
+dbscan accuracy for eps: 0.4 and min_samples == 19
+birch accuracy for threshold: 0.1 == 0.82402028402
+birch accuracy for threshold: 0.2 == 0.82402028402
+birch accuracy for threshold: 0.3 == 0.82402028402
+birch accuracy for threshold: 0.4 == 0.82402028402
+birch accuracy for threshold: 0.5 == 0.82402028402
+birch accuracy for threshold: 0.6 == 0.82402028402
+
+
+ FEATURES SELECTED WITH: SparseRandomProjection
+kmeans accuracy for # clusters2: 0.37544525383
+agglomerationg accuracy for # clusters2: 0.364419971633
+kmeans accuracy for # clusters3: 0.0569053176677
+agglomerationg accuracy for # clusters3: 0.354649507319
+kmeans accuracy for # clusters4: 0.0234808858218
+agglomerationg accuracy for # clusters4: 0.242810461141
+kmeans accuracy for # clusters5: 0.018064864628
+agglomerationg accuracy for # clusters5: 0.246234333201
+kmeans accuracy for # clusters6: 0.0340740239278
+agglomerationg accuracy for # clusters6: 0.199964107563
+kmeans accuracy for # clusters7: 0.0511067504925
+agglomerationg accuracy for # clusters7: 0.054907462218
+kmeans accuracy for # clusters8: 0.177488920434
+agglomerationg accuracy for # clusters8: 0.05784608621
+kmeans accuracy for # clusters9: 0.0333693473385
+agglomerationg accuracy for # clusters9: 0.059193264519
+kmeans accuracy for # clusters10: 0.0192322475919
+agglomerationg accuracy for # clusters10: 0.0520923615373
+affinity propagation accuracy for dumping: 0.5 == 0.0187173833295
+affinity propagation accuracy for dumping: 0.6 == 0.0187173833295
+affinity propagation accuracy for dumping: 0.7 == 0.0187173833295
+affinity propagation accuracy for dumping: 0.8 == 0.0187173833295
+affinity propagation accuracy for dumping: 0.9 == 0.00881742078686
+meanshoft accuracy for dumping: 0.184073871522
+dbscan N clusters: 0 for min_samples = 5
+dbscan accuracy for eps: 0.1 and min_samples == 5
+dbscan N clusters: 0 for min_samples = 6
+dbscan accuracy for eps: 0.1 and min_samples == 6
+dbscan N clusters: 0 for min_samples = 7
+dbscan accuracy for eps: 0.1 and min_samples == 7
+dbscan N clusters: 0 for min_samples = 8
+dbscan accuracy for eps: 0.1 and min_samples == 8
+dbscan N clusters: 0 for min_samples = 9
+dbscan accuracy for eps: 0.1 and min_samples == 9
+dbscan N clusters: 0 for min_samples = 10
+dbscan accuracy for eps: 0.1 and min_samples == 10
+dbscan N clusters: 0 for min_samples = 11
+dbscan accuracy for eps: 0.1 and min_samples == 11
+dbscan N clusters: 0 for min_samples = 12
+dbscan accuracy for eps: 0.1 and min_samples == 12
+dbscan N clusters: 0 for min_samples = 13
+dbscan accuracy for eps: 0.1 and min_samples == 13
+dbscan N clusters: 0 for min_samples = 14
+dbscan accuracy for eps: 0.1 and min_samples == 14
+dbscan N clusters: 0 for min_samples = 15
+dbscan accuracy for eps: 0.1 and min_samples == 15
+dbscan N clusters: 0 for min_samples = 16
+dbscan accuracy for eps: 0.1 and min_samples == 16
+dbscan N clusters: 0 for min_samples = 17
+dbscan accuracy for eps: 0.1 and min_samples == 17
+dbscan N clusters: 0 for min_samples = 18
+dbscan accuracy for eps: 0.1 and min_samples == 18
+dbscan N clusters: 0 for min_samples = 19
+dbscan accuracy for eps: 0.1 and min_samples == 19
+dbscan N clusters: 0 for min_samples = 5
+dbscan accuracy for eps: 0.2 and min_samples == 5
+dbscan N clusters: 0 for min_samples = 6
+dbscan accuracy for eps: 0.2 and min_samples == 6
+dbscan N clusters: 0 for min_samples = 7
+dbscan accuracy for eps: 0.2 and min_samples == 7
+dbscan N clusters: 0 for min_samples = 8
+dbscan accuracy for eps: 0.2 and min_samples == 8
+dbscan N clusters: 0 for min_samples = 9
+dbscan accuracy for eps: 0.2 and min_samples == 9
+dbscan N clusters: 0 for min_samples = 10
+dbscan accuracy for eps: 0.2 and min_samples == 10
+dbscan N clusters: 0 for min_samples = 11
+dbscan accuracy for eps: 0.2 and min_samples == 11
+dbscan N clusters: 0 for min_samples = 12
+dbscan accuracy for eps: 0.2 and min_samples == 12
+dbscan N clusters: 0 for min_samples = 13
+dbscan accuracy for eps: 0.2 and min_samples == 13
+dbscan N clusters: 0 for min_samples = 14
+dbscan accuracy for eps: 0.2 and min_samples == 14
+dbscan N clusters: 0 for min_samples = 15
+dbscan accuracy for eps: 0.2 and min_samples == 15
+dbscan N clusters: 0 for min_samples = 16
+dbscan accuracy for eps: 0.2 and min_samples == 16
+dbscan N clusters: 0 for min_samples = 17
+dbscan accuracy for eps: 0.2 and min_samples == 17
+dbscan N clusters: 0 for min_samples = 18
+dbscan accuracy for eps: 0.2 and min_samples == 18
+dbscan N clusters: 0 for min_samples = 19
+dbscan accuracy for eps: 0.2 and min_samples == 19
+dbscan N clusters: 0 for min_samples = 5
+dbscan accuracy for eps: 0.3 and min_samples == 5
+dbscan N clusters: 0 for min_samples = 6
+dbscan accuracy for eps: 0.3 and min_samples == 6
+dbscan N clusters: 0 for min_samples = 7
+dbscan accuracy for eps: 0.3 and min_samples == 7
+dbscan N clusters: 0 for min_samples = 8
+dbscan accuracy for eps: 0.3 and min_samples == 8
+dbscan N clusters: 0 for min_samples = 9
+dbscan accuracy for eps: 0.3 and min_samples == 9
+dbscan N clusters: 0 for min_samples = 10
+dbscan accuracy for eps: 0.3 and min_samples == 10
+dbscan N clusters: 0 for min_samples = 11
+dbscan accuracy for eps: 0.3 and min_samples == 11
+dbscan N clusters: 0 for min_samples = 12
+dbscan accuracy for eps: 0.3 and min_samples == 12
+dbscan N clusters: 0 for min_samples = 13
+dbscan accuracy for eps: 0.3 and min_samples == 13
+dbscan N clusters: 0 for min_samples = 14
+dbscan accuracy for eps: 0.3 and min_samples == 14
+dbscan N clusters: 0 for min_samples = 15
+dbscan accuracy for eps: 0.3 and min_samples == 15
+dbscan N clusters: 0 for min_samples = 16
+dbscan accuracy for eps: 0.3 and min_samples == 16
+dbscan N clusters: 0 for min_samples = 17
+dbscan accuracy for eps: 0.3 and min_samples == 17
+dbscan N clusters: 0 for min_samples = 18
+dbscan accuracy for eps: 0.3 and min_samples == 18
+dbscan N clusters: 0 for min_samples = 19
+dbscan accuracy for eps: 0.3 and min_samples == 19
+dbscan N clusters: 0 for min_samples = 5
+dbscan accuracy for eps: 0.4 and min_samples == 5
+dbscan N clusters: 0 for min_samples = 6
+dbscan accuracy for eps: 0.4 and min_samples == 6
+dbscan N clusters: 0 for min_samples = 7
+dbscan accuracy for eps: 0.4 and min_samples == 7
+dbscan N clusters: 0 for min_samples = 8
+dbscan accuracy for eps: 0.4 and min_samples == 8
+dbscan N clusters: 0 for min_samples = 9
+dbscan accuracy for eps: 0.4 and min_samples == 9
+dbscan N clusters: 0 for min_samples = 10
+dbscan accuracy for eps: 0.4 and min_samples == 10
+dbscan N clusters: 0 for min_samples = 11
+dbscan accuracy for eps: 0.4 and min_samples == 11
+dbscan N clusters: 0 for min_samples = 12
+dbscan accuracy for eps: 0.4 and min_samples == 12
+dbscan N clusters: 0 for min_samples = 13
+dbscan accuracy for eps: 0.4 and min_samples == 13
+dbscan N clusters: 0 for min_samples = 14
+dbscan accuracy for eps: 0.4 and min_samples == 14
+dbscan N clusters: 0 for min_samples = 15
+dbscan accuracy for eps: 0.4 and min_samples == 15
+dbscan N clusters: 0 for min_samples = 16
+dbscan accuracy for eps: 0.4 and min_samples == 16
+dbscan N clusters: 0 for min_samples = 17
+dbscan accuracy for eps: 0.4 and min_samples == 17
+dbscan N clusters: 0 for min_samples = 18
+dbscan accuracy for eps: 0.4 and min_samples == 18
+dbscan N clusters: 0 for min_samples = 19
+dbscan accuracy for eps: 0.4 and min_samples == 19
+birch accuracy for threshold: 0.1 == 0.354649507319
+birch accuracy for threshold: 0.2 == 0.354649507319
+birch accuracy for threshold: 0.3 == 0.354649507319
+birch accuracy for threshold: 0.4 == 0.354649507319
+birch accuracy for threshold: 0.5 == 0.354649507319
+birch accuracy for threshold: 0.6 == 0.354649507319
+
+
+ FEATURES SELECTED WITH: GaussianRandomProjection
+kmeans accuracy for # clusters2: 0.388493455567
+agglomerationg accuracy for # clusters2: 0.386198002132
+kmeans accuracy for # clusters3: 0.344532674941
+agglomerationg accuracy for # clusters3: 0.383372147288
+kmeans accuracy for # clusters4: 0.0323191115096
+agglomerationg accuracy for # clusters4: 0.216694604487
+kmeans accuracy for # clusters5: 0.0039475318264
+agglomerationg accuracy for # clusters5: 0.0542577123021
+kmeans accuracy for # clusters6: 0.102801773658
+agglomerationg accuracy for # clusters6: 0.0531327932984
+kmeans accuracy for # clusters7: 0.0118740758461
+agglomerationg accuracy for # clusters7: 0.0547413225232
+kmeans accuracy for # clusters8: 0.0538746319641
+agglomerationg accuracy for # clusters8: 0.0571292056424
+kmeans accuracy for # clusters9: 0.0592240040959
+agglomerationg accuracy for # clusters9: 0.058078388644
+kmeans accuracy for # clusters10: -0.0192209659527
+agglomerationg accuracy for # clusters10: 0.0587929652272
+affinity propagation accuracy for dumping: 0.5 == 0.0115827184203
+affinity propagation accuracy for dumping: 0.6 == 0.0115827184203
+affinity propagation accuracy for dumping: 0.7 == 0.0115827184203
+affinity propagation accuracy for dumping: 0.8 == 0.0115827184203
+affinity propagation accuracy for dumping: 0.9 == 0.00435289514503
+meanshoft accuracy for dumping: 0.181172730822
+dbscan N clusters: 0 for min_samples = 5
+dbscan accuracy for eps: 0.1 and min_samples == 5
+dbscan N clusters: 0 for min_samples = 6
+dbscan accuracy for eps: 0.1 and min_samples == 6
+dbscan N clusters: 0 for min_samples = 7
+dbscan accuracy for eps: 0.1 and min_samples == 7
+dbscan N clusters: 0 for min_samples = 8
+dbscan accuracy for eps: 0.1 and min_samples == 8
+dbscan N clusters: 0 for min_samples = 9
+dbscan accuracy for eps: 0.1 and min_samples == 9
+dbscan N clusters: 0 for min_samples = 10
+dbscan accuracy for eps: 0.1 and min_samples == 10
+dbscan N clusters: 0 for min_samples = 11
+dbscan accuracy for eps: 0.1 and min_samples == 11
+dbscan N clusters: 0 for min_samples = 12
+dbscan accuracy for eps: 0.1 and min_samples == 12
+dbscan N clusters: 0 for min_samples = 13
+dbscan accuracy for eps: 0.1 and min_samples == 13
+dbscan N clusters: 0 for min_samples = 14
+dbscan accuracy for eps: 0.1 and min_samples == 14
+dbscan N clusters: 0 for min_samples = 15
+dbscan accuracy for eps: 0.1 and min_samples == 15
+dbscan N clusters: 0 for min_samples = 16
+dbscan accuracy for eps: 0.1 and min_samples == 16
+dbscan N clusters: 0 for min_samples = 17
+dbscan accuracy for eps: 0.1 and min_samples == 17
+dbscan N clusters: 0 for min_samples = 18
+dbscan accuracy for eps: 0.1 and min_samples == 18
+dbscan N clusters: 0 for min_samples = 19
+dbscan accuracy for eps: 0.1 and min_samples == 19
+dbscan N clusters: 0 for min_samples = 5
+dbscan accuracy for eps: 0.2 and min_samples == 5
+dbscan N clusters: 0 for min_samples = 6
+dbscan accuracy for eps: 0.2 and min_samples == 6
+dbscan N clusters: 0 for min_samples = 7
+dbscan accuracy for eps: 0.2 and min_samples == 7
+dbscan N clusters: 0 for min_samples = 8
+dbscan accuracy for eps: 0.2 and min_samples == 8
+dbscan N clusters: 0 for min_samples = 9
+dbscan accuracy for eps: 0.2 and min_samples == 9
+dbscan N clusters: 0 for min_samples = 10
+dbscan accuracy for eps: 0.2 and min_samples == 10
+dbscan N clusters: 0 for min_samples = 11
+dbscan accuracy for eps: 0.2 and min_samples == 11
+dbscan N clusters: 0 for min_samples = 12
+dbscan accuracy for eps: 0.2 and min_samples == 12
+dbscan N clusters: 0 for min_samples = 13
+dbscan accuracy for eps: 0.2 and min_samples == 13
+dbscan N clusters: 0 for min_samples = 14
+dbscan accuracy for eps: 0.2 and min_samples == 14
+dbscan N clusters: 0 for min_samples = 15
+dbscan accuracy for eps: 0.2 and min_samples == 15
+dbscan N clusters: 0 for min_samples = 16
+dbscan accuracy for eps: 0.2 and min_samples == 16
+dbscan N clusters: 0 for min_samples = 17
+dbscan accuracy for eps: 0.2 and min_samples == 17
+dbscan N clusters: 0 for min_samples = 18
+dbscan accuracy for eps: 0.2 and min_samples == 18
+dbscan N clusters: 0 for min_samples = 19
+dbscan accuracy for eps: 0.2 and min_samples == 19
+dbscan N clusters: 0 for min_samples = 5
+dbscan accuracy for eps: 0.3 and min_samples == 5
+dbscan N clusters: 0 for min_samples = 6
+dbscan accuracy for eps: 0.3 and min_samples == 6
+dbscan N clusters: 0 for min_samples = 7
+dbscan accuracy for eps: 0.3 and min_samples == 7
+dbscan N clusters: 0 for min_samples = 8
+dbscan accuracy for eps: 0.3 and min_samples == 8
+dbscan N clusters: 0 for min_samples = 9
+dbscan accuracy for eps: 0.3 and min_samples == 9
+dbscan N clusters: 0 for min_samples = 10
+dbscan accuracy for eps: 0.3 and min_samples == 10
+dbscan N clusters: 0 for min_samples = 11
+dbscan accuracy for eps: 0.3 and min_samples == 11
+dbscan N clusters: 0 for min_samples = 12
+dbscan accuracy for eps: 0.3 and min_samples == 12
+dbscan N clusters: 0 for min_samples = 13
+dbscan accuracy for eps: 0.3 and min_samples == 13
+dbscan N clusters: 0 for min_samples = 14
+dbscan accuracy for eps: 0.3 and min_samples == 14
+dbscan N clusters: 0 for min_samples = 15
+dbscan accuracy for eps: 0.3 and min_samples == 15
+dbscan N clusters: 0 for min_samples = 16
+dbscan accuracy for eps: 0.3 and min_samples == 16
+dbscan N clusters: 0 for min_samples = 17
+dbscan accuracy for eps: 0.3 and min_samples == 17
+dbscan N clusters: 0 for min_samples = 18
+dbscan accuracy for eps: 0.3 and min_samples == 18
+dbscan N clusters: 0 for min_samples = 19
+dbscan accuracy for eps: 0.3 and min_samples == 19
+dbscan N clusters: 0 for min_samples = 5
+dbscan accuracy for eps: 0.4 and min_samples == 5
+dbscan N clusters: 0 for min_samples = 6
+dbscan accuracy for eps: 0.4 and min_samples == 6
+dbscan N clusters: 0 for min_samples = 7
+dbscan accuracy for eps: 0.4 and min_samples == 7
+dbscan N clusters: 0 for min_samples = 8
+dbscan accuracy for eps: 0.4 and min_samples == 8
+dbscan N clusters: 0 for min_samples = 9
+dbscan accuracy for eps: 0.4 and min_samples == 9
+dbscan N clusters: 0 for min_samples = 10
+dbscan accuracy for eps: 0.4 and min_samples == 10
+dbscan N clusters: 0 for min_samples = 11
+dbscan accuracy for eps: 0.4 and min_samples == 11
+dbscan N clusters: 0 for min_samples = 12
+dbscan accuracy for eps: 0.4 and min_samples == 12
+dbscan N clusters: 0 for min_samples = 13
+dbscan accuracy for eps: 0.4 and min_samples == 13
+dbscan N clusters: 0 for min_samples = 14
+dbscan accuracy for eps: 0.4 and min_samples == 14
+dbscan N clusters: 0 for min_samples = 15
+dbscan accuracy for eps: 0.4 and min_samples == 15
+dbscan N clusters: 0 for min_samples = 16
+dbscan accuracy for eps: 0.4 and min_samples == 16
+dbscan N clusters: 0 for min_samples = 17
+dbscan accuracy for eps: 0.4 and min_samples == 17
+dbscan N clusters: 0 for min_samples = 18
+dbscan accuracy for eps: 0.4 and min_samples == 18
+dbscan N clusters: 0 for min_samples = 19
+dbscan accuracy for eps: 0.4 and min_samples == 19
+birch accuracy for threshold: 0.1 == 0.383372147288
+birch accuracy for threshold: 0.2 == 0.383372147288
+birch accuracy for threshold: 0.3 == 0.383372147288
+birch accuracy for threshold: 0.4 == 0.383372147288
+birch accuracy for threshold: 0.5 == 0.383372147288
+birch accuracy for threshold: 0.6 == 0.383372147288
+
+
+ FEATURES SELECTED WITH: PCA
+kmeans accuracy for # clusters2: 0.0290903581374
+agglomerationg accuracy for # clusters2: 0.3524551758
+kmeans accuracy for # clusters3: 0.0448762540922
+agglomerationg accuracy for # clusters3: 0.216245560757
+kmeans accuracy for # clusters4: 0.027303203338
+agglomerationg accuracy for # clusters4: 0.218770546458
+kmeans accuracy for # clusters5: 0.116014542084
+agglomerationg accuracy for # clusters5: 0.050137051594
+kmeans accuracy for # clusters6: 0.195410254861
+agglomerationg accuracy for # clusters6: 0.051652925947
+kmeans accuracy for # clusters7: 0.0420042132753
+agglomerationg accuracy for # clusters7: 0.0503122081641
+kmeans accuracy for # clusters8: 0.0476106746911
+agglomerationg accuracy for # clusters8: 0.053116930862
+kmeans accuracy for # clusters9: -0.0177879474339
+agglomerationg accuracy for # clusters9: 0.056319936905
+kmeans accuracy for # clusters10: 0.0442535677192
+agglomerationg accuracy for # clusters10: 0.0575302552396
+affinity propagation accuracy for dumping: 0.5 == 0.0436760013585
+affinity propagation accuracy for dumping: 0.6 == 0.0436760013585
+affinity propagation accuracy for dumping: 0.7 == 0.0436760013585
+affinity propagation accuracy for dumping: 0.8 == 0.0436760013585
+affinity propagation accuracy for dumping: 0.9 == 0.0228186480493
+meanshoft accuracy for dumping: 0.186784627737
+dbscan N clusters: 0 for min_samples = 5
+dbscan accuracy for eps: 0.1 and min_samples == 5
+dbscan N clusters: 0 for min_samples = 6
+dbscan accuracy for eps: 0.1 and min_samples == 6
+dbscan N clusters: 0 for min_samples = 7
+dbscan accuracy for eps: 0.1 and min_samples == 7
+dbscan N clusters: 0 for min_samples = 8
+dbscan accuracy for eps: 0.1 and min_samples == 8
+dbscan N clusters: 0 for min_samples = 9
+dbscan accuracy for eps: 0.1 and min_samples == 9
+dbscan N clusters: 0 for min_samples = 10
+dbscan accuracy for eps: 0.1 and min_samples == 10
+dbscan N clusters: 0 for min_samples = 11
+dbscan accuracy for eps: 0.1 and min_samples == 11
+dbscan N clusters: 0 for min_samples = 12
+dbscan accuracy for eps: 0.1 and min_samples == 12
+dbscan N clusters: 0 for min_samples = 13
+dbscan accuracy for eps: 0.1 and min_samples == 13
+dbscan N clusters: 0 for min_samples = 14
+dbscan accuracy for eps: 0.1 and min_samples == 14
+dbscan N clusters: 0 for min_samples = 15
+dbscan accuracy for eps: 0.1 and min_samples == 15
+dbscan N clusters: 0 for min_samples = 16
+dbscan accuracy for eps: 0.1 and min_samples == 16
+dbscan N clusters: 0 for min_samples = 17
+dbscan accuracy for eps: 0.1 and min_samples == 17
+dbscan N clusters: 0 for min_samples = 18
+dbscan accuracy for eps: 0.1 and min_samples == 18
+dbscan N clusters: 0 for min_samples = 19
+dbscan accuracy for eps: 0.1 and min_samples == 19
+dbscan N clusters: 0 for min_samples = 5
+dbscan accuracy for eps: 0.2 and min_samples == 5
+dbscan N clusters: 0 for min_samples = 6
+dbscan accuracy for eps: 0.2 and min_samples == 6
+dbscan N clusters: 0 for min_samples = 7
+dbscan accuracy for eps: 0.2 and min_samples == 7
+dbscan N clusters: 0 for min_samples = 8
+dbscan accuracy for eps: 0.2 and min_samples == 8
+dbscan N clusters: 0 for min_samples = 9
+dbscan accuracy for eps: 0.2 and min_samples == 9
+dbscan N clusters: 0 for min_samples = 10
+dbscan accuracy for eps: 0.2 and min_samples == 10
+dbscan N clusters: 0 for min_samples = 11
+dbscan accuracy for eps: 0.2 and min_samples == 11
+dbscan N clusters: 0 for min_samples = 12
+dbscan accuracy for eps: 0.2 and min_samples == 12
+dbscan N clusters: 0 for min_samples = 13
+dbscan accuracy for eps: 0.2 and min_samples == 13
+dbscan N clusters: 0 for min_samples = 14
+dbscan accuracy for eps: 0.2 and min_samples == 14
+dbscan N clusters: 0 for min_samples = 15
+dbscan accuracy for eps: 0.2 and min_samples == 15
+dbscan N clusters: 0 for min_samples = 16
+dbscan accuracy for eps: 0.2 and min_samples == 16
+dbscan N clusters: 0 for min_samples = 17
+dbscan accuracy for eps: 0.2 and min_samples == 17
+dbscan N clusters: 0 for min_samples = 18
+dbscan accuracy for eps: 0.2 and min_samples == 18
+dbscan N clusters: 0 for min_samples = 19
+dbscan accuracy for eps: 0.2 and min_samples == 19
+dbscan N clusters: 0 for min_samples = 5
+dbscan accuracy for eps: 0.3 and min_samples == 5
+dbscan N clusters: 0 for min_samples = 6
+dbscan accuracy for eps: 0.3 and min_samples == 6
+dbscan N clusters: 0 for min_samples = 7
+dbscan accuracy for eps: 0.3 and min_samples == 7
+dbscan N clusters: 0 for min_samples = 8
+dbscan accuracy for eps: 0.3 and min_samples == 8
+dbscan N clusters: 0 for min_samples = 9
+dbscan accuracy for eps: 0.3 and min_samples == 9
+dbscan N clusters: 0 for min_samples = 10
+dbscan accuracy for eps: 0.3 and min_samples == 10
+dbscan N clusters: 0 for min_samples = 11
+dbscan accuracy for eps: 0.3 and min_samples == 11
+dbscan N clusters: 0 for min_samples = 12
+dbscan accuracy for eps: 0.3 and min_samples == 12
+dbscan N clusters: 0 for min_samples = 13
+dbscan accuracy for eps: 0.3 and min_samples == 13
+dbscan N clusters: 0 for min_samples = 14
+dbscan accuracy for eps: 0.3 and min_samples == 14
+dbscan N clusters: 0 for min_samples = 15
+dbscan accuracy for eps: 0.3 and min_samples == 15
+dbscan N clusters: 0 for min_samples = 16
+dbscan accuracy for eps: 0.3 and min_samples == 16
+dbscan N clusters: 0 for min_samples = 17
+dbscan accuracy for eps: 0.3 and min_samples == 17
+dbscan N clusters: 0 for min_samples = 18
+dbscan accuracy for eps: 0.3 and min_samples == 18
+dbscan N clusters: 0 for min_samples = 19
+dbscan accuracy for eps: 0.3 and min_samples == 19
+dbscan N clusters: 0 for min_samples = 5
+dbscan accuracy for eps: 0.4 and min_samples == 5
+dbscan N clusters: 0 for min_samples = 6
+dbscan accuracy for eps: 0.4 and min_samples == 6
+dbscan N clusters: 0 for min_samples = 7
+dbscan accuracy for eps: 0.4 and min_samples == 7
+dbscan N clusters: 0 for min_samples = 8
+dbscan accuracy for eps: 0.4 and min_samples == 8
+dbscan N clusters: 0 for min_samples = 9
+dbscan accuracy for eps: 0.4 and min_samples == 9
+dbscan N clusters: 0 for min_samples = 10
+dbscan accuracy for eps: 0.4 and min_samples == 10
+dbscan N clusters: 0 for min_samples = 11
+dbscan accuracy for eps: 0.4 and min_samples == 11
+dbscan N clusters: 0 for min_samples = 12
+dbscan accuracy for eps: 0.4 and min_samples == 12
+dbscan N clusters: 0 for min_samples = 13
+dbscan accuracy for eps: 0.4 and min_samples == 13
+dbscan N clusters: 0 for min_samples = 14
+dbscan accuracy for eps: 0.4 and min_samples == 14
+dbscan N clusters: 0 for min_samples = 15
+dbscan accuracy for eps: 0.4 and min_samples == 15
+dbscan N clusters: 0 for min_samples = 16
+dbscan accuracy for eps: 0.4 and min_samples == 16
+dbscan N clusters: 0 for min_samples = 17
+dbscan accuracy for eps: 0.4 and min_samples == 17
+dbscan N clusters: 0 for min_samples = 18
+dbscan accuracy for eps: 0.4 and min_samples == 18
+dbscan N clusters: 0 for min_samples = 19
+dbscan accuracy for eps: 0.4 and min_samples == 19
+birch accuracy for threshold: 0.1 == 0.216245560757
+birch accuracy for threshold: 0.2 == 0.216245560757
+birch accuracy for threshold: 0.3 == 0.216245560757
+birch accuracy for threshold: 0.4 == 0.216245560757
+birch accuracy for threshold: 0.5 == 0.216245560757
+birch accuracy for threshold: 0.6 == 0.216245560757
