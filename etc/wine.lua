@@ -4,27 +4,32 @@ if  wine_schema == nil then
     wine_primary = wine_schema:create_index('primary', {type = 'tree', parts = {1, 'STR'}})
 end
 -- 1: name: str
--- 2: color: red/white/pink str
--- 3: switness: dry/sweet/semi-sweet str
--- 4: grape str
--- 5: country str
--- 6: region str
--- 7: alcohol str --> num
--- 8: serving temperature str
--- 9: decantation str
--- 10: vintage num
+-- 2: image_url str
+-- 3: color: red/white/pink str
+-- 4: switness: dry/sweet/semi-sweet str
+-- 5: grape str
+-- 6: country str
+-- 7: region str
+-- 8: alcohol str --> num
+-- 9: serving temperature str
+-- 10: decantation str
+-- 11: vintage num
+-- 12: ageing str
 
 -- [need to be treated as bag of words]
--- 11: style
--- 12: charateristics
+-- 13: style
+-- 14: charateristics
+-- 15: gastronomy
 
 --[postprocessed results]
--- 13: downloaded photo name
--- 14: temperature min
--- 15 temperature max
--- 16: bag ow words
+-- 16: downloaded photo name
+-- 17: temperature min
+-- 18: temperature max
+-- 19: bag of words_style
+-- 20: bag of words_characteristics
+-- 21: bag of words_gastronomy
 
-local MAX_TUPLE_LENGTH = 17
+local MAX_TUPLE_LENGTH = 21
 local function insert_local(...) 
     local args = {...}
     if #args == 0 then
@@ -87,7 +92,7 @@ local function find_by_chunk(offset, chunk_length, only_new)
         end
 
         if curr_length >= offset and 
-           (not only_new or tuple[14] == nil) then -- check if tuple was not post processed yet (and image is empty)
+           (not only_new or tuple[16] == nil) then -- check if tuple was not post processed yet (and image is empty)
             table.insert(res_table, tuple)
             curr_length = curr_length + 1
         end

@@ -11,7 +11,7 @@ from settings import DOMAIN, TARANTOOL_CONNCTION, CHUNK_LENGTH
 CATALOG_PATH = '/catalog/vino/'
 CRAWLER_MAX_WORKERS = 10
 SUCCESS_STATUS_CODES = [200, 202, ]
-MAX_PAGE = 10
+MAX_PAGE = 1
 
 TNT_INSERT_CHUNK = 2
 class SimpleWineCrawler:
@@ -32,19 +32,44 @@ class SimpleWineCrawler:
         for w in workers:
             w.cancel()
 
-    def _extract_wine_info(self, content):
-        def _extract_2nd_td(tr):
+    def _extract_wine_info(self, content): #raises ValueError on broken description
+        def _extract_td_by_number(tr, td_number):
             try:
-                return tr.find_all('td')[1].text
+                return tr.find_all('td')[td_number].text.strip()
             except (AttributeError, IndexError):
                 return None
+                
+        #def _extract_2nd_td(tr):
+        #    try:
+        #        return tr.find_all('td')[1].text.strip()
+        #    except (AttributeError, IndexError):
+        #        raise ValueError
 
+        #def _extract_2nd_td_conditionally(expected_name, tr):
+        #    try:
+        #        if tr.find_all('td')[0].text.strip() != expected_name:
+        #            print(tr.find_all('td')[0].text)
+        #            print(expected_name)
+        #            raise ValueError
+        #        return tr.find_all('td')[1].text
+        #    except (AttributeError, IndexError):
+        #        raise ValueError
+                
         def _get_by_index(list_, index):
             try:
                 return list_[index]
             except IndexError:
                 return None 
 
+        def _tds2hash(td_raws):
+            res = {}
+            for row in td_raws:
+                key = _extract_td_by_number(row, 0)
+                value = _extract_td_by_number(row, 1)
+                if not key or not value: continue
+                res[key] = value
+            return res
+            
         soup = bs(content, 'html.parser')
         data_list = [
             soup.select_one('h1.title').text, #name
@@ -59,32 +84,57 @@ class SimpleWineCrawler:
             (_get_by_index(basic_data, -1) and basic_data[-1].text), #country
         ])  
         
-        extra_info = soup.select_one('#characteristics .tabs-content__table').find_all('tr')
+        extra_info = _tds2hash(
+            soup.select_one('#characteristics .tabs-content__table').find_all('tr')
+        )
         
-        # region
+        # feautures -- short description
+        if not extra_info.get('Стилистика:'): raise ValueError #skip wines without description
+        
         data_list.extend([
-            _extract_2nd_td(_get_by_index(extra_info, 0)), #region
-            _extract_2nd_td(_get_by_index(extra_info, 4)), #strength
-            _extract_2nd_td(_get_by_index(extra_info, 5)), #temperature
-            _extract_2nd_td(_get_by_index(extra_info, 8)), #decantation 
-            _extract_2nd_td(_get_by_index(extra_info, 3)), #vintage
-            _extract_2nd_td(_get_by_index(extra_info, 10)), #style
+            extra_info.get('Регион:'), #region
+            extra_info.get('Крепость:'), #strength
+            extra_info.get('Температура подачи от и до:'), #temperature
+            extra_info.get('Декантация:'), #decantation 
+            extra_info.get('Год:'), #vintage
+            extra_info.get('Стилистика:'), #style
+            extra_info.get('Выдержка в ёмкости:'), #ageing
         ])
+                
+        #data_list.extend([
+        #    _extract_2nd_td_conditionally('Регион:', _get_by_index(extra_info, 0)), #region
+        #    _extract_2nd_td_conditionally('Крепость:', _get_by_index(extra_info, 4)), #strength
+        #    _extract_2nd_td_conditionally('Температура подачи от и до:', _get_by_index(extra_info, 5)), #temperature
+        #    _extract_2nd_td_conditionally('Декантация:', _get_by_index(extra_info, 8)), #decantation 
+        #    _extract_2nd_td_conditionally('Год:', _get_by_index(extra_info, 3)), #vintage
+        #    _extract_2nd_td_conditionally('Стилистика:', _get_by_index(extra_info, 10)), #style
+        #])
          
-        extra_info_bag_of_words = soup.select_one('#characteristics .tabs-content__table.padding').find_all('tr')
-        data_list.append(_extract_2nd_td(_get_by_index(extra_info_bag_of_words, 4))) #taste description
+        # features -- extended description
+        extra_info_bag_of_words = _tds2hash(
+            soup.select_one('#characteristics .tabs-content__table.padding').find_all('tr')
+        )
+        data_list.extend([
+            extra_info_bag_of_words.get('Дегустационные характеристики:'), #taste description
+            extra_info_bag_of_words.get('Гастрономия:') #gastronomy
+        ])
+        
+        #data_list.append(_extract_2nd_td(_get_by_index(extra_info_bag_of_words, 4))) #taste description
+        #data_list.append(_extract_2nd_td(_get_by_index(extra_info_bag_of_words, 1))) #gastronomy
         for i, str_ in enumerate(data_list):
             if str_ is not None:
                 data_list[i] = str(str_).strip(' \t\n\r') 
-        print(data_list)
         return data_list
 
     def _save_wine2tnt(self, data):
         if not hasattr(self, 'tnt') or not self.tnt:
             raise ValueError('no tnt connector')
         try:
+            print('saving wine')
+            print(data)
             self.tnt.call('wine.insert_local', [data, ])
-        except tarantool.error.DatabaseError:
+        except tarantool.error.DatabaseError as e:
+            print(e)
             pass #its ok to have duplicate error
  
     def _save_catalog2tnt(self, data):
@@ -110,8 +160,11 @@ class SimpleWineCrawler:
             # split data to chunks to prevent tnt stack overflow
             data = [(url, page) for url in urls[i: i + TNT_INSERT_CHUNK]]
             try:
+                print('saving data')
+                print(data)
                 self.tnt.call('catalog.insert', [data, ])
-            except tarantool.error.DatabaseError:
+            except tarantool.error.DatabaseError as e:
+                print(e)
                 pass #its ok to have duplicate error
 
     @asyncio.coroutine
@@ -132,8 +185,9 @@ class SimpleWineCrawler:
         if r.status_code not in SUCCESS_STATUS_CODES:
             # its ok to loose some wines
             return 
-        data = self._extract_wine_info(r.text)
-        if not data:
+        try:
+            data = self._extract_wine_info(r.text)
+        except ValueError:
             return
         self._save_wine2tnt(data)
         self._delete_from_catalog_tnt(url_path)

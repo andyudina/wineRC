@@ -10,29 +10,33 @@ import tarantool
 
 from settings import DOMAIN, TARANTOOL_CONNCTION, CHUNK_LENGTH
 
-EXPECTED_TUPLE_LENGTH = 17
-# wine space
+EXPECTED_TUPLE_LENGTH = 21
 # 1: name: str
-# 2: image url: str
+# 2: image_url str
 # 3: color: red/white/pink str
 # 4: switness: dry/sweet/semi-sweet str
 # 5: grape str
-# 6. country str
+# 6: country str
 # 7: region str
-# 8: alcohol str --> float
+# 8: alcohol str -> num
 # 9: serving temperature str
 # 10: decantation str
 # 11: vintage num
+# 12: ageing str
 
 # [need to be treated as bag of words]
-# 12: style
-# 13: charateristics
+# 13: style
+# 14: charateristics
+# 15: gastronomy
 
 #[postprocessed results]
-# 14: downloaded photo name
-# 15: temperature min
-# 16: temperature max
-# 17: bag of words
+# 16: downloaded photo name
+# 17: temperature min
+# 18: temperature max
+# 19: bag of words_style
+# 20: bag of words_characteristics
+# 21: bag of words_gastronomy
+
 
 def _download_and_save_photo(wine_tuple):
     if not wine_tuple[1]:
@@ -45,10 +49,10 @@ def _download_and_save_photo(wine_tuple):
         with open(path, 'wb') as f:
             r.raw.decode_content = True
             shutil.copyfileobj(r.raw, f)    
-        wine_tuple[13] = photo_filename
+        wine_tuple[15] = photo_filename
         
 def _process_and_update_simple_text_fields(wine_tuple):
-    for field_index in list(range(2, 7)) + [9, 11, 12]:
+    for field_index in list(range(2, 7)) + list(range(9, 12)):
         if wine_tuple[field_index]:
             wine_tuple[field_index] = wine_tuple[field_index].lower()
 
@@ -62,7 +66,7 @@ def _split_temperature_range2int(wine_tuple):
         new_range = new_range[:2]
     if len(new_range) < 2:
         new_range.append(new_range[0])
-    wine_tuple[14], wine_tuple[15] = new_range[0], new_range[1]    
+    wine_tuple[16], wine_tuple[17] = new_range[0], new_range[1]    
 
 def _split_grapes2table(wine_tuple):
     grapes = wine_tuple[4]
@@ -81,8 +85,9 @@ def _convert_alcohol2float(wine_tuple):
     if not alcohol_percent: return
     wine_tuple[7] = alcohol_percent[0]
 
-def _split_texts2bag_of_words(wine_tuple):
-    text = (wine_tuple[11] or '') + ' ' + (wine_tuple[12] or '') 
+def _split_texts2bag_of_words(text):
+    #text = (wine_tuple[11] or '') + ' ' + (wine_tuple[12] or '') 
+    if not text: return []
     tokenized_text = nltk.wordpunct_tokenize(text)
     stemmer = nltk.stem.snowball.RussianStemmer(ignore_stopwords=True)
     stemmed_text = []
@@ -90,7 +95,8 @@ def _split_texts2bag_of_words(wine_tuple):
         stem = stemmer.stem(word)
         if stem and len(stem) > 2: #skip short words
             stemmed_text.append(stem)
-    wine_tuple[16] = stemmed_text 
+    #TODO: process synonims here
+    return stemmed_text 
     
 def _save2tnt(wine_tuple, tnt_connection):
     tnt_connection.call('wine.update_total', [wine_tuple, ])
@@ -107,7 +113,8 @@ def postprocess_wine(wine_tuple, tnt_connection):
     _split_grapes2table(wine_tuple)
     _change_produced_year2vintage(wine_tuple)
     _convert_alcohol2float(wine_tuple)
-    _split_texts2bag_of_words(wine_tuple)
+    for text in wine_tuple[12: 15]:
+        wine_tuple.append(_split_texts2bag_of_words(text))
     
     print('result tuple')
     print(wine_tuple)
@@ -134,3 +141,4 @@ def postprocess_wines():
     
 if __name__ == '__main__':
     postprocess_wines()
+
