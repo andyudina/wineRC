@@ -43,6 +43,7 @@ BAG_OF_WORDS_INDEXES = [18, 19, 20]
 # 20: bag of words_characteristics
 # 21: bag of words_gastronomy
 
+#TODO: Count words before and after synonyms
 morph = pymorphy2.MorphAnalyzer()
 def _get_normal_form(word):
     parsed_word = morph.parse(word)[0]
@@ -51,7 +52,7 @@ def _get_normal_form(word):
     
 def _get_synonyms(word):
     #TODO: to normal form
-    word = _get_normal_form(word)
+    #word = _get_normal_form(word)
     url = YANDEX_BASE_URL.format(YANDEX_DICT_KEY, word)
     r = requests.get(url)
     if r.status_code != SUCCESS_STATUS_CODE:
@@ -146,9 +147,11 @@ def _collect_synonyms(synonyms, t):
         print(t)
         print(info['order'])
         if not bag_of_words: continue
-        for word in bag_of_words:
+        for word_index, word in enumerate(bag_of_words):
             if len(word) < MIN_WORD_LENGTH: continue
             if info['words'].get(word): continue
+            word = _get_normal_form(word)
+            bag_of_words[word_index] = word
             synonyms[key]['words'][word] = _get_synonyms(word)
               
     
