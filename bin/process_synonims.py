@@ -3,16 +3,19 @@ import re
 import shutil
 import hashlib # for picture filename
 import collections
-
+from itertools import chain
+ 
 import requests
 import nltk
 import tarantool
+import pymorphy2
 
 from settings import TARANTOOL_CONNCTION, CHUNK_LENGTH, YANDEX_BASE_URL, YANDEX_DICT_KEY
 
 SUCCESS_STATUS_CODE = 200
 MIN_WORD_LENGTH = 3
 MIN_COMMON_RATIO = 0.5
+BAG_OF_WORDS_INDEXES = [18, 19, 20]
 
 # 1: name: str
 # 2: image_url str
@@ -40,15 +43,26 @@ MIN_COMMON_RATIO = 0.5
 # 20: bag of words_characteristics
 # 21: bag of words_gastronomy
 
+morph = pymorphy2.MorphAnalyzer()
+def _get_normal_form(word):
+    parsed_word = morph.parse(word)[0]
+    if not parsed_word: return word
+    return (parsed_word.normal_form or word)
+    
 def _get_synonyms(word):
+    #TODO: to normal form
+    word = _get_normal_form(word)
     url = YANDEX_BASE_URL.format(YANDEX_DICT_KEY, word)
     r = requests.get(url)
     if r.status_code != SUCCESS_STATUS_CODE:
+        print(r.status_code)
         return []
     response = r.json()
     try:
         return [w['text'] for w in response['def'][0]['tr'][0]['syn']]
-    except KeyError:
+    except (KeyError, IndexError):
+        print(response)
+        print(word)
         return []
         
 def _merge_and_label_synonyms_groups(synonyms):
@@ -79,7 +93,7 @@ def _merge_and_label_synonyms_groups(synonyms):
               
     word_sets = _syn_hash2sets(synonyms)
     for i, source_word_set in enumerate(word_sets[: -1]):
-         # найти похожие сеты и влить туда  
+         # find all similiar sets and merge them 
          was_merged = False
          for j, dest_word_set in enumerate(word_sets[i + 1: ]):  
              if _are_mergable(source_word_set, dest_word_set):
@@ -87,10 +101,12 @@ def _merge_and_label_synonyms_groups(synonyms):
                  was_merged = True
          if was_merged: 
              word_sets.pop(i)
-             
+    print('merged synonyms')
+    print(word_sets)         
     return _syn_sets2hash(word_sets)
                 
 def _replace_words_with_synonyms(t, synonyms):
+    print('replace words with synonyms 4 ' + t[0])
     for syn in synonyms.values():
         syn_hash = syn['words']
         order = syn['order']
@@ -102,13 +118,19 @@ def _replace_words_with_synonyms(t, synonyms):
             t[order][i] = syn_hash.get(word, word)
             
 def _update_wine_bag_of_words(syn_t, tnt):
-    raise NotImplemented
+    print('updating tuple')
+    print(syn_t)
+    tnt.call(
+        'catalog.delete_by_pk', 
+        [syn_t[0], list(chain.from_iterable((index, syn_t[index]) for index in BAG_OF_WORDS_INDEXES))]
+    )
  
 def _stemm_tuple(t):
     for t_order in range(18, 21):
-        t[t_order] = _stemm_words(t_order)
+        t[t_order] = _stemm_words(t[t_order])
         
 def _stemm_words(tokenized_text):
+    if not tokenized_text: return []
     stemmer = nltk.stem.snowball.RussianStemmer(ignore_stopwords=True)
     stemmed_text = []
     for word in tokenized_text: 
@@ -118,8 +140,11 @@ def _stemm_words(tokenized_text):
     return stemmed_text
                    
 def _collect_synonyms(synonyms, t):
+    print('collecting synonyms 4 ' + t[0])
     for key, info in synonyms.items():
         bag_of_words = t[info['order']]
+        print(t)
+        print(info['order'])
         if not bag_of_words: continue
         for word in bag_of_words:
             if len(word) < MIN_WORD_LENGTH: continue
@@ -131,7 +156,7 @@ def _collect_synonyms(synonyms, t):
 def process_wine_synonyms():
     tnt = tarantool.connect(**TARANTOOL_CONNCTION)
     offset = 0
-    tuples = tnt.call('wine.find_by_chunk', [offset, CHUNK_LENGTH, True ]).data
+    tuples = tnt.call('wine.find_by_chunk', [offset, CHUNK_LENGTH, False ]).data
     synonyms = {
        'style': {
            'words': {},
@@ -152,8 +177,10 @@ def process_wine_synonyms():
         for t in tuples:
             _collect_synonyms(synonyms, t)
         offset += CHUNK_LENGTH    
-        tuples = tnt.call('wine.find_by_chunk', [offset, CHUNK_LENGTH, True ]).data 
-        
+        tuples = tnt.call('wine.find_by_chunk', [offset, CHUNK_LENGTH, False ]).data 
+    
+    print('total synonyms')
+    print(synonyms)
     for key, info in synonyms.items():
         synonyms[key]['words'] = _merge_and_label_synonyms_groups(synonyms[key]['words'])
         

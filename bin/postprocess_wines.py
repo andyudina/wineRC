@@ -89,14 +89,14 @@ def _split_texts2bag_of_words(text):
     #text = (wine_tuple[11] or '') + ' ' + (wine_tuple[12] or '') 
     if not text: return []
     tokenized_text = nltk.wordpunct_tokenize(text)
-    stemmer = nltk.stem.snowball.RussianStemmer(ignore_stopwords=True)
-    stemmed_text = []
+    #stemmer = nltk.stem.snowball.RussianStemmer(ignore_stopwords=True)
+    #stemmed_text = []
     #for word in tokenized_text: 
     #    stem = stemmer.stem(word)
     #    if stem and len(stem) > 2: #skip short words
     #        stemmed_text.append(stem)
     #TODO: process synonims here
-    return stemmed_text 
+    return tokenized_text 
     
 def _save2tnt(wine_tuple, tnt_connection):
     tnt_connection.call('wine.update_total', [wine_tuple, ])
@@ -113,8 +113,8 @@ def postprocess_wine(wine_tuple, tnt_connection):
     _split_grapes2table(wine_tuple)
     _change_produced_year2vintage(wine_tuple)
     _convert_alcohol2float(wine_tuple)
-    for text in wine_tuple[12: 15]:
-        wine_tuple.append(_split_texts2bag_of_words(text))
+    for i, text in enumerate(wine_tuple[12: 15]):
+        wine_tuple[18 + i] = _split_texts2bag_of_words(text)
     
     print('result tuple')
     print(wine_tuple)
