@@ -91,10 +91,10 @@ def _split_texts2bag_of_words(text):
     tokenized_text = nltk.wordpunct_tokenize(text)
     stemmer = nltk.stem.snowball.RussianStemmer(ignore_stopwords=True)
     stemmed_text = []
-    for word in tokenized_text: 
-        stem = stemmer.stem(word)
-        if stem and len(stem) > 2: #skip short words
-            stemmed_text.append(stem)
+    #for word in tokenized_text: 
+    #    stem = stemmer.stem(word)
+    #    if stem and len(stem) > 2: #skip short words
+    #        stemmed_text.append(stem)
     #TODO: process synonims here
     return stemmed_text 
     

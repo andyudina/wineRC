@@ -40,10 +40,11 @@ def extract_features_inplace(t, result_features_set, total_columns, ranges):
         'country': 5,
         'region': 6,
         'decantation': 9,
-        'min_temperature': 14,
-        'max_temperature': 15,
+        'min_temperature': 16,
+        'max_temperature': 17,
         'alcohol': 7,
-        'vintage': 10
+        'vintage': 10,
+        'ageing': 11 
         
     }
      
@@ -66,12 +67,20 @@ def extract_features_inplace(t, result_features_set, total_columns, ranges):
             total_columns.update([key + '_' + value, ])
             
     # words
-    if t[16]:
-        for word in t[16]:
-            if not result_features_set[name].get('word_' + word):
-                result_features_set[name]['word_' + word] =  0
-            result_features_set[name]['word_' + word] += 1
-            total_columns.update(['word_' + word, ])
+    word_features2order = {
+        'word_style__': 18,
+        'word_characteristics__': 19,
+        'word_gastronomy__': 20   
+    }
+
+    for key, order in word_features2order.items():
+        if not t[order]: continue
+        for word in t[order]:
+            key += word
+            if not result_features_set[name].get(key):
+                result_features_set[name][key] =  0
+            result_features_set[name][key] += 1
+            total_columns.update([key, ])
             
     # TODO: ranges as ranges
     #result_features_set[name]['ranges'] = {
