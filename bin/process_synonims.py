@@ -15,7 +15,7 @@ from settings import TARANTOOL_CONNCTION, CHUNK_LENGTH, YANDEX_BASE_URL, YANDEX_
 SUCCESS_STATUS_CODE = 200
 MIN_WORD_LENGTH = 3
 MIN_COMMON_RATIO = 0.5
-BAG_OF_WORDS_INDEXES = [18, 19, 20]
+BAG_OF_WORDS_INDEXES = range(18, 21)
 
 # 1: name: str
 # 2: image_url str
@@ -44,27 +44,54 @@ BAG_OF_WORDS_INDEXES = [18, 19, 20]
 # 21: bag of words_gastronomy
 
 #TODO: Count words before and after synonyms
+def _count_unique_words(bag_of_words):
+    # expects tuples of format [[word1, word2, word3], [word4, word5], ...]
+    return len(list(set(chain.from_iterable(bag_of_words))))
+
+def _assess_unique_words_in_tuples(tuples):
+    result_counters = {}
+    for index in BAG_OF_WORDS_INDEXES:
+        result_counters[index] = _count_unique_words(
+            [t[index] for t in tuples]
+        )
+    return result_counters
+
+def _save_synonyms2tnt(synonyms, tnt):
+    for info in synonyms.values():
+        for word, w_synonyms in info['words'].items():
+            tnt.call(
+               'synonyms.upsert_local', 
+               [[word, w_synonyms]]
+            )  
+                          
 morph = pymorphy2.MorphAnalyzer()
 def _get_normal_form(word):
+    #TODO: through away verbs
     parsed_word = morph.parse(word)[0]
     if not parsed_word: return word
     return (parsed_word.normal_form or word)
     
 def _get_synonyms(word):
-    #TODO: to normal form
     #word = _get_normal_form(word)
     url = YANDEX_BASE_URL.format(YANDEX_DICT_KEY, word)
     r = requests.get(url)
     if r.status_code != SUCCESS_STATUS_CODE:
-        print(r.status_code)
+        #print(r.status_code)
         return []
     response = r.json()
-    try:
-        return [w['text'] for w in response['def'][0]['tr'][0]['syn']]
-    except (KeyError, IndexError):
-        print(response)
-        print(word)
-        return []
+    synonyms = []
+    if not response['def']: 
+        #print('no def')
+        #print(synonyms)
+        return synonyms
+        
+    for defenition in response['def']:
+        if not defenition.get('tr'): continue 
+        for tr in defenition.get('tr'):
+            if not tr.get('syn'): continue
+            synonyms.extend([w['text'] for w in tr.get('syn')])
+    #if not synonyms: #print(response)
+    return synonyms
         
 def _merge_and_label_synonyms_groups(synonyms):
     def _syn_hash2sets(syn_hash):
@@ -79,7 +106,8 @@ def _merge_and_label_synonyms_groups(synonyms):
         source_word_set = list(source_word_set)
         dest_word_set = list(dest_word_set)
         ratios = [len(common) / len(source_word_set), len(common) / len(dest_word_set)]
-        if len(filter(lambda x: x > MIN_BOTH_COMMON_RATIO)) >= 1: #merge synonyms if half of one or more bags is in iterception
+        if len(list(filter(lambda x: x > MIN_COMMON_RATIO, ratios))) >= 1: 
+            #merge synonyms if half of one or more bags is in iterception
             return True
         return False 
     
@@ -87,6 +115,7 @@ def _merge_and_label_synonyms_groups(synonyms):
         res_hash = {}
         for s in word_sets:
             if not s: continue
+            s = list(s)
             label = s[0]
             for word in s:
                 res_hash[word] = label
@@ -102,12 +131,11 @@ def _merge_and_label_synonyms_groups(synonyms):
                  was_merged = True
          if was_merged: 
              word_sets.pop(i)
-    print('merged synonyms')
-    print(word_sets)         
+             
     return _syn_sets2hash(word_sets)
                 
 def _replace_words_with_synonyms(t, synonyms):
-    print('replace words with synonyms 4 ' + t[0])
+    #print('replace words with synonyms 4 ' + t[0])
     for syn in synonyms.values():
         syn_hash = syn['words']
         order = syn['order']
@@ -117,13 +145,13 @@ def _replace_words_with_synonyms(t, synonyms):
                 t[order].pop(i)
                 continue
             t[order][i] = syn_hash.get(word, word)
+    return t
             
 def _update_wine_bag_of_words(syn_t, tnt):
     print('updating tuple')
-    print(syn_t)
     tnt.call(
-        'catalog.delete_by_pk', 
-        [syn_t[0], list(chain.from_iterable((index, syn_t[index]) for index in BAG_OF_WORDS_INDEXES))]
+        'wine.update_local', 
+        [syn_t[0], list(chain.from_iterable((index + 1, syn_t[index]) for index in BAG_OF_WORDS_INDEXES))]
     )
  
 def _stemm_tuple(t):
@@ -141,11 +169,11 @@ def _stemm_words(tokenized_text):
     return stemmed_text
                    
 def _collect_synonyms(synonyms, t):
-    print('collecting synonyms 4 ' + t[0])
+    #print('collecting synonyms 4 ' + t[0])
     for key, info in synonyms.items():
         bag_of_words = t[info['order']]
-        print(t)
-        print(info['order'])
+        #print(t)
+        #print(info['order'])
         if not bag_of_words: continue
         for word_index, word in enumerate(bag_of_words):
             if len(word) < MIN_WORD_LENGTH: continue
@@ -180,18 +208,24 @@ def process_wine_synonyms():
         for t in tuples:
             _collect_synonyms(synonyms, t)
         offset += CHUNK_LENGTH    
-        tuples = tnt.call('wine.find_by_chunk', [offset, CHUNK_LENGTH, False ]).data 
-    
-    print('total synonyms')
-    print(synonyms)
+        tuples = tnt.call('wine.find_by_chunk', [offset, CHUNK_LENGTH, False ]).data
+         
+    print([t[0] for t in result_tuples])
+    #print('total synonyms')
+    #print(synonyms)
+    _save_synonyms2tnt(synonyms, tnt)
     for key, info in synonyms.items():
         synonyms[key]['words'] = _merge_and_label_synonyms_groups(synonyms[key]['words'])
-        
+       
+    #print('before synonyms')
+    #print(_assess_unique_words_in_tuples(result_tuples))
     for t in result_tuples:
         syn_t = _replace_words_with_synonyms(t, synonyms)
-        _stemm_tuple(t)
+        _stemm_tuple(syn_t)
         _update_wine_bag_of_words(syn_t, tnt)
-    
+    #print('after synonyms')
+    #print(_assess_unique_words_in_tuples(result_tuples))
+        
 if __name__ == '__main__':
     process_wine_synonyms()
 

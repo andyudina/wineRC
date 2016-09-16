@@ -76,11 +76,11 @@ def extract_features_inplace(t, result_features_set, total_columns, ranges):
     for key, order in word_features2order.items():
         if not t[order]: continue
         for word in t[order]:
-            key += word
-            if not result_features_set[name].get(key):
-                result_features_set[name][key] =  0
-            result_features_set[name][key] += 1
-            total_columns.update([key, ])
+            res_key = key + word
+            if not result_features_set[name].get(res_key):
+                result_features_set[name][res_key] =  0
+            result_features_set[name][res_key] += 1
+            total_columns.update([res_key, ])
             
     # TODO: ranges as ranges
     #result_features_set[name]['ranges'] = {
