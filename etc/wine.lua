@@ -55,7 +55,7 @@ local function update_local(...)
         pk = args[i]
         tuple4update = args[i + 1]
         local table4update = {}
-        for j = 1, #tuple4update do
+        for j = 1, #tuple4update, 2 do
             table.insert(table4update, {'=', tuple4update[j], tuple4update[j + 1]})
         end
         box.space.wine:update(pk, table4update)

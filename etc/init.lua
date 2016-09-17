@@ -7,9 +7,10 @@ box.cfg {
 wine = require 'wine'
 catalog = require 'catalog'
 feature = require 'feature'
+synonyms = require 'synonyms'
 
 box.schema.user.create('root', {if_not_exists = true, password='1234'})
-box.schema.user.grant('root', 'read,write,execute', 'universe', nil, {if_not_exists = true})
+box.schema.user.grant('root', 'drop,alter,create,read,write,execute', 'universe', nil, {if_not_exists = true})
 --for _, func_name in pairs({'insert_local', 'insert', 'delete_by_page', 'delete_by_pk'}) do
 --    box.schema.user.grant('root', 'execute', 'function', func_name)
 --end
