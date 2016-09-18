@@ -146,14 +146,25 @@ def _is_banned_part_of_speach(parsed_word, banned_parts_of_speach):
     for pos in banned_parts_of_speach:
         if pos.upper() in parsed_word.tag: return True
     return False
-    
+
+def _is_adj(parsed_word):
+    return 'ADJF' in parsed_word.tag or 'ADJS' in parsed_word.tag
+      
 def _rm_part_of_speach_and_translate_to_nf(word_list, banned_parts_of_speach):
+    #if 'кухня' in word_list:
+    #    print(word_list)
+    #to normal form
     for i, word in enumerate(word_list):
         parsed_word = morph.parse(word)[0]
-        if _is_banned_part_of_speach(parsed_word, banned_parts_of_speach):
+        word_list[i] = (parsed_word.normal_form or word)
+            
+    for i, word in enumerate(word_list):
+        parsed_word = morph.parse(word)[0]
+        if _is_adj(parsed_word) and i < len(word_list) - 1 and word_list[i + 1] == 'кухня':
+            word_list[i + 1] = ' '.join([word, word_list[i + 1]])
             word_list.pop(i)
-        else:
-            word_list[i] = (parsed_word.normal_form or word)
+        elif _is_banned_part_of_speach(parsed_word, banned_parts_of_speach):
+            word_list.pop(i)
     return word_list
             
 def _get_normal_form(word):
