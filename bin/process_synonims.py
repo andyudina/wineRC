@@ -53,6 +53,12 @@ BANNED_PARTS2ORDER = {
     ]
 }
 
+WORDS_WITH_AJECTIVES = ['кухня', 'сыр', 'рыба', 'кислотность'] #слова, значения которых меняются от предстоящего прилагательного
+STOP_WORDS_FILE2ORDER = {
+    19: 'stop_words_characteristics',
+    20: 'stop_words_gastronomy'
+}
+
 # 1: name: str
 # 2: image_url str
 # 3: color: red/white/pink str
@@ -78,6 +84,7 @@ BANNED_PARTS2ORDER = {
 # 19: bag of words_style
 # 20: bag of words_characteristics
 # 21: bag of words_gastronomy
+
 def _is_number(val):
    try:
        int(val)
@@ -91,26 +98,41 @@ def _has_non_alphanumeric_symobls(word):
 russian_stop_words = list(nltk.corpus.stopwords.words('russian'))
 def _rm_stop_words(words, custom_stop_words=[]):
     #first iteration: rm stop words except 'не'
+    result = []
+    
     for i, word in enumerate(words):
-         if (_is_number(word) or \
-             _has_non_alphanumeric_symobls(word) or \
-             word in russian_stop_words or \
-             word in custom_stop_words or len(word) < MIN_WORD_LENGTH) and word != 'не':
-             words.pop(i)
-    return words
+         if word in custom_stop_words:
+             print(word)
+         if not (
+                (_is_number(word) or \
+                 _has_non_alphanumeric_symobls(word) or \
+                 word in russian_stop_words or \
+                 word in custom_stop_words or \
+                 len(word) < MIN_WORD_LENGTH) and word != 'не'
+             ):
+             result.append(word)
+    return result
     
 def _merge_negation(words):
     #second iteration: merge negation
-    for i, word in enumerate(words):
+    result = []
+    skip_next_flag = False
+    for i, word in enumerate(words[:]):
+        if skip_next_flag: 
+            skip_next_flag = False
+            continue
+        
         if word == 'не':
             if i < len(words) - 1: 
-                words[i + 1] = ' '.join(words[i: i + 2])     #if its not last word -- merge it with next one
-            words.pop(i) #just pop it
-    return words
+                result.append(' '.join(words[i: i + 2]))     #if its not last word -- merge it with next one
+                skip_next_flag = True #пропускаем след элмент, если только что склеили не
+        else:
+            result.append(word)
+    return result
     
 def _rm_short_words(words):
-    _rm_stop_words(words)
-    _merge_negation(words)        
+    words = _rm_stop_words(words)
+    words = _merge_negation(words)        
     return words
                 
 def _rm_short_words4tuple(t):
@@ -158,14 +180,14 @@ def _rm_part_of_speach_and_translate_to_nf(word_list, banned_parts_of_speach):
         parsed_word = morph.parse(word)[0]
         word_list[i] = (parsed_word.normal_form or word)
             
-    for i, word in enumerate(word_list):
+    result = []
+    for i, word in enumerate(word_list[:]):
         parsed_word = morph.parse(word)[0]
-        if _is_adj(parsed_word) and i < len(word_list) - 1 and word_list[i + 1] == 'кухня':
-            word_list[i + 1] = ' '.join([word, word_list[i + 1]])
-            word_list.pop(i)
-        elif _is_banned_part_of_speach(parsed_word, banned_parts_of_speach):
-            word_list.pop(i)
-    return word_list
+        if _is_adj(parsed_word) and i < len(word_list) - 1 and word_list[i + 1] in WORDS_WITH_AJECTIVES:
+            result.append(' '.join([word, word_list[i + 1]]))
+        elif not _is_banned_part_of_speach(parsed_word, banned_parts_of_speach):
+            result.append(word)
+    return result
             
 def _get_normal_form(word):
     # получить нормальную форму (Именительный падеж, единственное число) слова
@@ -248,8 +270,8 @@ def _replace_words_with_synonyms(t, synonyms):
         syn_hash = syn['words']
         order = syn['order']
         if not t[order]: continue
-        for i, word in enumerate(t[order]):
-            if len(word) < MIN_WORD_LENGTH: # выкинуть все лсова маеньше трешхолда
+        for i, word in enumerate(t[order][:]):
+            if len(word) < MIN_WORD_LENGTH: # выкинуть все слова маеньше трешхолда
                 t[order].pop(i)
                 continue
             # заменить каждое слово лейблом синонимов из словаря
@@ -290,12 +312,25 @@ def _collect_synonyms(synonyms, t):
             word = _get_normal_form(word)
             bag_of_words[word_index] = word
             synonyms[key]['words'][word] = _get_synonyms(word)
-              
+     
+def _load_sw_from_file(file_name):
+    res = []
+    with open(file_name, "rt") as in_file:
+        res = [l.strip() for l in in_file]
+    return res
+                 
+def _load_custom_stop_words():
+    stop_words = {}
+    for key, file_name in STOP_WORDS_FILE2ORDER.items():
+        stop_words[key] = _load_sw_from_file('../src/{}'.format(file_name))
+    return stop_words
     
+custom_stop_words = _load_custom_stop_words()    
 def _clean_bag_of_words(t):
     for order in COMPLEX_BAG_OF_WORDS_INDEXES:  
         # убрать стоп слова
-        t[order] = _rm_stop_words(t[order])
+        #print(custom_stop_words[order])
+        t[order] = _rm_stop_words(t[order], custom_stop_words[order])
         # вычистить неугодные части речи
         t[order] = _rm_part_of_speach_and_translate_to_nf(t[order], BANNED_PARTS2ORDER[order])
         # склеить не
