@@ -1,7 +1,7 @@
 import re
 import asyncio
-from asyncio import JoinableQueue as Queue
-
+#from asyncio import JoinableQueue as Queue
+from asyncio import Queue
 import requests
 import tarantool
 from bs4 import BeautifulSoup as bs
@@ -11,7 +11,7 @@ from settings import DOMAIN, TARANTOOL_CONNCTION, CHUNK_LENGTH
 CATALOG_PATH = '/catalog/vino/'
 CRAWLER_MAX_WORKERS = 10
 SUCCESS_STATUS_CODES = [200, 202, ]
-MAX_PAGE = 1000
+MAX_PAGE = 1
 
 TNT_INSERT_CHUNK = 2
 class SimpleWineCrawler:

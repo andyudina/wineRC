@@ -9,7 +9,11 @@ import nltk
 import tarantool
 
 from settings import DOMAIN, TARANTOOL_CONNCTION, CHUNK_LENGTH
+from nltk import SnowballStemmer
 
+import numpy
+
+from sklearn.feature_extraction.text import TfidfVectorizer
 EXPECTED_TUPLE_LENGTH = 21
 # 1: name: str
 # 2: image_url str
@@ -56,7 +60,31 @@ def _process_and_update_simple_text_fields(wine_tuple):
     for field_index in list(range(2, 7)) + list(range(9, 12)):
         if wine_tuple[field_index] and isinstance(wine_tuple[field_index], str):
             wine_tuple[field_index] = wine_tuple[field_index].lower()
+#def _process_and_update_simple_text_fields(wine_tuple):
+#    for i in range(2, (len(wine_tuple) - 1)):
+#        if isinstance(wine_tuple[i], str):
+#            wine_tuple[i] =  wine_tuple[i].lower()
+#        elif isinstance(wine_tuple[i], list):
+#            wine_tuple[i] = [x.lower() for x in wine_tuple[i]]
 
+def _reparse_style(wine_tuple):
+    wine_tuple[11][0] = [f.strip() for f in wine_tuple[11][0].split(' - ')][1]
+
+def _сut_aged_in_oak(wine_tuple):
+    wine_tuple[11] = [f.strip() for f in wine_tuple[11].split(',')]
+    features = []
+    for i in wine_tuple[11]:
+        if re.search(r'.*не выдерж.*', i):
+            wine_tuple[12] = 0
+        elif re.search(r'.*выдерж.*', i):
+            wine_tuple[12] = 1
+        elif i:
+            features.append(i)
+    if wine_tuple[12] != 0 and wine_tuple[12] != 1: wine_tuple[12] = 0
+    wine_tuple[11] = features
+
+def _cut_trash_from_name(wine_tuple):
+    wine_tuple[0] = [f.strip() for f in wine_tuple[0].split(',')][0]
 def _split_temperature_range2int(wine_tuple):
     temperature_range = wine_tuple[8]
     if not temperature_range: return
@@ -90,6 +118,8 @@ def _split_texts2bag_of_words(text):
     #text = (wine_tuple[11] or '') + ' ' + (wine_tuple[12] or '') 
     if not text: return []
     tokenized_text = nltk.wordpunct_tokenize(text)
+    #stopwords = nltk.corpus.stopwords.words('russian')
+    #stemmer = SnowballStemmer("russian")
     #stemmer = nltk.stem.snowball.RussianStemmer(ignore_stopwords=True)
     #stemmed_text = []
     #for word in tokenized_text: 
@@ -108,14 +138,17 @@ def postprocess_wine(wine_tuple, tnt_connection):
         for i in range(len(wine_tuple), EXPECTED_TUPLE_LENGTH):
             wine_tuple.append(None)
             
-    _download_and_save_photo(wine_tuple)
+    #_download_and_save_photo(wine_tuple)
     _process_and_update_simple_text_fields(wine_tuple)
     _split_temperature_range2int(wine_tuple)
     _split_grapes2table(wine_tuple)
     _change_produced_year2vintage(wine_tuple)
     _convert_alcohol2float(wine_tuple)
-    for i, text in enumerate([wine_tuple[11], ] + wine_tuple[13: 15]):
-        wine_tuple[18 + i] = _split_texts2bag_of_words(text)
+    _сut_aged_in_oak(wine_tuple)
+    _reparse_style(wine_tuple)
+    #_cut_trash_from_name(wine_tuple)
+    #for i, text in enumerate([wine_tuple[11], ] + wine_tuple[13: 15]):
+    #    wine_tuple[18 + i] = _split_texts2bag_of_words(text)
     
     print('result tuple')
     print(wine_tuple)
