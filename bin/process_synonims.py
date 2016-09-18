@@ -66,6 +66,7 @@ def _count_unique_words(bag_of_words):
     return len(list(set(chain.from_iterable(bag_of_words))))
 
 def _assess_unique_words_in_tuples(tuples):
+    # посчитать кол-во уникальных слов таплах
     result_counters = {}
     for index in BAG_OF_WORDS_INDEXES:
         result_counters[index] = _count_unique_words(
@@ -83,23 +84,23 @@ def _save_synonyms2tnt(synonyms, tnt):
                           
 morph = pymorphy2.MorphAnalyzer()
 def _get_normal_form(word):
+    # получить нормальную форму (Именительный падеж, единственное число) слова
     #TODO: through away verbs
     parsed_word = morph.parse(word)[0]
     if not parsed_word: return word
     return (parsed_word.normal_form or word)
     
 def _get_synonyms(word):
-    #word = _get_normal_form(word)
+    # скачать все синонимы для слова из яндекса
     url = YANDEX_BASE_URL.format(YANDEX_DICT_KEY, word)
     r = requests.get(url)
     if r.status_code != SUCCESS_STATUS_CODE:
-        #print(r.status_code)
         return []
     response = r.json()
     synonyms = []
+    
+    # вытащить все синонимы для всех определений ('def') из яндекса
     if not response['def']: 
-        #print('no def')
-        #print(synonyms)
         return synonyms
         
     for defenition in response['def']:
@@ -107,11 +108,12 @@ def _get_synonyms(word):
         for tr in defenition.get('tr'):
             if not tr.get('syn'): continue
             synonyms.extend([w['text'] for w in tr.get('syn')])
-    #if not synonyms: #print(response)
     return synonyms
         
 def _merge_and_label_synonyms_groups(synonyms):
+    # склеить группы синонимов
     def _syn_hash2sets(syn_hash):
+        # из словаря синонимов сделать лист сетов с лейблами
         result = []
         for word, synonyms in syn_hash.items():
             if not synonyms: continue
@@ -122,6 +124,8 @@ def _merge_and_label_synonyms_groups(synonyms):
         return result
             
     def _are_mergable(source_word_set, dest_word_set):
+        # решить, можно ли склеить два сета
+        # модем, если на 50% совпадают
         common = list(source_word_set & dest_word_set) 
         source_word_set = list(source_word_set)
         dest_word_set = list(dest_word_set)
@@ -132,6 +136,7 @@ def _merge_and_label_synonyms_groups(synonyms):
         return False 
     
     def _syn_sets2hash(word_sets): 
+        # из массова сетов синонимов сделать словарь для замены слова лейблом группы синонимов
         res_hash = {}
         for s in word_sets:
             if not s['words']: continue
@@ -142,31 +147,34 @@ def _merge_and_label_synonyms_groups(synonyms):
     word_sets = _syn_hash2sets(synonyms)
     for i, source_word_set in enumerate(word_sets[: -1]):
          # find all similiar sets and merge them 
+         # слить текущий сет синонимов с похождими сетами
          was_merged = False
          for j, dest_word_set in enumerate(word_sets[i + 1: ]):  
              if _are_mergable(source_word_set['words'], dest_word_set['words']):
                  word_sets[j + i + 1]['words'].update(source_word_set['words'])
                  was_merged = True
          if was_merged: 
+             # удалить сет, если слили его хоть с одним
              word_sets.pop(i)
              
     return _syn_sets2hash(word_sets)
                 
 def _replace_words_with_synonyms(t, synonyms):
-    #print('replace words with synonyms 4 ' + t[0])
+    # заменить слова тапла синонимом
     for syn in synonyms.values():
         syn_hash = syn['words']
         order = syn['order']
         if not t[order]: continue
         for i, word in enumerate(t[order]):
-            if len(word) < MIN_WORD_LENGTH: 
+            if len(word) < MIN_WORD_LENGTH: # выкинуть все лсова маеньше трешхолда
                 t[order].pop(i)
                 continue
+            # заменить каждое слово лейблом синонимов из словаря
             t[order][i] = syn_hash.get(word, word)
     return t
             
 def _update_wine_bag_of_words(syn_t, tnt):
-    print('updating tuple')
+    # сохрнаить новые таплы в тарантул
     print(syn_t)
     tnt.call(
         'wine.update_local', 
@@ -188,15 +196,14 @@ def _stemm_words(tokenized_text):
     return stemmed_text
                    
 def _collect_synonyms(synonyms, t):
-    #print('collecting synonyms 4 ' + t[0])
+    # собрать синонимы для всех слов тапла
+    # положить в dict synonyms['style']['words']
     for key, info in synonyms.items():
-        bag_of_words = t[info['order']]
-        #print(t)
-        #print(info['order'])
-        if not bag_of_words: continue
+        bag_of_words = t[info['order']] 
+        if not bag_of_words: continue 
         for word_index, word in enumerate(bag_of_words):
-            if len(word) < MIN_WORD_LENGTH: continue
-            if info['words'].get(word): continue
+            if len(word) < MIN_WORD_LENGTH: continue # выкидываем маленькие слова
+            if info['words'].get(word): continue #не ходим повторно за синонимами к одному и тому же слову
             word = _get_normal_form(word)
             bag_of_words[word_index] = word
             synonyms[key]['words'][word] = _get_synonyms(word)
@@ -212,14 +219,14 @@ def process_wine_synonyms():
            'words': {},
            'order': 18
        },
-       'characteristics': {
-           'words': {},
-           'order': 19
-       },
-       'gastronomy': {
-           'words': {},
-           'order': 20
-       }       
+       #'characteristics': {
+       #    'words': {},
+       #    'order': 19
+       #},
+       #'gastronomy': {
+       #    'words': {},
+       #    'order': 20
+       #}       
     }
     result_tuples = []
     while len(tuples) > 0 and tuples[0]:
@@ -227,7 +234,7 @@ def process_wine_synonyms():
         for t in tuples:
             _collect_synonyms(synonyms, t)
         offset += CHUNK_LENGTH    
-        tuples = tnt.call('wine.find_by_chunk', [offset, CHUNK_LENGTH, False ]).data
+        tuples = [] #tnt.call('wine.find_by_chunk', [offset, CHUNK_LENGTH, False ]).data
          
     _save_synonyms2tnt(synonyms, tnt)
     for key, info in synonyms.items():

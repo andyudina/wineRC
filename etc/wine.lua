@@ -14,10 +14,10 @@ end
 -- 9: serving temperature str
 -- 10: decantation str
 -- 11: vintage num
--- 12: ageing str
+-- 12: style [need to be treated as bag of words]
+-- 13: ageing
 
 -- [need to be treated as bag of words]
--- 13: style
 -- 14: charateristics
 -- 15: gastronomy
 
@@ -87,15 +87,15 @@ local function find_by_chunk(offset, chunk_length, only_new)
     local curr_length = 0
     local res_table = {}
     for _, tuple in box.space.wine.index.primary:pairs({iterator = box.index.ALL}) do
-        if curr_length >= chunk_length then
+        if curr_length >= chunk_length + offset then
             break
         end
 
         if curr_length >= offset and 
            (not only_new or tuple[16] == nil) then -- check if tuple was not post processed yet (and image is empty)
             table.insert(res_table, tuple)
-            curr_length = curr_length + 1
         end
+        curr_length = curr_length + 1
     end
     return res_table
 end

@@ -189,7 +189,7 @@ def save2csv(res):
     for stat_key, stat in res.items():
         for feature_key, features in stat.items():
             features = _features2csv(features)
-            file_name = '{}__{}.csv'.format(stat_key, feature_key)
+            file_name = 'csv/{}__{}.csv'.format(stat_key, feature_key)
             _save_data2csv(file_name, features)
                                    
 def count_word_stat():

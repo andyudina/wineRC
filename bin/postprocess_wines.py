@@ -22,10 +22,11 @@ EXPECTED_TUPLE_LENGTH = 21
 # 9: serving temperature str
 # 10: decantation str
 # 11: vintage num
-# 12: ageing str
-
 # [need to be treated as bag of words]
-# 13: style
+# 12: style str
+
+# 13: ageing str
+# [need to be treated as bag of words]
 # 14: charateristics
 # 15: gastronomy
 
@@ -53,7 +54,7 @@ def _download_and_save_photo(wine_tuple):
         
 def _process_and_update_simple_text_fields(wine_tuple):
     for field_index in list(range(2, 7)) + list(range(9, 12)):
-        if wine_tuple[field_index]:
+        if wine_tuple[field_index] and isinstance(wine_tuple[field_index], str):
             wine_tuple[field_index] = wine_tuple[field_index].lower()
 
 def _split_temperature_range2int(wine_tuple):
@@ -70,7 +71,7 @@ def _split_temperature_range2int(wine_tuple):
 
 def _split_grapes2table(wine_tuple):
     grapes = wine_tuple[4]
-    if not grapes: return
+    if not grapes or not isinstance(grapes, str): return
     wine_tuple[4] = [g.strip() for g in grapes.split(',')]
     
 def _change_produced_year2vintage(wine_tuple):
@@ -113,7 +114,7 @@ def postprocess_wine(wine_tuple, tnt_connection):
     _split_grapes2table(wine_tuple)
     _change_produced_year2vintage(wine_tuple)
     _convert_alcohol2float(wine_tuple)
-    for i, text in enumerate(wine_tuple[12: 15]):
+    for i, text in enumerate([wine_tuple[11], ] + wine_tuple[13: 15]):
         wine_tuple[18 + i] = _split_texts2bag_of_words(text)
     
     print('result tuple')
@@ -124,7 +125,7 @@ def postprocess_wine(wine_tuple, tnt_connection):
 def postprocess_wines():
     tnt = tarantool.connect(**TARANTOOL_CONNCTION)
     offset = 0
-    tuples = tnt.call('wine.find_by_chunk', [offset, CHUNK_LENGTH, True ]).data
+    tuples = tnt.call('wine.find_by_chunk', [offset, CHUNK_LENGTH, False ]).data
     while len(tuples) > 0 and tuples[0]:
         for t in tuples:
             try:
@@ -137,7 +138,7 @@ def postprocess_wines():
                 # else just pass to next chunk
                  
         offset += CHUNK_LENGTH    
-        tuples = tnt.call('wine.find_by_chunk', [offset, CHUNK_LENGTH, True ]).data 
+        tuples = tnt.call('wine.find_by_chunk', [offset, CHUNK_LENGTH, False ]).data 
     
 if __name__ == '__main__':
     postprocess_wines()
