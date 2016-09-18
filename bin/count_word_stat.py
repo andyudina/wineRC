@@ -81,6 +81,7 @@ def find_words_frequences__by_wine(tuples, keys2order):
     return res
  
 def _find_tf_idf(x):
+    #import gc; gc.collect() #to prevent MemoryError
     res = TfidfTransformer().fit_transform(x).max(axis=0).todense().tolist()
     return res[0]
     
@@ -116,7 +117,7 @@ def split_tuples2features(tuples, extract_features_func):
     dict_features = _tuples2dict_features(tuples, extract_features_func)
     for feature_set in dict_features:
         vec = DictVectorizer()
-        x_ = vec.fit_transform(feature_set).toarray()
+        x_ = vec.fit_transform(feature_set)#.toarray()
         x.append(
             x_
         )

@@ -15,6 +15,43 @@ from settings import TARANTOOL_CONNCTION, CHUNK_LENGTH, YANDEX_BASE_URL, YANDEX_
 SUCCESS_STATUS_CODE = 200
 MIN_WORD_LENGTH = 3
 MIN_COMMON_RATIO = 0.5
+COMPLEX_BAG_OF_WORDS_INDEXES = [19, 20] #style обрабатываем как единичную фичу
+BANNED_PARTS2ORDER = {
+    19: [
+        'VERB',  # глагол (личная форма)
+        'COMP',  # компаратив
+        'INFN',  # глагол (инфинитив)
+        'PRTF',  # причастие (полное)
+        'PRTS',  # причастие (краткое)
+        'GRND',  # деепричастие
+        'NUMR',  # числительное
+        'ADVB',  # наречие
+        'NPRO',  # местоимение-существительное
+        'PRED',  # предикатив
+        'PREP',  # предлог
+        'CONJ',  # союз
+        'PRCL',  # частица
+        'INTJ',  # междометие
+        ],
+    20: [
+        'ADJF',  # имя прилагательное (полное)
+        'ADJS',  # имя прилагательное (краткое)
+        'COMP',  # компаратив
+        'VERB',  # глагол (личная форма)
+        'INFN',  # глагол (инфинитив)
+        'PRTF',  # причастие (полное)
+        'PRTS',  # причастие (краткое)
+        'GRND',  # деепричастие
+        'NUMR',  # числительное
+        'ADVB',  # наречие
+        'NPRO',  # местоимение-существительное
+        'PRED',  # предикатив
+        'PREP',  # предлог
+        'CONJ',  # союз
+        'PRCL',  # частица
+        'INTJ',  # междометие
+    ]
+}
 
 # 1: name: str
 # 2: image_url str
@@ -41,14 +78,28 @@ MIN_COMMON_RATIO = 0.5
 # 19: bag of words_style
 # 20: bag of words_characteristics
 # 21: bag of words_gastronomy
+def _is_number(val):
+   try:
+       int(val)
+       return True
+   except (ValueError, TypeError):
+       return False
 
+def _has_non_alphanumeric_symobls(word):
+    return not not re.match(r'\W+', word)
+           
 russian_stop_words = list(nltk.corpus.stopwords.words('russian'))
-def _rm_short_words(words):
+def _rm_stop_words(words, custom_stop_words=[]):
     #first iteration: rm stop words except 'не'
     for i, word in enumerate(words):
-         if word in russian_stop_words and word != 'не':
+         if (_is_number(word) or \
+             _has_non_alphanumeric_symobls(word) or \
+             word in russian_stop_words or \
+             word in custom_stop_words or len(word) < MIN_WORD_LENGTH) and word != 'не':
              words.pop(i)
-             
+    return words
+    
+def _merge_negation(words):
     #second iteration: merge negation
     for i, word in enumerate(words):
         if word == 'не':
@@ -56,10 +107,16 @@ def _rm_short_words(words):
                 words[i + 1] = ' '.join(words[i: i + 2])     #if its not last word -- merge it with next one
             words.pop(i) #just pop it
     return words
+    
+def _rm_short_words(words):
+    _rm_stop_words(words)
+    _merge_negation(words)        
+    return words
                 
 def _rm_short_words4tuple(t):
     for index in BAG_OF_WORDS_INDEXES:
         t[index] = _rm_short_words(t[index])
+    return t
         
 def _count_unique_words(bag_of_words):
     # expects tuples of format [[word1, word2, word3], [word4, word5], ...]
@@ -83,9 +140,24 @@ def _save_synonyms2tnt(synonyms, tnt):
             )  
                           
 morph = pymorphy2.MorphAnalyzer()
+def _is_banned_part_of_speach(parsed_word, banned_parts_of_speach):
+    # решить, есть ли часть речи слова в banned_parts_of_speach
+    if not parsed_word or not parsed_word.tag: return False
+    for pos in banned_parts_of_speach:
+        if pos.upper() in parsed_word.tag: return True
+    return False
+    
+def _rm_part_of_speach_and_translate_to_nf(word_list, banned_parts_of_speach):
+    for i, word in enumerate(word_list):
+        parsed_word = morph.parse(word)[0]
+        if _is_banned_part_of_speach(parsed_word, banned_parts_of_speach):
+            word_list.pop(i)
+        else:
+            word_list[i] = (parsed_word.normal_form or word)
+    return word_list
+            
 def _get_normal_form(word):
     # получить нормальную форму (Именительный падеж, единственное число) слова
-    #TODO: through away verbs
     parsed_word = morph.parse(word)[0]
     if not parsed_word: return word
     return (parsed_word.normal_form or word)
@@ -173,12 +245,12 @@ def _replace_words_with_synonyms(t, synonyms):
             t[order][i] = syn_hash.get(word, word)
     return t
             
-def _update_wine_bag_of_words(syn_t, tnt):
+def _update_wine_bag_of_words(t, tnt):
     # сохрнаить новые таплы в тарантул
-    print(syn_t)
+    #print(t)
     tnt.call(
         'wine.update_local', 
-        [syn_t[0], list(chain.from_iterable((index + 1, syn_t[index]) for index in BAG_OF_WORDS_INDEXES))]
+        [t[0], list(chain.from_iterable((index + 1, t[index]) for index in BAG_OF_WORDS_INDEXES))]
     )
  
 def _stemm_tuple(t):
@@ -209,7 +281,16 @@ def _collect_synonyms(synonyms, t):
             synonyms[key]['words'][word] = _get_synonyms(word)
               
     
- 
+def _clean_bag_of_words(t):
+    for order in COMPLEX_BAG_OF_WORDS_INDEXES:  
+        # убрать стоп слова
+        t[order] = _rm_stop_words(t[order])
+        # вычистить неугодные части речи
+        t[order] = _rm_part_of_speach_and_translate_to_nf(t[order], BANNED_PARTS2ORDER[order])
+        # склеить не
+        t[order] = _merge_negation(t[order])
+    return t
+     
 def process_wine_synonyms():
     tnt = tarantool.connect(**TARANTOOL_CONNCTION)
     offset = 0
@@ -231,10 +312,10 @@ def process_wine_synonyms():
     result_tuples = []
     while len(tuples) > 0 and tuples[0]:
         result_tuples.extend(tuples)
-        for t in tuples:
-            _collect_synonyms(synonyms, t)
+        #for t in tuples:
+        #    _collect_synonyms(synonyms, t)
         offset += CHUNK_LENGTH    
-        tuples = [] #tnt.call('wine.find_by_chunk', [offset, CHUNK_LENGTH, False ]).data
+        tuples = tnt.call('wine.find_by_chunk', [offset, CHUNK_LENGTH, False ]).data
          
     _save_synonyms2tnt(synonyms, tnt)
     for key, info in synonyms.items():
@@ -244,11 +325,17 @@ def process_wine_synonyms():
     print(_assess_unique_words_in_tuples(result_tuples))
     for t in result_tuples:
         #TODO: return stem process
-        syn_t = _replace_words_with_synonyms(t, synonyms)
-        #_stemm_tuple(syn_t)
-        _rm_short_words4tuple(syn_t)
+        #TODO: return synonyms
+        #t = _replace_words_with_synonyms(t, synonyms)
+        #t = _rm_short_words4tuple(t)
+       
+        t = _clean_bag_of_words(t)
+        #TODO: rm debug
+        #if t[0] == 'Вино Warre`s Otima 20 Year Old Tawny Port, 0.5 л.': print(t)
+        #TODO: return stemming
+        #_stemm_tuple(t)
         #_update_wine_bag_of_words(t, tnt)
-        _update_wine_bag_of_words(syn_t, tnt)
+        _update_wine_bag_of_words(t, tnt)
     print('after synonyms')
     print(_assess_unique_words_in_tuples(result_tuples))
         
