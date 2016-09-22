@@ -101,16 +101,12 @@ def _rm_stop_words(words, custom_stop_words=[]):
     result = []
     
     for i, word in enumerate(words):
-         if word in custom_stop_words:
-             print(word)
-         if not (
-                (_is_number(word) or \
-                 _has_non_alphanumeric_symobls(word) or \
-                 word in russian_stop_words or \
-                 word in custom_stop_words or \
-                 len(word) < MIN_WORD_LENGTH) and word != 'не'
-             ):
-             result.append(word)
+         if word in custom_stop_words: continue
+         if _is_number(word): continue
+         if _has_non_alphanumeric_symobls(word): continue
+         if (word in russian_stop_words or 
+             len(word) < MIN_WORD_LENGTH) and word != 'не': continue
+         result.append(word)
     return result
     
 def _merge_negation(words):

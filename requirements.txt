@@ -4,3 +4,6 @@ requests
 nltk
 sklearn
 pymorphy2
+networkx
+pydotplus
+cairocffi
