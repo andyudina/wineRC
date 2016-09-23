@@ -29,7 +29,7 @@ local function insert_feature(args, space)
         space = 'feature' -- for backwords compability
     end
     for _, tuple in pairs(args) do
-        box.space[space]:insert(tuple)
+        box.space[space]:replace(tuple)
     end
 end
 
@@ -37,6 +37,19 @@ local function insert_feature_names(args)
     if #args == 0 then
         return
     end
+    for _, tuple in pairs(args) do
+        box.space['feature_name']:insert(tuple)
+    end
+end
+
+local function replace_feature_names(args)
+    if #args == 0 then
+        return
+    end
+    for _, tuple in box.space['feature_name'].index.primary:pairs({iterator = box.index.ALL}) do
+        box.space['feature_name']:delete{tuple[1]}
+    end
+
     for _, tuple in pairs(args) do
         box.space['feature_name']:insert(tuple)
     end
@@ -61,4 +74,5 @@ return {
     insert_feature_names = insert_feature_names, 
     insert_feature = insert_feature,
     get_feature_table = get_feature_table,
+    replace_feature_names = replace_feature_names
 }

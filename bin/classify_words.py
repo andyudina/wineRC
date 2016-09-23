@@ -3,9 +3,11 @@ from collections import Counter
 import csv
 import re
 
+import numpy
 import networkx as nx
 import tarantool
 from settings import TARANTOOL_CONNCTION, CHUNK_LENGTH, BAG_OF_WORDS_INDEXES
+from sklearn.preprocessing import normalize
 
 SYNONYMS_INTERSECTION_TRESHOLD = 0.8
 MAX_MERGE_COUNTS = 100
@@ -36,6 +38,9 @@ MAX_MERGE_COUNTS = 100
 # 20: bag of words_characteristics
 # 21: bag of words_gastronomy
  
+# 22: features characteristics
+# 23: features gastronomy
+
 tnt = tarantool.connect(**TARANTOOL_CONNCTION)                                  
 def load_docs_from_tnt():
     offset = 0
@@ -47,7 +52,16 @@ def load_docs_from_tnt():
         offset += CHUNK_LENGTH    
         tuples = tnt.call('wine.find_by_chunk', [offset, CHUNK_LENGTH, False ]).data       
     return result_tuples
- 
+
+def save_features2tnt(features, labels):
+    for tuple_ in features:
+        try:
+            tnt.call('feature.insert_feature', [[tuple_, ]])
+        except tarantool.error.DatabaseError as e:
+            print(e)
+            pass #its ok to loose some wines
+    tnt.call('feature.replace_feature_names', [[list(labels), ]]) 
+    
 def create_reverse_index(tuples, order):
     index = {}
     for t in tuples:
@@ -246,19 +260,46 @@ def find_graph_stat(G):
     degrees = nx.degree(G)    
     degrees_list = sorted(degrees.items(), key=lambda x: x[1])
     return degrees_list
-      
+
+def _wines2dict(tuples):
+    return {t[0]: [t[0], ] for t in tuples}
+
+def _norm_features(features):
+    f = numpy.array(features)
+    y, x = numpy.split(f, [1, ], axis=1)
+    x_norm = normalize(x)
+    return numpy.concatenate((y, x_norm), axis=1).tolist()
+    
+def form_features(tuples, word_categories, s_labels):
+    wines_dict = _wines2dict(tuples)
+    for label in s_labels:
+        wines_set = word_categories[label]['wines']
+        for key in wines_dict.keys():
+            if key in wines_set:
+                wines_dict[key].append(1)
+            else:
+                wines_dict[key].append(0)
+   
+    features = _norm_features(list(wines_dict.values()))
+    return features    
+    
 if __name__ == '__main__':
     ORDER = 19
     SPACE_FILE_NAME = 'characteristics.csv'
-    
+    FEATURE_ORDER = 21
     tuples = load_docs_from_tnt()
     word_categories = load_word_space('csv/space/{}'.format(SPACE_FILE_NAME))
     index = create_reverse_index(tuples, ORDER)
     word_categories = replace_word_with_wine(word_categories, index)
     #print([[key, len(word_categories[key]['wines'])] for key in word_categories.keys()])
+    
     s, s_labels, u = find_synonyms_and_antonyms(word_categories)
     graph = build_word_graph(s, s_labels)
-    _save_data2csv('csv/space/graph.csv', find_graph_stat(graph))
+    stat = find_graph_stat(graph)
+    #_save_data2csv('csv/space/graph.csv', stat)
+    
+    features = form_features(tuples, word_categories, s_labels)
+    save_features2tnt(features, s_labels)
     #print_graph(graph)
     
     #save2csv(['pair_label', 'wines_intersect_num'], s, 'csv/space/c_synonyms.csv', order='wines_intersect_num')

@@ -29,6 +29,9 @@ end
 -- 20: bag of words_characteristics
 -- 21: bag of words_gastronomy
 
+--[features]
+-- 22: features characteristics
+
 local MAX_TUPLE_LENGTH = 21
 local function insert_local(...) 
     local args = {...}
@@ -40,6 +43,19 @@ local function insert_local(...)
             table.insert(tuple, nil) -- fill tuple with nulls
         end
         wine_schema:insert(tuple)
+    end
+end
+
+local function replace_local(...)
+    local args = {...}
+    if #args == 0 then
+        return
+    end
+    for _, tuple in pairs(args) do
+        for i = #tuple + 1, MAX_TUPLE_LENGTH do
+            table.insert(tuple, nil) -- fill tuple with nulls
+        end
+        wine_schema:replace(tuple)
     end
 end
 
@@ -109,5 +125,6 @@ return {
     update_local = update_local,
     update_total = update_total,
     insert_local = insert_local,
+    replace_local = replace_local,
     delete_by_pk = delete_by_pk,
 }
