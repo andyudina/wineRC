@@ -61,7 +61,22 @@ def save_features2tnt(features, labels):
             print(e)
             pass #its ok to loose some wines
     tnt.call('feature.replace_feature_names', [[list(labels), ]]) 
-    
+
+def _update_wine(key, new_value, order):
+    try:
+        tnt.call('wine.update_local', [key, [order, new_value]])
+    except tarantool.error.DatabaseError as e:
+        print(e)
+          
+def update_wines_tnt(word_categories, s_labels, feature_order):
+    wines = {}
+    for label in s_labels:
+        for wine in word_categories[label]['wines']: 
+            wines[wine] = wines.get(wine, [])
+            wines[wine].append(label)
+    for wine in wines.keys():
+        _update_wine(wine, wines[wine], feature_order)
+        
 def create_reverse_index(tuples, order):
     index = {}
     for t in tuples:
@@ -228,7 +243,7 @@ def build_word_graph(synonyms, labels):
     for s in synonyms:
         word_graph.add_edge(*s['labels'])
     return word_graph
- 
+     
 def print_graph2file(g):
     import pydotplus
     from networkx.drawing.nx_pydot import graphviz_layout
@@ -287,6 +302,7 @@ if __name__ == '__main__':
     ORDER = 19
     SPACE_FILE_NAME = 'characteristics.csv'
     FEATURE_ORDER = 21
+    
     tuples = load_docs_from_tnt()
     word_categories = load_word_space('csv/space/{}'.format(SPACE_FILE_NAME))
     index = create_reverse_index(tuples, ORDER)
@@ -300,9 +316,9 @@ if __name__ == '__main__':
     
     features = form_features(tuples, word_categories, s_labels)
     save_features2tnt(features, s_labels)
+    
+    update_wines_tnt(word_categories, s_labels, FEATURE_ORDER)
     #print_graph(graph)
     
     #save2csv(['pair_label', 'wines_intersect_num'], s, 'csv/space/c_synonyms.csv', order='wines_intersect_num')
     #save2csv(['label', 'wines_num'], u, 'csv/space/c_uniques.csv', order='wines_num')
-    
-    #TODO: построить граф синонимов
