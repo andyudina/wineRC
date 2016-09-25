@@ -7,6 +7,7 @@ import networkx as nx
 from sklearn.metrics.pairwise import euclidean_distances
 
 from models import Wine, Feature, Question
+
 SHOW_WINES_NUMBER = 10
 QUESTIONS_NUMBER = 4
 WINE_SUBSET_RANGE = range(100, 400)
@@ -46,9 +47,8 @@ class RS:
         
      
     def _construct_features4wines(self, wine_names):
-        
         res = self.features_raw.loc[wine_names,]
-        return res.as_matrix(), res.index
+        return res.as_matrix(), np.array([[val, ] for val in res.index.values])
         
     def _find_category_pairs(self, wine_names):
         category_set = set()
@@ -75,13 +75,15 @@ class RS:
         
     def _find_next_question_category(self, graph, selected_nodes):
         #return node with maximum degree
+        print(graph.degree())
         return next(
-            node[0] for node in sorted(graph.degree(), key=lambda x: x[1], reverse=True)
+            node[0] for node in sorted(graph.degree().items(), key=lambda x: x[1], reverse=True)
             if not selected_nodes.get(node[0])
         )
         
     def find_next_question(self):
         category = self._find_next_question_category(self.graph, self.yes_categories)
+        #print(category)
         question = self.questions.get(category)
         if not question: return
         self.current_category = category
@@ -91,7 +93,7 @@ class RS:
     def answer_yes(self):
         #subgraph graph by node
         self.yes_categories[self.current_category] = 1
-        self.graph = nx.subgraph(self.graph, [self.current_category, ]) 
+        self.graph = nx.subgraph(self.graph, nx.node_connected_component(self.graph, self.current_category)) 
         
     def answer_no(self):
         #rm node from graph
@@ -100,7 +102,8 @@ class RS:
         
     def has_next_question(self):
         #graph has nodes
-        return (not not [n for n in self.graph.nodes() if self.yes_categories.get(n)]) \
+        #TODO: not self.yes_categories.get(n) 
+        return (not not [n for n in self.graph.nodes() if not self.yes_categories.get(n)]) \
                and self.answered_questions_number < QUESTIONS_NUMBER
        
     def _form_vector(self, yes_categories, no_categories):
@@ -115,7 +118,14 @@ class RS:
         answer_vector = self._form_vector(self.yes_categories, self.no_categories)
         #minimize euclidean_distances
         distances = euclidean_distances(self.features_x, [answer_vector,]) 
-        wines = np.concatenate((distances.T, self.features_y), axis=1).sort()
+        #print(self.features_x)
+        #print(distances)
+        #print(distances)
+        #print(self.features_y)
+        #print(len(self.features_y))
+        #print(self.features_y)
+        wines = np.concatenate((distances, self.features_y), axis=1)
+        wines = np.sort(wines, axis=0) #TODO: check that sort 
         return wines[:, -SHOW_WINES_NUMBER:] #TODO: get descriptions
         
   
@@ -133,7 +143,8 @@ if __name__ == '__main__':
     rs = RS(wine_names)
 
     while rs.has_next_question():
-        question = rs.find_next_question(self) 
+        question = rs.find_next_question() 
+        print(question)
         if not question: break
         res = ask_question(question)
         if res:
