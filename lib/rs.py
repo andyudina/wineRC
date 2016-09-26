@@ -12,6 +12,7 @@ from models import Wine, Feature, Question
 SHOW_WINES_NUMBER = 10
 QUESTIONS_NUMBER = 4
 WINE_SUBSET_RANGE = range(20, 30)
+LOG_BASE = 5
 
 #TODO:
 #    Wine:
@@ -83,7 +84,7 @@ class RS:
  
     def _round_degrees(self, degrees):
         for d in degrees:
-            d[1] = int(math.log(d[1])) / 10 * 10 
+            d[1] = int(math.log(d[1], LOG_BASE)) / 10 * 10 
         return degrees
         
     def _find_next_question_category_random(self, graph, selected_nodes):
