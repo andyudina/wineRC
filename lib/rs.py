@@ -143,7 +143,7 @@ class RS:
         #print(self.features_y)
         wines = np.concatenate((distances, self.features_y), axis=1)
         wines = np.sort(wines, axis=0) #TODO: check that sort 
-        return wines[:, -SHOW_WINES_NUMBER:] #TODO: get descriptions
+        return wines[:, :SHOW_WINES_NUMBER] #TODO: get descriptions
         
   
 def generate_random_wines_subset(wines):
