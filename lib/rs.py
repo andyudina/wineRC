@@ -1,4 +1,5 @@
 import random
+import math
 from itertools import chain
 
 #import pandas
@@ -10,7 +11,7 @@ from models import Wine, Feature, Question
 
 SHOW_WINES_NUMBER = 10
 QUESTIONS_NUMBER = 4
-WINE_SUBSET_RANGE = range(100, 400)
+WINE_SUBSET_RANGE = range(20, 30)
 
 #TODO:
 #    Wine:
@@ -75,14 +76,28 @@ class RS:
         
     def _find_next_question_category(self, graph, selected_nodes):
         #return node with maximum degree
-        print(graph.degree())
         return next(
             node[0] for node in sorted(graph.degree().items(), key=lambda x: x[1], reverse=True)
             if not selected_nodes.get(node[0])
         )
+ 
+    def _round_degrees(self, degrees):
+        for d in degrees:
+            d[1] = int(math.log(d[1])) / 10 * 10 
+        return degrees
         
+    def _find_next_question_category_random(self, graph, selected_nodes):
+        #return node with maximum degree
+        #print(len(graph.nodes()))
+        degrees = list(list(n) for n in graph.degree().items() if n[0] not in selected_nodes)
+        degrees = self._round_degrees(degrees)
+        #rint(degrees)
+        max_degree = max(d[1] for d in degrees)
+        node_candidates = [d[0] for d in degrees if d[1] == max_degree]
+        return random.choice(node_candidates)
+               
     def find_next_question(self):
-        category = self._find_next_question_category(self.graph, self.yes_categories)
+        category = self._find_next_question_category_random(self.graph, self.yes_categories)
         #print(category)
         question = self.questions.get(category)
         if not question: return
@@ -93,7 +108,8 @@ class RS:
     def answer_yes(self):
         #subgraph graph by node
         self.yes_categories[self.current_category] = 1
-        self.graph = nx.subgraph(self.graph, nx.node_connected_component(self.graph, self.current_category)) 
+        #print(self.graph.neighbors(self.current_category))
+        self.graph = nx.subgraph(self.graph, self.graph.neighbors(self.current_category)) #nx.node_connected_component(self.graph, self.current_category)) 
         
     def answer_no(self):
         #rm node from graph
@@ -144,7 +160,7 @@ if __name__ == '__main__':
 
     while rs.has_next_question():
         question = rs.find_next_question() 
-        print(question)
+        #print(question)
         if not question: break
         res = ask_question(question)
         if res:
@@ -152,4 +168,6 @@ if __name__ == '__main__':
         else:
             rs.answer_no()
     print(rs.find_matches())
-   
+
+#TODO: split degrees to groups
+#if yes: put all other in group to zero --> and don't ask!   
