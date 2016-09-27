@@ -1,5 +1,6 @@
 from itertools import product
 
+import tarantool
 from models.base import Base
 
 class Wine(Base):
@@ -36,3 +37,18 @@ class Wine(Base):
         
     def get_category_pairs(self):
         return [list(c) + [self.name, ] for c in product(self.characteristic_categories, repeat=2) if c[0] != c[1]]
+        
+    def update(self, **kwargs): 
+        fields2update = self.fields
+        if kwargs.get('fields'):
+            fields2update = kwargs.get('fields') 
+        values2update = [ 
+            [ i + 1, getattr(self, field) ] \
+            for i, field in enumerate(self.fields) if field in fields2update
+        ]
+        try:
+            #pass
+            #print([self.name, values2update])
+            self.tnt.call('wine.update_local', [self.name, ] + values2update)
+        except tarantool.error.DatabaseError as e:
+            print(e)

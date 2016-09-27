@@ -6,6 +6,8 @@ from itertools import chain
 import numpy as np
 import networkx as nx
 from sklearn.metrics.pairwise import euclidean_distances
+from sklearn.preprocessing import normalize
+from scipy.spatial.distance import cdist
 
 from models import Wine, Feature, Question
 
@@ -13,7 +15,7 @@ SHOW_WINES_NUMBER = 10
 QUESTIONS_NUMBER = 4
 WINE_SUBSET_RANGE = range(20, 30)
 LOG_BASE = 5
-
+RELATIVE_NODES_MX_RATIO = 0.5
 #TODO:
 #    Wine:
 #        load_all
@@ -46,6 +48,7 @@ class RS:
         self.no_categories = {}
         self.answered_questions_number = 0
         self.current_category = None
+        self.current_relative_nodes = [] #Nodes which has the same degree as selected one
         
      
     def _construct_features4wines(self, wine_names):
@@ -83,9 +86,9 @@ class RS:
         )
  
     def _round_degrees(self, degrees):
-        for d in degrees:
-            d[1] = int(math.log(d[1], LOG_BASE)) / 10 * 10 
-        return degrees
+        print(degrees)
+        return [[d[0], int(math.log(d[1], LOG_BASE)) / 10 * 10] for d in degrees if d[1] > 0]
+
         
     def _find_next_question_category_random(self, graph, selected_nodes):
         #return node with maximum degree
@@ -94,8 +97,8 @@ class RS:
         degrees = self._round_degrees(degrees)
         #rint(degrees)
         max_degree = max(d[1] for d in degrees)
-        node_candidates = [d[0] for d in degrees if d[1] == max_degree]
-        return random.choice(node_candidates)
+        self.current_relative_nodes = [d[0] for d in degrees if d[1] == max_degree]
+        return random.choice(self.current_relative_nodes)
                
     def find_next_question(self):
         category = self._find_next_question_category_random(self.graph, self.yes_categories)
@@ -106,43 +109,49 @@ class RS:
         self.answered_questions_number += 1
         return question.get_random_question()
     
+    def _remove_relative_nodes(self):
+        for node in self.current_relative_nodes:
+            if node == self.current_category: continue
+            self.graph.remove_node(node) 
+            
     def answer_yes(self):
         #subgraph graph by node
         self.yes_categories[self.current_category] = 1
         #print(self.graph.neighbors(self.current_category))
+        if len(self.current_relative_nodes) < RELATIVE_NODES_MX_RATIO * len(self.graph.nodes()):
+            self._remove_relative_nodes()   
         self.graph = nx.subgraph(self.graph, self.graph.neighbors(self.current_category)) #nx.node_connected_component(self.graph, self.current_category)) 
         
     def answer_no(self):
         #rm node from graph
-        self.no_categories[self.current_category] =1
+        self.no_categories[self.current_category] = 1
         self.graph.remove_node(self.current_category)
         
     def has_next_question(self):
         #graph has nodes
-        #TODO: not self.yes_categories.get(n) 
         return (not not [n for n in self.graph.nodes() if not self.yes_categories.get(n)]) \
                and self.answered_questions_number < QUESTIONS_NUMBER
        
     def _form_vector(self, yes_categories, no_categories):
         res_vector = []
-        for category in self.features_names:
-            if yes_categories.get(category): res_vector.append(1)
-            elif no_categories.get(category): res_vector.append(-1)
-            else: res_vector.append(0)
-        return np.array(res_vector)
+        indexes = []
+        for i, category in enumerate(self.features_names):
+            if yes_categories.get(category): 
+                 indexes.append(i)
+                 res_vector.append(1)
+            elif no_categories.get(category):
+                 indexes.append(i) 
+                 res_vector.append(-1)
+            #else: res_vector.append(0)
+        return np.array([np.array(res_vector)]), indexes
         
     def find_matches(self):
-        answer_vector = self._form_vector(self.yes_categories, self.no_categories)
+        answer_vector, indexes = self._form_vector(self.yes_categories, self.no_categories)
         #minimize euclidean_distances
-        distances = euclidean_distances(self.features_x, [answer_vector,]) 
-        #print(self.features_x)
-        #print(distances)
-        #print(distances)
-        #print(self.features_y)
-        #print(len(self.features_y))
-        #print(self.features_y)
-        wines = np.concatenate((distances, self.features_y), axis=1)
-        wines = np.sort(wines, axis=0) #TODO: check that sort 
+        valuable_features = self.features_x[:, indexes]
+        distances = cdist(valuable_features, answer_vector, 'euclidean') 
+        wines = np.concatenate((distances, self.features_y, valuable_features), axis=1)
+        wines = wines[np.argsort(wines[:, 0])]
         return wines[:, :SHOW_WINES_NUMBER] #TODO: get descriptions
         
   
@@ -170,5 +179,4 @@ if __name__ == '__main__':
             rs.answer_no()
     print(rs.find_matches())
 
-#TODO: split degrees to groups
-#if yes: put all other in group to zero --> and don't ask!   
+#TODO: Multiple answers with values

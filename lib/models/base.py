@@ -26,7 +26,12 @@ class Base:
         for index, value in enumerate(t):
             res[cls.fields[index]] = value
         return res
-       
+     
+    @classmethod 
+    def hash2tuple(cls, hash_):
+        return [ hash_.get(value) for value in cls.fields]
+        
     def __init__(self, **kwargs):
         self.__dict__.update(kwargs)
+        
                 

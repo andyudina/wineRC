@@ -1,5 +1,6 @@
 from itertools import product
 
+import tarantool
 from pandas import DataFrame
 
 from models.base import Base
@@ -25,3 +26,11 @@ class Feature(Base):
     def load_all_names(cls):
         print('load all feature names')
         return cls.tnt.call('feature.get_feature_names', [[]]).data[0] 
+        
+    def insert(self):
+        try:
+            #print([[self.name, self.features],])
+            self.tnt.call('feature.insert_feature', [[[self.name, ] + self.features]])
+        except tarantool.error.DatabaseError as e:
+            print(e)
+            pass         
