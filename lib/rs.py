@@ -1,5 +1,7 @@
 import random
 import math
+import re
+import datetime
 from itertools import chain
 
 #import pandas
@@ -163,9 +165,129 @@ def ask_question(question):
     while answer not in ['y', 'n']:
         answer = input('Please, answer question: "{}". Posible answers are "y" on "n"\n'.format(question))
     return (answer == 'y')    
+
+ANSWER_MAP = {
+    'да': 1,
+    'нет': 2,
+    'все равно': 0 
+}
+
+
+def ask_formal_question(question, answers):
+    answer = input(question + str(answers) + '\n')
+    while answer not in answers:
+        answer = input('Please, answer question: "{}". Posible answers are: {}\n'.format(question, str(answers)))
+  
+    return ANSWER_MAP.get(answer, answer)
+         
+def select_formal_features(questions):
+    result = []
+    for question, answers in questions:
+        result.append(ask_formal_question(question, answers))
+    return result
+        
+#FORMAL
+
+def _сut_aged_in_oak(style):
+    if isinstance(style, list):
+        return
+    style = [f.strip() for f in style.split(',')]
+    features = []
+    aged_in_oak = 1
+    for i in style:
+        if re.search(r'.*не выдерж.*', i):
+            aged_in_oak = 1
+        elif re.search(r'.*выдерж.*', i):
+            aged_in_oak = 2
+        elif i:
+            features.append(i)
+    features[0] = [f.strip() for f in features[0].split(' - ')][1]
+    return aged_in_oak, features
+
+def _change_produced_year2vintage(year):
+    produced_year = year
+    if not produced_year: return
+    return datetime.datetime.now().year - int(produced_year)
+
+def select_wine(type, tuples):
+    #tnt = tarantool.connect(**TARANTOOL_CONNCTION)
+    #offset = 0
+    #tuples = tnt.call('wine.find_by_chunk', [offset, 2000, True ]).data
+    wines  = []
+    for i in tuples:
+        oak, style = _сut_aged_in_oak(i[11])
+        wine = [i[0], i[2].lower(), i[3].lower(), i[5].lower(), _change_produced_year2vintage(i[10]), oak, style]
+        wines.append(wine)
+    suitable = []
+    for wine in wines:
+        temp = 1
+        for i in range(1, len(wine)):
+            if i == 6 and len(type[i - 1]) != 0 and temp != 0:
+                style = wine[i]
+                temp = check_style(type[i - 1], style)
+            elif i == 4 and type[ i - 1] != 0 and wine[i] == None:
+                temp = 0
+                break
+            elif i == 4 and type[ i - 1] != 0  and not (((wine[i] - int(type[i -1])) >= 0 and int(type[i -1]) > 0) or ((-wine[i] - int(type[i -1])) >= 0 and int(type[i -1]) < 0)):
+                temp = 0
+            elif wine[i] != type[ i - 1 ] and type[ i - 1] != 0 and i != 6 and i != 4:
+                temp = 0
+                break
+        if temp != 0:
+            wine.insert(0, temp)
+            suitable.append(wine)
+    suitable.sort(reverse=True)
+    #for wine in suitable:
+        #print(wine)
+    results = [s[1] for s in suitable]
+    return results
+
+def get_all_style():
+    tnt = tarantool.connect(**TARANTOOL_CONNCTION)
+    offset = 0
+    tuples = tnt.call('wine.find_by_chunk', [offset, 2000, True ]).data
+    styles = []
+    for i in tuples:
+        oak, style = _сut_aged_in_oak(i[11])
+        for s in style:
+            if s not in styles:
+                styles.append(s)
+    return styles
+
+def check_style(type, wine):
+    check = 0
+    for style in type:
+        if re.search(r'.*легк.*', style):
+            for wine_style in wine:
+                if re.search(r'.*мощн.*', wine_style) or re.search(r'.*крепл.*', wine_style) or re.search(r'.*концентр.*', wine_style):
+                    return 0
+        if re.search(r'.*мощн.*', style) or re.search(r'.*крепл.*', style) or re.search(r'.*концентр.*', style):
+            for wine_style in wine:
+                if re.search(r'.*легк.*', wine_style):
+                    return 0
+        if re.search(r'.*кисл.*', style):
+            for wine_style in wine:
+                if re.search(r'.*кисл.*', wine_style):
+                    check += 1
+        if style in wine:
+            check += 1
+    return check
+ 
+FORMAL_QUESTIONS = [
+#(белое, красное, розовое), (сухое, сладкое, полусладкое, полусухое), страна, год, выдержка(1 да, 2 нет 0 пофиг), ['стиль', 'стиль']
+    ['Красное или белое?', ['белое', 'красное', 'розовое', 'все равно']],
+    ['Что насчет сладости?', ['сухое', 'сладкое', 'полусладкое', 'полусухое', 'все равно']],
+    ['Любишь выдерженное вино?', ['да', 'нет', 'все равно']]
       
+]
+    
 if __name__ == '__main__':
-    wine_names = generate_random_wines_subset(list(RS.features_raw.index)) #list(RS.wines.keys()))
+    features = select_formal_features(FORMAL_QUESTIONS)
+    features = features[: 2] + [0, 0] + [features[2], ] + [[], ]
+    #print(features) 
+    tuples = [Wine.hash2tuple(wine.__dict__) for wine in RS.wines.values()]
+    wine_names = select_wine(features, tuples)#generate_random_wines_subset(list(RS.features_raw.index)) #list(RS.wines.keys())) 
+    #print(wine_names) 
     rs = RS(wine_names)
 
     while rs.has_next_question():
