@@ -23,8 +23,9 @@ class Base:
         #if len(cls.fields) != len(t):
         #    print(t)
         #    print(cls.fields)
-        for index, value in enumerate(t):
-            res[cls.fields[index]] = value
+        for index, field in enumerate(cls.fields):
+            try: res[field] = t[index]
+            except IndexError: res[field] = None
         return res
      
     @classmethod 
