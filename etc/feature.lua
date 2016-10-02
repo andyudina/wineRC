@@ -70,9 +70,29 @@ local function get_feature_table()
     return result
 end
 
+local function get_feature_names()
+    local header = {}
+    for _, tuple in box.space['feature_name'].index.primary:pairs({iterator = box.index.ALL}) do
+        for _, name in pairs({tuple:unpack()}) do
+            table.insert(header, name)
+        end
+    end
+    return header
+end
+
+local function get_features()
+    result = {}
+    for _, tuple in box.space['feature'].index.primary:pairs({iterator = box.index.ALL}) do
+        table.insert(result, tuple)
+    end
+    return result
+end
+
 return {
     insert_feature_names = insert_feature_names, 
     insert_feature = insert_feature,
     get_feature_table = get_feature_table,
-    replace_feature_names = replace_feature_names
+    replace_feature_names = replace_feature_names,
+    get_feature_names = get_feature_names,
+    get_features = get_features
 }

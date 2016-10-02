@@ -74,6 +74,7 @@ local function update_local(...)
         for j = 1, #tuple4update, 2 do
             table.insert(table4update, {'=', tuple4update[j], tuple4update[j + 1]})
         end
+        
         box.space.wine:update(pk, table4update)
     end
 end
@@ -102,6 +103,11 @@ local function find_by_chunk(offset, chunk_length, only_new)
 
     local curr_length = 0
     local res_table = {}
+    
+    if only_new == nil then
+         only_new = false
+    end
+    
     for _, tuple in box.space.wine.index.primary:pairs({iterator = box.index.ALL}) do
         if curr_length >= chunk_length + offset then
             break
