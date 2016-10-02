@@ -20,12 +20,12 @@ WINE_SUBSET_RANGE = range(20, 30)
 LOG_BASE = 5
 RELATIVE_NODES_MX_RATIO = 0.5
 FORMAL_FEATURES_DICT = {
-    'color': ['Красное или белое?', ['белое', 'красное', 'розовое', 'все равно']],
-    'sweetness': ['Что насчет сладости?', ['сухое', 'сладкое', 'полусладкое', 'полусухое', 'все равно']],
-    'aging': ['Любишь выдерженное вино?', ['да', 'нет', 'все равно']]
+    'color': ['Красное или белое?', {'1': 'белое', '2': 'красное', '3': 'розовое', '4': 'все равно'}],
+    'sweetness': ['Что насчет сладости?', {'1': 'сухое', '2': 'сладкое', '3': 'полусладкое', '4': 'полусухое', '5': 'все равно'}],
+    'aging': ['Любишь выдерженное вино?', {'1': 'да', '2': 'нет', '3': 'все равно'}]
 }
 
-DEFAULT_ANSWERS = ['да', 'нет']
+DEFAULT_ANSWERS = {'1': 'да', '2': 'нет'}
 FORMAL_ANSWER_MAP = {
     'да': 1,
     'нет': 2,
@@ -166,8 +166,10 @@ class RS:
     def answer_current(self, answer):
 
         if FORMAL_FEATURES_DICT.get(self._session.current_question):
+            answer = FORMAL_FEATURES_DICT.get(self._session.current_question)[1].get(answer)
             self._session.update_formal_feature(self._session.current_question, FORMAL_ANSWER_MAP.get(answer, answer))
         else:
+            answer = DEFAULT_ANSWERS.get(answer)
             if answer == 'да':
                 self._answer_yes()
             elif answer == 'нет':
@@ -242,7 +244,7 @@ def ask_question(question, answers):
         
      
 if __name__ == '__main__':
-    USER_ID = 5
+    USER_ID = 6
     answer = None
     while True:
         rs = RS(USER_ID)
