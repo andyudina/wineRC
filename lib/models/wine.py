@@ -47,8 +47,6 @@ class Wine(Base):
             for i, field in enumerate(self.fields) if field in fields2update
         ]
         try:
-            #pass
-            #print([self.name, values2update])
             self.tnt.call('wine.update_local', [self.name, ] + values2update)
         except tarantool.error.DatabaseError as e:
             print(e)

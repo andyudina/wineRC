@@ -6,7 +6,7 @@ from models.base import Base
 class Question(Base):
     fields = [
          'category',
-         'questions'
+         'questions',
     ]
     
     @classmethod
