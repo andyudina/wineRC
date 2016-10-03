@@ -15,7 +15,8 @@ from models import Wine, Feature, Question, Session
 from formal_features import select_wine
 
 SHOW_WINES_NUMBER = 10
-QUESTIONS_NUMBER = 4
+QUESTIONS_NUMBER = 10
+GRAPH_EDGES_TRESHOLD = 10
 WINE_SUBSET_RANGE = range(20, 30)
 LOG_BASE = 5
 RELATIVE_NODES_MX_RATIO = 0.5
@@ -182,8 +183,14 @@ class RS:
                    any(f is None for f in self._session.get_formal_features()) 
                ) or\
                (
-                   #graph has nodes
-                   (not not [n for n in self._session.graph.nodes() if not self._session.yes_categories.get(n)]) \
+                   #graph nodes are more then treshold
+                   #answered questions are less then treshold
+                   (
+                       len([
+                               n for n in self._session.graph.edges() 
+                               if not self._session.yes_categories.get(n[0]) and not self._session.yes_categories.get(n[1])
+                           ]) > GRAPH_EDGES_TRESHOLD
+                    ) \
                     and self._session.answered_questions_number < QUESTIONS_NUMBER
                ) or\
                (
@@ -204,6 +211,12 @@ class RS:
             #else: res_vector.append(0)
         return np.array([np.array(res_vector)]), indexes
         
+    def _get_wines_description(self, wines):
+        return [
+            self.wines.get(w[1]).__dict__
+            for w in wines
+        ]
+        
     def find_matches(self):
         print(self._session.yes_categories)
         print(self._session.no_categories)
@@ -214,9 +227,10 @@ class RS:
         valuable_features = self._session.features_x[:, indexes]
         distances = cdist(valuable_features, answer_vector, 'euclidean') 
         wines = np.concatenate((distances, self._session.features_y, valuable_features), axis=1)
-        wines = wines[np.argsort(wines[:, 0])]
-        self._session.results = wines[:, :SHOW_WINES_NUMBER].tolist()
-        return wines[:, :SHOW_WINES_NUMBER] #TODO: get descriptions
+        wines = wines[np.argsort(wines[:, 0])][:, :SHOW_WINES_NUMBER]
+        self._session.results = wines.tolist()
+        print(wines)
+        return self._get_wines_description(wines) #TODO: get descriptions
         
   
 def generate_random_wines_subset(wines):
