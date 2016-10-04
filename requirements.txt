@@ -8,3 +8,4 @@ networkx
 pydotplus
 cairocffi
 numpy
+networkx
