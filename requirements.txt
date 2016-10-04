@@ -7,3 +7,4 @@ pymorphy2
 networkx
 pydotplus
 cairocffi
+numpy
