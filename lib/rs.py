@@ -167,7 +167,7 @@ class RS:
     def answer_current(self, answer):
 
         if FORMAL_FEATURES_DICT.get(self._session.current_question):
-            answer = FORMAL_FEATURES_DICT.get(self._session.current_question)[1].get(answer)
+            answer = FORMAL_FEATURES_DICT.get(self._session.current_question)[1].get(str(answer))
             self._session.update_formal_feature(self._session.current_question, FORMAL_ANSWER_MAP.get(answer, answer))
         else:
             answer = DEFAULT_ANSWERS.get(answer)
