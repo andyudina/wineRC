@@ -11,8 +11,8 @@ from sklearn.metrics.pairwise import euclidean_distances
 from sklearn.preprocessing import normalize
 from scipy.spatial.distance import cdist
 
-from models import Wine, Feature, Question, Session
-from formal_features import select_wine
+from lib.models import Wine, Feature, Question, Session
+from lib.formal_features import select_wine
 
 SHOW_WINES_NUMBER = 10
 QUESTIONS_NUMBER = 10

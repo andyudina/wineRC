@@ -1,7 +1,7 @@
 from itertools import product
 
 import tarantool
-from models.base import Base
+from lib.models.base import Base
 
 class Wine(Base):
     fields = [

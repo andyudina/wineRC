@@ -6,7 +6,7 @@ import tarantool
 import networkx as nx
 import numpy as np
 
-from models.base import Base
+from lib.models.base import Base
 
 class Session(Base):
     fields = [

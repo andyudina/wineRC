@@ -1,7 +1,7 @@
 import random
 
 import tarantool
-from models.base import Base
+from lib.models.base import Base
 
 class Question(Base):
     fields = [

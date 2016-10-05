@@ -94,3 +94,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+# Tarantool:
+TARANTOOL_CONNCTION = {
+    'user': 'root', 
+    'password': '1234', 
+    'host': 'localhost',
+    'port': 3311
+}
+
+CHUNK_LENGTH = 100
