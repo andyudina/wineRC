@@ -21,7 +21,7 @@ WINE_SUBSET_RANGE = range(20, 30)
 LOG_BASE = 5
 RELATIVE_NODES_MX_RATIO = 0.5
 FORMAL_FEATURES_DICT = {
-    'color': ['Красное или белое?', {'1': 'белое', '2': 'красное', '3': 'розовое', '4': 'все равно'}],
+    'color': ['Красное, белое или розовое?', {'1': 'белое', '2': 'красное', '3': 'розовое', '4': 'все равно'}],
     'sweetness': ['Что насчет сладости?', {'1': 'сухое', '2': 'сладкое', '3': 'полусладкое', '4': 'полусухое', '5': 'все равно'}],
     'aging': ['Любишь выдерженное вино?', {'1': 'да', '2': 'нет', '3': 'все равно'}]
 }
@@ -170,7 +170,7 @@ class RS:
             answer = FORMAL_FEATURES_DICT.get(self._session.current_question)[1].get(str(answer))
             self._session.update_formal_feature(self._session.current_question, FORMAL_ANSWER_MAP.get(answer, answer))
         else:
-            answer = DEFAULT_ANSWERS.get(answer)
+            answer = DEFAULT_ANSWERS.get(str(answer))
             if answer == 'да':
                 self._answer_yes()
             elif answer == 'нет':
