@@ -31,12 +31,13 @@ def get_next(request):
     if rs.has_next_question():
         question, possible_answers = rs.find_next_question()
         #print(question, possible_answers)
+        answers_list = [{ a : possible_answers.get(a)} for a in possible_answers.keys()]
         rs.commit_session()
         result = {
             'question': {
                 'text': question,
                 'Img': '',
-                'answers': [possible_answers]
+                'answers': answers_list
             }
         }
     else:
