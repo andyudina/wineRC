@@ -72,7 +72,7 @@ class RS:
         self._session.update(**kwargs)    
      
     def _construct_features4wines(self, wine_names):
-        res = self.features_raw.loc[wine_names,]
+        res = self.features_raw.loc[wine_names,].copy(deep=True)
         return res.as_matrix(), np.array([[val, ] for val in res.index.values])
         
     def _find_category_pairs(self, wine_names):
@@ -100,13 +100,14 @@ class RS:
  
     def _round_degrees(self, degrees):
         #print(degrees)
-        return [[d[0], int(math.log(d[1], LOG_BASE)) / 10 * 10] for d in degrees if d[1] > 0]
+        return [[d[0], int(math.log(d[1], LOG_BASE)) / 10 * 10] for d in degrees if d[1] > 0] + [d for d in degrees if d[1] <= 0]
 
         
     def _find_next_question_category_random(self, graph, selected_nodes):
         #return node with maximum degree
         #print(len(graph.nodes()))
         degrees = list(list(n) for n in graph.degree().items() if n[0] not in selected_nodes)
+        #raise ValueError([degrees, list(graph.degree().items()), selected_nodes, graph.nodes(), self._session.__dict__])
         degrees = self._round_degrees(degrees)
         max_degree = max(d[1] for d in degrees)
         self._session.current_relative_nodes = [d[0] for d in degrees if d[1] == max_degree]
@@ -125,6 +126,7 @@ class RS:
         features = self._session.get_formal_features()
         tuples = [Wine.hash2tuple(wine.__dict__) for wine in self.wines.values()]
         self._session.wine_names = select_wine(features, tuples)
+        #raise ValueError(self._session.wine_names)
         #print(self._session.wine_names)
         self._session.features_x,  self._session.features_y = self._construct_features4wines(self._session.wine_names)
         self._session.graph = self._build_subgraph_by_wines(self._session.wine_names)
@@ -188,7 +190,8 @@ class RS:
                    (
                        len([
                                n for n in self._session.graph.edges() 
-                               if not self._session.yes_categories.get(n[0]) and not self._session.yes_categories.get(n[1])
+                               if not self._session.yes_categories.get(n[0]) and not self._session.yes_categories.get(n[1]) \
+                               and not self._session.no_categories.get(n[1])
                            ]) > GRAPH_EDGES_TRESHOLD
                     ) \
                     and self._session.answered_questions_number < QUESTIONS_NUMBER
