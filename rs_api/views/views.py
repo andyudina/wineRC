@@ -13,7 +13,9 @@ def _form_wine_description(wine):
     "year": wine.get('vintage'),
     "description": wine.get('charateristics'),
     "color": "белое",
-    "sweetness": wine.get('switness')
+    "sweetness": wine.get('switness'),
+    'country': wine.get('country'),
+    'image': wine.get('image')
     }
     
 def get_next(request):
