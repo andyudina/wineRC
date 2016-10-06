@@ -31,7 +31,8 @@ def get_next(request):
     if rs.has_next_question():
         question, possible_answers = rs.find_next_question()
         #print(question, possible_answers)
-        answers_list = [{ a : possible_answers.get(a)} for a in possible_answers.keys()]
+        answers_list = [{ 'id': a , 'text' : possible_answers.get(a)} for a in possible_answers.keys()]
+        #print(answers_list)
         rs.commit_session()
         result = {
             'question': {
