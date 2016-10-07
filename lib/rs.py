@@ -149,14 +149,19 @@ class RS:
     def _remove_relative_nodes(self):
         for node in self._session.current_relative_nodes:
             if node == self._session.current_question: continue
-            self._session.graph.remove_node(node) 
-            
+            try:
+                self._session.graph.remove_node(node) 
+            except nx.NetworkXError:
+                pass 
     def _answer_yes(self):
         #subgraph graph by node
         self._session.yes_categories[self._session.current_question] = 1
         if len(self._session.current_relative_nodes) < RELATIVE_NODES_MX_RATIO * len(self._session.graph.nodes()):
             self._remove_relative_nodes()   
-        self._session.graph = nx.subgraph(self._session.graph, self._session.graph.neighbors(self._session.current_question))\
+        try:
+            self._session.graph = nx.subgraph(self._session.graph, self._session.graph.neighbors(self._session.current_question))
+        except nx.NetworkXError:
+            pass
         #nx.node_connected_component(self._session.graph, self.current_category)) 
         self.commit_session(fields=['yes_categories', 'graph'])
         
