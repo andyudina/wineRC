@@ -163,7 +163,10 @@ class RS:
     def _answer_no(self):
         #rm node from graph
         self._session.no_categories[self._session.current_question] = 1
-        self._session.graph.remove_node(self._session.current_question)
+        try:
+            self._session.graph.remove_node(self._session.current_question)
+        except nx.NetworkXError:
+            pass
         self.commit_session(fields=['no_categories', 'graph'])
       
     def answer_current(self, answer):
