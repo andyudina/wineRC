@@ -5,6 +5,7 @@ import math
 from itertools import chain
 
 #import pandas
+import copy
 import numpy as np
 import networkx as nx
 from sklearn.metrics.pairwise import euclidean_distances
@@ -142,6 +143,7 @@ class RS:
         if not questions: return
         questions, answer = questions
         if feature == 'sweetness' and self._session.color == 'розовое':
+            answer = copy.deepcopy(answer)
             del answer['2']
         return (questions, answer)
 
