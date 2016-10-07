@@ -21,7 +21,7 @@ WINE_SUBSET_RANGE = range(20, 30)
 LOG_BASE = 5
 RELATIVE_NODES_MX_RATIO = 0.5
 FORMAL_FEATURES_DICT = {
-    'color': ['Красное или белое?', {'1': 'белое', '2': 'красное', '3': 'розовое', '4': 'все равно'}],
+    'color': ['Красное, белое или розовое?', {'1': 'белое', '2': 'красное', '3': 'розовое', '4': 'все равно'}],
     'sweetness': ['Что насчет сладости?', {'1': 'сухое', '2': 'сладкое', '3': 'полусладкое', '4': 'полусухое', '5': 'все равно'}],
     'aging': ['Любишь выдерженное вино?', {'1': 'да', '2': 'нет', '3': 'все равно'}]
 }
@@ -72,7 +72,7 @@ class RS:
         self._session.update(**kwargs)    
      
     def _construct_features4wines(self, wine_names):
-        res = self.features_raw.loc[wine_names,]
+        res = self.features_raw.loc[wine_names,].copy(deep=True)
         return res.as_matrix(), np.array([[val, ] for val in res.index.values])
         
     def _find_category_pairs(self, wine_names):
@@ -100,13 +100,14 @@ class RS:
  
     def _round_degrees(self, degrees):
         #print(degrees)
-        return [[d[0], int(math.log(d[1], LOG_BASE)) / 10 * 10] for d in degrees if d[1] > 0]
+        return [[d[0], int(math.log(d[1], LOG_BASE)) / 10 * 10] for d in degrees if d[1] > 0] + [d for d in degrees if d[1] <= 0]
 
         
     def _find_next_question_category_random(self, graph, selected_nodes):
         #return node with maximum degree
         #print(len(graph.nodes()))
         degrees = list(list(n) for n in graph.degree().items() if n[0] not in selected_nodes)
+        #raise ValueError([degrees, list(graph.degree().items()), selected_nodes, graph.nodes(), self._session.__dict__])
         degrees = self._round_degrees(degrees)
         max_degree = max(d[1] for d in degrees)
         self._session.current_relative_nodes = [d[0] for d in degrees if d[1] == max_degree]
@@ -125,6 +126,7 @@ class RS:
         features = self._session.get_formal_features()
         tuples = [Wine.hash2tuple(wine.__dict__) for wine in self.wines.values()]
         self._session.wine_names = select_wine(features, tuples)
+        #raise ValueError(self._session.wine_names)
         #print(self._session.wine_names)
         self._session.features_x,  self._session.features_y = self._construct_features4wines(self._session.wine_names)
         self._session.graph = self._build_subgraph_by_wines(self._session.wine_names)
@@ -147,30 +149,38 @@ class RS:
     def _remove_relative_nodes(self):
         for node in self._session.current_relative_nodes:
             if node == self._session.current_question: continue
-            self._session.graph.remove_node(node) 
-            
+            try:
+                self._session.graph.remove_node(node) 
+            except nx.NetworkXError:
+                pass 
     def _answer_yes(self):
         #subgraph graph by node
         self._session.yes_categories[self._session.current_question] = 1
         if len(self._session.current_relative_nodes) < RELATIVE_NODES_MX_RATIO * len(self._session.graph.nodes()):
             self._remove_relative_nodes()   
-        self._session.graph = nx.subgraph(self._session.graph, self._session.graph.neighbors(self._session.current_question))\
+        try:
+            self._session.graph = nx.subgraph(self._session.graph, self._session.graph.neighbors(self._session.current_question))
+        except nx.NetworkXError:
+            pass
         #nx.node_connected_component(self._session.graph, self.current_category)) 
         self.commit_session(fields=['yes_categories', 'graph'])
         
     def _answer_no(self):
         #rm node from graph
         self._session.no_categories[self._session.current_question] = 1
-        self._session.graph.remove_node(self._session.current_question)
+        try:
+            self._session.graph.remove_node(self._session.current_question)
+        except nx.NetworkXError:
+            pass
         self.commit_session(fields=['no_categories', 'graph'])
       
     def answer_current(self, answer):
 
         if FORMAL_FEATURES_DICT.get(self._session.current_question):
-            answer = FORMAL_FEATURES_DICT.get(self._session.current_question)[1].get(answer)
+            answer = FORMAL_FEATURES_DICT.get(self._session.current_question)[1].get(str(answer))
             self._session.update_formal_feature(self._session.current_question, FORMAL_ANSWER_MAP.get(answer, answer))
         else:
-            answer = DEFAULT_ANSWERS.get(answer)
+            answer = DEFAULT_ANSWERS.get(str(answer))
             if answer == 'да':
                 self._answer_yes()
             elif answer == 'нет':
@@ -188,7 +198,8 @@ class RS:
                    (
                        len([
                                n for n in self._session.graph.edges() 
-                               if not self._session.yes_categories.get(n[0]) and not self._session.yes_categories.get(n[1])
+                               if not self._session.yes_categories.get(n[0]) and not self._session.yes_categories.get(n[1]) \
+                               and not self._session.no_categories.get(n[1])
                            ]) > GRAPH_EDGES_TRESHOLD
                     ) \
                     and self._session.answered_questions_number < QUESTIONS_NUMBER

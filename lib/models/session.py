@@ -81,8 +81,6 @@ class Session(Base):
             [ i + 1, self.serialize(field) ] \
             for i, field in enumerate(self.fields) if field in fields2update
         ]
-        if kwargs.get('fields'):
-            print(values2update)
         try:
             self.tnt.call('session.update_local', [self.id, list(chain.from_iterable(values2update))])
             #print([self.id, values2update])

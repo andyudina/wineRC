@@ -13,7 +13,9 @@ def _form_wine_description(wine):
     "year": wine.get('vintage'),
     "description": wine.get('charateristics'),
     "color": "белое",
-    "sweetness": wine.get('switness')
+    "sweetness": wine.get('switness'),
+    'country': wine.get('country'),
+    'image': wine.get('image')
     }
     
 def get_next(request):
@@ -31,12 +33,14 @@ def get_next(request):
     if rs.has_next_question():
         question, possible_answers = rs.find_next_question()
         #print(question, possible_answers)
+        answers_list = [{ 'id': a , 'text' : possible_answers.get(a)} for a in possible_answers.keys()]
+        #print(answers_list)
         rs.commit_session()
         result = {
             'question': {
                 'text': question,
                 'Img': '',
-                'answers': [possible_answers]
+                'answers': answers_list
             }
         }
     else:
