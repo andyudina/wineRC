@@ -132,12 +132,19 @@ class RS:
         self._session.graph = self._build_subgraph_by_wines(self._session.wine_names)
         #print(self._session.graph.nodes)
     
+    def _filter_questions(self, feature, questions):
+        if not questions: return
+        questions, answer = questions
+        if feature == 'sweetness' and self._session.color == 'розовое':
+            del answer['2']
+        return (questions, answer)
+
     def find_next_question(self):
         #check formal features first
         formal_feature = self._session.get_next_not_answered_formal_feature()
         if formal_feature:
             self._session.current_question = formal_feature
-            return FORMAL_FEATURES_DICT.get(formal_feature)
+            return self._filter_questions(formal_feature, FORMAL_FEATURES_DICT.get(formal_feature))
             
         #if formal features are answered but graph is not initialized
         #TODO: dangerous: assume that wines filtered by formal featrues can never be empty
