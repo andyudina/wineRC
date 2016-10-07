@@ -33,6 +33,8 @@ FORMAL_ANSWER_MAP = {
     'все равно': 0 
 }
 
+MAX_TRIES_NUMBER = 3
+
 #TODO:
 #    Wine:
 #        load_all
@@ -114,9 +116,13 @@ class RS:
         return random.choice(self._session.current_relative_nodes)
                
     def _find_next_taste_question(self):
-        category = self._find_next_question_category_random(self._session.graph, self._session.yes_categories)
-        #print(category)
-        question = self.questions.get(category)
+        question = None
+        tries = 0
+        while tries  < MAX_TRIES_NUMBER and question is None:
+            category = self._find_next_question_category_random(self._session.graph, self._session.yes_categories)
+            #print(category)
+            question = self.questions.get(category)
+            tries += 1
         if not question: return
         self._session.current_question = category
         self._session.answered_questions_number += 1
