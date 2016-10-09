@@ -9,10 +9,11 @@ def _form_wine_description(wine):
     #print(wine)
     return {
     "title": wine.get('name'),
-    "price": None,
+    "price": wine.get('price'),
+    'food': wine.get('food'),
     "year": wine.get('vintage'),
     "description": wine.get('charateristics'),
-    "color": "белое",
+    "color": wine.get('color'),
     "sweetness": wine.get('switness'),
     'country': wine.get('country'),
     'image': wine.get('image'),

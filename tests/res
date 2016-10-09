@@ -1,0 +1,128 @@
+
+  user_groups:  1
+  threads: 20
+
+[                  0%                  ]  0s/100s   transactions: 0  timers: 0  errors: 0
+[A[                  1%                  ]  1s/100s   transactions: 18  timers: 20  errors: 0
+[A[=                 2%                  ]  2s/100s   transactions: 35  timers: 59  errors: 1
+[A[=                 3%                  ]  3s/100s   transactions: 38  timers: 70  errors: 1
+[A[==                4%                  ]  4s/100s   transactions: 41  timers: 81  errors: 1
+[A[==                5%                  ]  5s/100s   transactions: 47  timers: 106  errors: 2
+[A[==                6%                  ]  6s/100s   transactions: 55  timers: 144  errors: 2
+[A[===               7%                  ]  7s/100s   transactions: 60  timers: 170  errors: 2
+[A[===               8%                  ]  8s/100s   transactions: 62  timers: 182  errors: 2
+[A[===               9%                  ]  9s/100s   transactions: 69  timers: 227  errors: 4
+[A[====             10%                  ]  10s/100s   transactions: 74  timers: 261  errors: 5
+[A[====             11%                  ]  11s/100s   transactions: 74  timers: 261  errors: 5
+[A[=====            12%                  ]  12s/100s   transactions: 74  timers: 261  errors: 5
+[A[=====            13%                  ]  13s/100s   transactions: 74  timers: 261  errors: 5
+[A[=====            14%                  ]  14s/100s   transactions: 74  timers: 261  errors: 5
+[A[======           15%                  ]  15s/100s   transactions: 74  timers: 261  errors: 5
+[A[======           16%                  ]  16s/100s   transactions: 74  timers: 261  errors: 5
+[A[======           17%                  ]  17s/100s   transactions: 74  timers: 261  errors: 5
+[A[=======          18%                  ]  18s/100s   transactions: 74  timers: 261  errors: 5
+[A[=======          19%                  ]  19s/100s   transactions: 74  timers: 261  errors: 5
+[A[========         20%                  ]  20s/100s   transactions: 74  timers: 261  errors: 5
+[A[========         21%                  ]  21s/100s   transactions: 74  timers: 261  errors: 5
+[A[========         22%                  ]  22s/100s   transactions: 74  timers: 261  errors: 5
+[A[=========        23%                  ]  23s/100s   transactions: 74  timers: 261  errors: 5
+[A[=========        24%                  ]  24s/100s   transactions: 74  timers: 261  errors: 5
+[A[==========       25%                  ]  25s/100s   transactions: 74  timers: 261  errors: 5
+[A[==========       26%                  ]  26s/100s   transactions: 74  timers: 261  errors: 5
+[A[==========       27%                  ]  27s/100s   transactions: 74  timers: 261  errors: 5
+[A[===========      28%                  ]  28s/100s   transactions: 74  timers: 261  errors: 5
+[A[===========      29%                  ]  29s/100s   transactions: 74  timers: 261  errors: 5
+[A[===========      30%                  ]  30s/100s   transactions: 74  timers: 261  errors: 5
+[A[============     31%                  ]  31s/100s   transactions: 74  timers: 261  errors: 5
+[A[============     32%                  ]  32s/100s   transactions: 75  timers: 268  errors: 5
+[A[=============    33%                  ]  33s/100s   transactions: 75  timers: 268  errors: 5
+[A[=============    34%                  ]  34s/100s   transactions: 75  timers: 268  errors: 5
+[A[=============    35%                  ]  35s/100s   transactions: 75  timers: 268  errors: 5
+[A[==============   36%                  ]  36s/100s   transactions: 81  timers: 316  errors: 5
+[A[==============   37%                  ]  37s/100s   transactions: 87  timers: 367  errors: 5
+[A[==============   38%                  ]  38s/100s   transactions: 90  timers: 392  errors: 5
+[A[===============  39%                  ]  39s/100s   transactions: 97  timers: 458  errors: 5
+[A[===============  40%                  ]  40s/100s   transactions: 103  timers: 517  errors: 5
+[A[================ 41%                  ]  41s/100s   transactions: 105  timers: 538  errors: 5
+[A[================ 42%                  ]  42s/100s   transactions: 112  timers: 621  errors: 5
+[A[================ 43%                  ]  43s/100s   transactions: 115  timers: 652  errors: 5
+[A[=================44%                  ]  44s/100s   transactions: 117  timers: 679  errors: 5
+[A[=================45%                  ]  45s/100s   transactions: 121  timers: 739  errors: 5
+[A[=================46%                  ]  46s/100s   transactions: 121  timers: 739  errors: 5
+[A[=================47%                  ]  47s/100s   transactions: 121  timers: 739  errors: 5
+[A[=================48%                  ]  48s/100s   transactions: 121  timers: 739  errors: 5
+[A[=================49%                  ]  49s/100s   transactions: 121  timers: 739  errors: 5
+[A[=================50%                  ]  50s/100s   transactions: 121  timers: 739  errors: 5
+[A[=================51%                  ]  51s/100s   transactions: 121  timers: 739  errors: 5
+[A[=================52%                  ]  52s/100s   transactions: 121  timers: 739  errors: 5
+[A[=================53%                  ]  53s/100s   transactions: 121  timers: 739  errors: 5
+[A[=================54%=                 ]  54s/100s   transactions: 121  timers: 739  errors: 5
+[A[=================55%=                 ]  55s/100s   transactions: 121  timers: 739  errors: 5
+[A[=================56%=                 ]  56s/100s   transactions: 122  timers: 749  errors: 5
+[A[=================57%==                ]  57s/100s   transactions: 122  timers: 749  errors: 5
+[A[=================58%==                ]  58s/100s   transactions: 122  timers: 749  errors: 5
+[A[=================59%==                ]  59s/100s   transactions: 122  timers: 749  errors: 5
+[A[=================60%===               ]  60s/100s   transactions: 122  timers: 749  errors: 5
+[A[=================61%===               ]  61s/100s   transactions: 122  timers: 749  errors: 5
+[A[=================62%====              ]  62s/100s   transactions: 122  timers: 749  errors: 5
+[A[=================63%====              ]  63s/100s   transactions: 122  timers: 749  errors: 5
+[A[=================64%====              ]  64s/100s   transactions: 124  timers: 771  errors: 6
+[A[=================65%=====             ]  65s/100s   transactions: 125  timers: 783  errors: 6
+[A[=================66%=====             ]  66s/100s   transactions: 125  timers: 783  errors: 6
+[A[=================67%=====             ]  67s/100s   transactions: 126  timers: 798  errors: 6
+[A[=================68%======            ]  68s/100s   transactions: 126  timers: 798  errors: 6
+[A[=================69%======            ]  69s/100s   transactions: 129  timers: 841  errors: 6
+[A[=================70%=======           ]  70s/100s   transactions: 134  timers: 921  errors: 8
+[A[=================71%=======           ]  71s/100s   transactions: 140  timers: 1008  errors: 10
+[A[=================72%=======           ]  72s/100s   transactions: 145  timers: 1098  errors: 10
+[A[=================73%========          ]  73s/100s   transactions: 150  timers: 1183  errors: 11
+[A[=================74%========          ]  74s/100s   transactions: 155  timers: 1275  errors: 11
+[A[=================75%=========         ]  75s/100s   transactions: 161  timers: 1392  errors: 11
+[A[=================76%=========         ]  76s/100s   transactions: 164  timers: 1452  errors: 11
+[A[=================77%=========         ]  77s/100s   transactions: 172  timers: 1623  errors: 12
+[A[=================78%==========        ]  78s/100s   transactions: 172  timers: 1623  errors: 12
+[A[=================79%==========        ]  79s/100s   transactions: 172  timers: 1623  errors: 12
+[A[=================80%==========        ]  80s/100s   transactions: 172  timers: 1623  errors: 12
+[A[=================81%===========       ]  81s/100s   transactions: 172  timers: 1623  errors: 12
+[A[=================82%===========       ]  82s/100s   transactions: 173  timers: 1641  errors: 12
+[A[=================83%============      ]  83s/100s   transactions: 173  timers: 1641  errors: 12
+[A[=================84%============      ]  84s/100s   transactions: 173  timers: 1641  errors: 12
+[A[=================85%============      ]  85s/100s   transactions: 173  timers: 1641  errors: 12
+[A[=================86%=============     ]  86s/100s   transactions: 173  timers: 1641  errors: 12
+[A[=================87%=============     ]  87s/100s   transactions: 173  timers: 1641  errors: 12
+[A[=================88%=============     ]  88s/100s   transactions: 173  timers: 1641  errors: 12
+[A[=================89%==============    ]  89s/100s   transactions: 173  timers: 1641  errors: 12
+[A[=================90%==============    ]  90s/100s   transactions: 173  timers: 1641  errors: 12
+[A[=================91%===============   ]  91s/100s   transactions: 173  timers: 1641  errors: 12
+[A[=================92%===============   ]  92s/100s   transactions: 173  timers: 1641  errors: 12
+[A[=================93%===============   ]  93s/100s   transactions: 173  timers: 1641  errors: 12
+[A[=================94%================  ]  94s/100s   transactions: 173  timers: 1641  errors: 12
+[A[=================95%================  ]  95s/100s   transactions: 173  timers: 1641  errors: 12
+[A[=================96%================  ]  96s/100s   transactions: 173  timers: 1641  errors: 12
+[A[=================97%================= ]  97s/100s   transactions: 175  timers: 1687  errors: 12
+[A[=================98%================= ]  98s/100s   transactions: 175  timers: 1687  errors: 12
+[A[=================99%==================]  99s/100s   transactions: 175  timers: 1687  errors: 12
+[A[================100%==================]  100s/100s   transactions: 175  timers: 1687  errors: 12
+[A[================100%==================]  100s/100s
+waiting for all requests to finish...
+[Awaiting for all requests to finish...
+[Awaiting for all requests to finish...
+[Awaiting for all requests to finish...
+[Awaiting for all requests to finish...
+[Awaiting for all requests to finish...
+[Awaiting for all requests to finish...
+[Awaiting for all requests to finish...
+[Awaiting for all requests to finish...
+[Awaiting for all requests to finish...
+[Awaiting for all requests to finish...
+[Awaiting for all requests to finish...
+[Awaiting for all requests to finish...
+[Awaiting for all requests to finish...
+[Awaiting for all requests to finish...
+[Awaiting for all requests to finish...
+[Awaiting for all requests to finish...
+[Awaiting for all requests to finish...
+[Awaiting for all requests to finish...
+[Awaiting for all requests to finish...
+[Awaiting for all requests to finish...
+[A
