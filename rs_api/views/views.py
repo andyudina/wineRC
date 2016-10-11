@@ -41,20 +41,22 @@ def get_next(request):
                 'text': question,
                 'Img': '',
                 'answers': answers_list
-            }
+            },
+            "is_end": False
         }
     else:
         result = {
-            'question': {}
+            'question': {},
+            "is_end": True
         }
         #rs.commit_session()
     return JsonResponse(result)
 
-def get_wine_list(request):
+def get_wine_list(request, user_id):
     if request.method != 'GET':
         return HttpResponseNotAllowed('Method Not Allowed')
     try:
-        user_id = int(request.GET.get('user_id'))
+        user_id = int(user_id)
     except (ValueError, TypeError):
         return HttpResponseNotAllowed('Invalid user_id')
     rs = RS(user_id)
