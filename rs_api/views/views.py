@@ -58,13 +58,20 @@ def get_wine_list(request):
     except (ValueError, TypeError):
         return HttpResponseNotAllowed('Invalid user_id')
     rs = RS(user_id)
-    wines = rs.find_matches()
-    result = {
-        'wine': len(wines),
-        'wines': [
-            _form_wine_description(w)
-            for w in wines
-        ]
-    }
-    rs.commit_session()
+    try:
+        wines = rs.find_matches()
+        result = {
+            'wine': len(wines),
+            'wines': [
+                _form_wine_description(w)
+                for w in wines
+            ]
+        }
+        rs.commit_session()
+    except Exception as e:
+        print(e)
+        result = {
+            'wine': 0,
+            'wines': []
+        }
     return JsonResponse(result)
