@@ -34,7 +34,6 @@ def get_next(request):
         rs.answer_current(int(answer_id))
     if rs.has_next_question():
         question, possible_answers = rs.find_next_question()
-        #print(question, possible_answers)
         answers_list = [{ 'id': a , 'text' : possible_answers.get(a)} for a in possible_answers.keys()]
         #print(answers_list)
         rs.commit_session()
@@ -43,9 +42,26 @@ def get_next(request):
                 'node': question,
                 #'Img': '',
                 'answers': answers_list
-            }
+            },
+            "is_end": False
         }
     else:
+        result = {
+            'question': {},
+            "is_end": True
+        }
+        #rs.commit_session()
+    return JsonResponse(result)
+
+def get_wine_list(request, user_id):
+    if request.method != 'GET':
+        return HttpResponseNotAllowed('Method Not Allowed')
+    try:
+        user_id = int(user_id)
+    except (ValueError, TypeError):
+        return HttpResponseNotAllowed('Invalid user_id')
+    rs = RS(user_id)
+    try:
         wines = rs.find_matches()
         result = {
             'wine': len(wines),
@@ -55,4 +71,10 @@ def get_next(request):
             ]
         }
         rs.commit_session()
+    except Exception as e:
+        print(e)
+        result = {
+            'wine': 0,
+            'wines': []
+        }
     return JsonResponse(result)
