@@ -127,7 +127,7 @@ class RS:
         if not question: return
         self._session.current_question = category
         self._session.answered_questions_number += 1
-        return question.get_random_question(), DEFAULT_ANSWERS
+        return category, DEFAULT_ANSWERS #question.get_random_question(), DEFAULT_ANSWERS
     
     def _form_wine_graph(self):
         features = self._session.get_formal_features()
@@ -145,7 +145,7 @@ class RS:
         if feature == 'sweetness' and self._session.color == 'розовое':
             answer = copy.deepcopy(answer)
             del answer['2']
-        return (questions, answer)
+        return (feature, answer)#(questions, answer)
 
     def find_next_question(self):
         #check formal features first
@@ -167,7 +167,8 @@ class RS:
             try:
                 self._session.graph.remove_node(node) 
             except nx.NetworkXError:
-                pass 
+                pass
+ 
     def _answer_yes(self):
         #subgraph graph by node
         self._session.yes_categories[self._session.current_question] = 1
@@ -244,18 +245,18 @@ class RS:
         ]
         
     def find_matches(self):
-        print(self._session.yes_categories)
-        print(self._session.no_categories)
+        #print(self._session.yes_categories)
+        #print(self._session.no_categories)
         answer_vector, indexes = self._form_vector(self._session.yes_categories, self._session.no_categories)
         #minimize euclidean_distances
-        print(self._session.features_x)
-        print(indexes)
+        #print(self._session.features_x)
+        #print(indexes)
         valuable_features = self._session.features_x[:, indexes]
         distances = cdist(valuable_features, answer_vector, 'euclidean') 
         wines = np.concatenate((distances, self._session.features_y, valuable_features), axis=1)
         wines = wines[np.argsort(wines[:, 0])][:, :SHOW_WINES_NUMBER]
         self._session.results = wines.tolist()
-        print(wines)
+        #print(wines)
         return self._get_wines_description(wines) #TODO: get descriptions
         
   

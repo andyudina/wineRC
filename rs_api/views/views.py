@@ -40,8 +40,8 @@ def get_next(request):
         rs.commit_session()
         result = {
             'question': {
-                'text': question,
-                'Img': '',
+                'node': question,
+                #'Img': '',
                 'answers': answers_list
             }
         }
