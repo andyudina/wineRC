@@ -9,15 +9,15 @@ def _form_wine_description(wine):
     #print(wine)
     return {
     "title": wine.get('name'),
-    "price": wine.get('price'),
-    'food': wine.get('food'),
-    "year": wine.get('vintage'),
-    "description": wine.get('charateristics'),
-    "color": wine.get('color'),
-    "sweetness": wine.get('switness'),
-    'country': wine.get('country'),
-    'image': wine.get('image'),
-    'style': wine.get('style')
+    #"price": wine.get('price'),
+    #'food': wine.get('food'),
+    #"year": wine.get('vintage'),
+    #"description": wine.get('charateristics'),
+    #"color": wine.get('color'),
+    #"sweetness": wine.get('switness'),
+    #'country': wine.get('country'),
+    #'image': wine.get('image'),
+    #'style': wine.get('style')
     }
     
 def get_next(request):
@@ -34,14 +34,15 @@ def get_next(request):
         rs.answer_current(int(answer_id))
     if rs.has_next_question():
         question, possible_answers = rs.find_next_question()
-        answers_list = [{ 'id': a , 'text' : possible_answers.get(a)} for a in possible_answers.keys()]
+        print(question)
+        #answers_list = [{ 'id': a , 'text' : possible_answers.get(a)} for a in possible_answers.keys()]
         #print(answers_list)
         rs.commit_session()
         result = {
             'question': {
                 'node': question,
                 #'Img': '',
-                'answers': answers_list
+                #'answers': answers_list
             },
             "is_end": False
         }
@@ -51,6 +52,7 @@ def get_next(request):
             "is_end": True
         }
         #rs.commit_session()
+    print(result)
     return JsonResponse(result)
 
 def get_wine_list(request, user_id):
