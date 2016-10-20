@@ -35,10 +35,10 @@ local function start_session(user_id)
         os.time(),
         
         nil,
-        0,
+        nil,
         0,  --TODO: create questions and remove preselected values
         0,  --TODO
-        0,
+        nil,
         {}, --TODO
         
         nil,
