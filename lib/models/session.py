@@ -141,6 +141,9 @@ class Session(Base):
     def set_formal_default(self):
         self.sweetness = 0
         self.aging = 0
+
+    def set_aging_default(self):
+        self.aging = 0
         
     def get_next_not_answered_formal_feature(self):
         #не показываем другие вопросы розовому 
@@ -148,9 +151,13 @@ class Session(Base):
             self.set_formal_default()
             return None
 
+        if self.color == 'красное' and self.sweetness == 'сладкое':
+            self.set_aging_default()
+            return None
+        
         for feature in self.formal_features:
            if getattr(self, feature) is None: return feature
-        
+
         return None   
         
     def update_formal_feature(self, key, value): 
