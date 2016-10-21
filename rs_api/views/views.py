@@ -33,7 +33,13 @@ def get_next(request):
         print(answer_id)
         rs.answer_current(int(answer_id))
     if rs.has_next_question():
-        question, possible_answers = rs.find_next_question()
+        try:
+            question, possible_answers = rs.find_next_question()
+        except (TypeError, ValueError):
+            return JsonResponse({
+                'question': {},
+                "is_end": True
+            })            
         #print(question)
         answers_list = sorted([{ 'id': a , 'text' : possible_answers.get(a)} for a in possible_answers.keys()], key=lambda x: x.get('id'))
         #print(answers_list)
@@ -52,7 +58,6 @@ def get_next(request):
             "is_end": True
         }
         #rs.commit_session()
-    print(result)
     return JsonResponse(result)
 
 def get_wine_list(request, user_id):
