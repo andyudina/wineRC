@@ -6,7 +6,7 @@ import tarantool
 import networkx as nx
 import numpy as np
 
-from models.base import Base
+from lib.models.base import Base
 
 class Session(Base):
     fields = [
@@ -81,8 +81,6 @@ class Session(Base):
             [ i + 1, self.serialize(field) ] \
             for i, field in enumerate(self.fields) if field in fields2update
         ]
-        if kwargs.get('fields'):
-            print(values2update)
         try:
             self.tnt.call('session.update_local', [self.id, list(chain.from_iterable(values2update))])
             #print([self.id, values2update])
@@ -140,9 +138,26 @@ class Session(Base):
     def get_formal_features(self):
         return [getattr(self, attr) for attr in self.formal_features]
         
+    def set_formal_default(self):
+        self.sweetness = 0
+        self.aging = 0
+
+    def set_aging_default(self):
+        self.aging = 0
+        
     def get_next_not_answered_formal_feature(self):
+        #не показываем другие вопросы розовому 
+        if self.color == 'розовое': 
+            self.set_formal_default()
+            return None
+
+        if self.color == 'красное' and self.sweetness == 'сладкое':
+            self.set_aging_default()
+            return None
+        
         for feature in self.formal_features:
-            if getattr(self, feature) is None: return feature
+           if getattr(self, feature) is None: return feature
+
         return None   
         
     def update_formal_feature(self, key, value): 

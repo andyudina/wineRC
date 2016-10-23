@@ -3,7 +3,7 @@ from itertools import product
 import tarantool
 from pandas import DataFrame
 
-from models.base import Base
+from lib.models.base import Base
 
 class Feature(Base):
     fields = [

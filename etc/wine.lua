@@ -32,6 +32,10 @@ end
 --[features]
 -- 22: features characteristics
 
+--[extra characteristics]
+-- food
+-- price
+
 local MAX_TUPLE_LENGTH = 21
 local function insert_local(...) 
     local args = {...}
@@ -126,6 +130,12 @@ local function delete_by_pk(pk)
     box.space.wine:delete(tostring(pk))
 end
 
+local function delete_all()
+    for _, tuple in box.space.wine.index.primary:pairs({iterator = box.index.ALL}) do
+        box.space.wine:delete{tuple[1]}
+    end
+end
+
 return {
     find_by_chunk = find_by_chunk,
     update_local = update_local,
@@ -133,4 +143,5 @@ return {
     insert_local = insert_local,
     replace_local = replace_local,
     delete_by_pk = delete_by_pk,
+    delete_all = delete_all
 }

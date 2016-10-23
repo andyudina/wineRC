@@ -1,7 +1,7 @@
 from itertools import product
 
 import tarantool
-from models.base import Base
+from lib.models.base import Base
 
 class Wine(Base):
     fields = [
@@ -27,6 +27,8 @@ class Wine(Base):
          'words_characteristics',
          #'words_gastronomy',
          'characteristic_categories',
+         'food',
+         'price'
     ]
     
     @classmethod
@@ -34,7 +36,11 @@ class Wine(Base):
         print('load all wines')
         raw_wines = cls.get_by_chunks('wine.find_by_chunk')
         return {t[0]: Wine(**cls.tuple2hash(t)) for t in raw_wines}
-        
+      
+    @classmethod
+    def delete_all(cls):
+        cls.tnt.call('wine.delete_all', [[]])
+          
     def get_category_pairs(self):
         return [list(c) + [self.name, ] for c in product(self.characteristic_categories, repeat=2) if c[0] != c[1]]
         
@@ -50,3 +56,11 @@ class Wine(Base):
             self.tnt.call('wine.update_local', [self.name, ] + values2update)
         except tarantool.error.DatabaseError as e:
             print(e)
+            
+    def replace(self):
+        values2update = Wine.hash2tuple(self.__dict__)
+        try:
+            #print([self.name, ] + values2update)
+            self.tnt.call('wine.replace_local', [values2update])
+        except tarantool.error.DatabaseError as e:
+            print(e)        
