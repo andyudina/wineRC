@@ -159,6 +159,9 @@ class RS:
         if not self._session.wine_names: 
             self._form_wine_graph()
             
+        if len(self._session.graph.nodes()) < GRAPH_EDGES_TRESHOLD: #don't ask questions if user has no actual choice
+            return None
+
         return self._find_next_taste_question()
 
     def _remove_relative_nodes(self):
@@ -215,7 +218,7 @@ class RS:
                        len([
                                n for n in self._session.graph.edges() 
                                if not self._session.yes_categories.get(n[0]) and not self._session.yes_categories.get(n[1]) \
-                               and not self._session.no_categories.get(n[1])
+                               and not self._session.no_categories.get(n[1]) and not self._session.no_categories.get(n[0])
                            ]) > GRAPH_EDGES_TRESHOLD
                     ) \
                     and self._session.answered_questions_number < QUESTIONS_NUMBER
@@ -253,11 +256,17 @@ class RS:
         #print(indexes)
         valuable_features = self._session.features_x[:, indexes]
         distances = cdist(valuable_features, answer_vector, 'euclidean') 
+
+        # filter "not" answers
+        has_negatives = np.multiply(valuable_features, answer_vector)
+        has_negatives = np.apply_along_axis(lambda arr: not list(filter(lambda x: x < 0, arr)), 1, has_negatives)
+
         wines = np.concatenate((distances, self._session.features_y, valuable_features), axis=1)
-        wines = wines[np.argsort(wines[:, 0])][:, :SHOW_WINES_NUMBER]
+    
+        wines = wines[np.argsort(wines[:, 0])][has_negatives][:, :SHOW_WINES_NUMBER]
         self._session.results = wines.tolist()
         #print(wines)
-        return self._get_wines_description(wines) #TODO: get descriptions
+        return self._get_wines_description(wines), list(self._session.yes_categories.keys()), list(self._session.no_categories.keys())
         
   
 def generate_random_wines_subset(wines):
