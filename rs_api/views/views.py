@@ -30,7 +30,6 @@ def get_next(request):
     answer_id = request.GET.get('answer_id')
     rs = RS(user_id)
     if answer_id: 
-        print(answer_id)
         rs.answer_current(int(answer_id))
     if rs.has_next_question():
         try:
@@ -69,9 +68,11 @@ def get_wine_list(request, user_id):
         return HttpResponseNotAllowed('Invalid user_id')
     rs = RS(user_id)
     try:
-        wines = rs.find_matches()
+        wines, yes_nodes, no_nodes = rs.find_matches()
         result = {
             'wine': len(wines),
+            'yes_nodes': yes_nodes,
+            'no_nodes' : no_nodes,
             'wines': [
                 _form_wine_description(w)
                 for w in wines
@@ -79,7 +80,6 @@ def get_wine_list(request, user_id):
         }
         rs.commit_session()
     except Exception as e:
-        print(e)
         result = {
             'wine': 0,
             'wines': []
