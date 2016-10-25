@@ -23,13 +23,37 @@ def _change_produced_year2vintage(year):
     if not produced_year: return
     return datetime.datetime.now().year - int(produced_year)
 
-def _cut_price_range(bottom, top, price):
-    if price <= top and price >= bottom:
+def _cut_price_range(price_range, price):
+    if price_range == 0: return True
+    bottom = float(price_range[0])
+    top = float(price_range[1])
+    if (price <= top or top == 0) and price >= bottom:
         return True
     else:
         return False
 
+#'price', 'color', 'sweetness', 'aging', 'country', 'vintage' ,'styling'
 def select_wine(type, tuples):
+    print(type)
+    wines  = []
+    for i in tuples:
+        oak, style = _сut_aged_in_oak(i[11])
+        price = i[22] if i[22] else 0
+        wine = [i[0], price, i[2].lower(), i[3].lower(), oak, i[5].lower(), _change_produced_year2vintage(i[10]),style]
+        wines.append(wine)
+    suitable = []
+    for wine in wines:
+        if _cut_price_range(type[0], float(wine[1])):
+            temp = 1
+            for i in range(2, 6):
+                if wine[i] != type[ i - 1 ] and type[ i - 1] != 0:
+                    temp = 0
+                    break
+            if temp == 1: suitable.append(wine)
+    results = [s[0] for s in suitable]
+    return results
+
+'''def select_wine(type, tuples):
     #tnt = tarantool.connect(**TARANTOOL_CONNCTION)
     #offset = 0
     #tuples = tnt.call('wine.find_by_chunk', [offset, 2000, True ]).data
@@ -37,14 +61,16 @@ def select_wine(type, tuples):
     for i in tuples:
         oak, style = _сut_aged_in_oak(i[11])
         price = i[22] if i[22] else 0
-        wine = [i[0], i[2].lower(), i[3].lower(), i[5].lower(), _change_produced_year2vintage(i[10]), oak, style, price]
+        wine = [i[0], i[2].lower(), i[3].lower(), i[5].lower(), _change_produced_year2vintage(i[10]), price, oak, style]
         wines.append(wine)
     suitable = []
     for wine in wines:
         temp = 1
-        #if _cut_price_range(1000, 200000, float(wine[7])):
-        for i in range(1, 6):
-            if i == 6 and len(type[i - 1]) != 0 and temp != 0:
+        for i in range(1, 7):
+            if i == 5 and _cut_price_range(float(type[4][0]), float(type[4][1]), float(wine[5])) != True:
+                temp = 0
+                break
+            if i == 7 and len(type[i - 1]) != 0 and temp != 0:
                 style = wine[i]
                 temp = check_style(type[i - 1], style)
             elif i == 4 and type[ i - 1] != 0 and wine[i] == None:
@@ -52,15 +78,17 @@ def select_wine(type, tuples):
                 break
             elif i == 4 and type[ i - 1] != 0  and not (((wine[i] - int(type[i -1])) >= 0 and int(type[i -1]) > 0) or ((-wine[i] - int(type[i -1])) >= 0 and int(type[i -1]) < 0)):
                 temp = 0
-            elif wine[i] != type[ i - 1 ] and type[ i - 1] != 0 and i != 6 and i != 4:
+            elif wine[i] != type[ i - 1 ] and type[ i - 1] != 0 and i != 7 and i != 4:
                 temp = 0
                 break
         if temp != 0:
             wine.insert(0, temp)
             suitable.append(wine)
     suitable.sort(reverse=True)
+    for w in suitable:
+        print(w)
     results = [s[1] for s in suitable]
-    return results
+    return results'''
 
 
 def check_style(type, wine):

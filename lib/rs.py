@@ -24,6 +24,7 @@ RELATIVE_NODES_MX_RATIO = 0.5
 FORMAL_FEATURES_DICT = {
     'color': ['Красное, белое или розовое?', {'1': 'белое', '2': 'красное', '3': 'розовое', '4': 'все равно'}],
     'sweetness': ['Что насчет сладости?', {'1': 'сухое', '2': 'сладкое', '3': 'полусладкое', '4': 'полусухое', '5': 'все равно'}],
+    'price': ['Какая цена тебя бы устроила?', {'1': (0, 1000), '2': (1000, 5000), '3': (4000, 15000), '4': 'все равно'}],
     'aging': ['Любишь выдерженное вино?', {'2': 'да', '1': 'нет', '3': 'все равно'}]
 }
 
@@ -194,7 +195,6 @@ class RS:
         self.commit_session(fields=['no_categories', 'graph'])
       
     def answer_current(self, answer):
-
         if FORMAL_FEATURES_DICT.get(self._session.current_question):
             answer = FORMAL_FEATURES_DICT.get(self._session.current_question)[1].get(str(answer))
             self._session.update_formal_feature(self._session.current_question, FORMAL_ANSWER_MAP.get(answer, answer))

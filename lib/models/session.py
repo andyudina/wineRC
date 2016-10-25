@@ -29,14 +29,16 @@ class Session(Base):
         'current_relative_nodes',
         'answered_questions_number',
         
-        'results'
+        'results',
+        'price'
     ]
 
     formal_features = [
         'color',
         'sweetness',
         'country', 
-        'vintage', 
+        'vintage',
+        'price',
         'aging',
         'styling',
     ]
@@ -136,7 +138,8 @@ class Session(Base):
     
     ## formal features                              
     def get_formal_features(self):
-        return [getattr(self, attr) for attr in self.formal_features]
+        return [getattr(self, 'price'), getattr(self, 'color'), getattr(self, 'sweetness'), getattr(self, 'aging'), getattr(self, 'country'), getattr(self, 'vintage'), getattr(self, 'styling')]
+        #return [getattr(self, attr) for attr in self.formal_features]
         
     def set_formal_default(self):
         self.sweetness = 0
@@ -160,7 +163,7 @@ class Session(Base):
 
         return None   
         
-    def update_formal_feature(self, key, value): 
+    def update_formal_feature(self, key, value):
         #print(key)
         #print(value)
         setattr(self, key, value)
