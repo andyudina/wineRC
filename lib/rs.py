@@ -13,7 +13,7 @@ from sklearn.preprocessing import normalize
 from scipy.spatial.distance import cdist
 
 from lib.models import Wine, Feature, Question, Session
-from lib.formal_features import select_wine
+from lib.formal_features import select_wine, get_formal_answers, cut_tuple
 
 SHOW_WINES_NUMBER = 10
 QUESTIONS_NUMBER = 10
@@ -62,6 +62,7 @@ class RS:
     
     def __init__(self, user_id):
         self._session = Session.get_session(user_id)
+        self.tuples = [Wine.hash2tuple(wine.__dict__) for wine in self.wines.values()]
         #self.features_x,  self.features_y = self._construct_features4wines(wine_names)
         #self._session.graph = self._build_subgraph_by_wines(wine_names)
         
@@ -132,8 +133,12 @@ class RS:
     
     def _form_wine_graph(self):
         features = self._session.get_formal_features()
-        tuples = [Wine.hash2tuple(wine.__dict__) for wine in self.wines.values()]
-        self._session.wine_names = select_wine(features, tuples)
+        #tuples = [Wine.hash2tuple(wine.__dict__) for wine in self.wines.values()]
+        for t in self.tuples:
+            print(t[1:10])
+        #self._session.wine_names = select_wine(features, self.tuples)
+        self._session.wine_names = [t[0] for t in self.tuples]
+
         #raise ValueError(self._session.wine_names)
         #print(self._session.wine_names)
         self._session.features_x,  self._session.features_y = self._construct_features4wines(self._session.wine_names)
@@ -153,7 +158,8 @@ class RS:
         formal_feature = self._session.get_next_not_answered_formal_feature()
         if formal_feature:
             self._session.current_question = formal_feature
-            return self._filter_questions(formal_feature, FORMAL_FEATURES_DICT.get(formal_feature))
+            return self._get_formal_answers()
+            #return self._filter_questions(formal_feature, FORMAL_FEATURES_DICT.get(formal_feature))
             
         #if formal features are answered but graph is not initialized
         #TODO: dangerous: assume that wines filtered by formal featrues can never be empty
@@ -196,7 +202,10 @@ class RS:
       
     def answer_current(self, answer):
         if FORMAL_FEATURES_DICT.get(self._session.current_question):
-            answer = FORMAL_FEATURES_DICT.get(self._session.current_question)[1].get(str(answer))
+            self.tuples = cut_tuple(self._session.current_question, answer, self.tuples)
+            for t in self.tuples:
+                print(t[0:4])
+            #answer = FORMAL_FEATURES_DICT.get(self._session.current_question)[1].get(str(answer))
             self._session.update_formal_feature(self._session.current_question, FORMAL_ANSWER_MAP.get(answer, answer))
         else:
             answer = DEFAULT_ANSWERS.get(str(answer))
@@ -267,7 +276,11 @@ class RS:
         self._session.results = wines.tolist()
         #print(wines)
         return self._get_wines_description(wines), list(self._session.yes_categories.keys()), list(self._session.no_categories.keys())
-        
+
+    def _get_formal_answers(self):
+        formal_feature = self._session.current_question
+        expected_answers = FORMAL_FEATURES_DICT.get(self._session.current_question)[1]
+        return get_formal_answers(self._session.current_question, expected_answers, self.tuples)
   
 def generate_random_wines_subset(wines):
     return [random.choice(wines) for i in range(random.choice(WINE_SUBSET_RANGE))] 
@@ -276,7 +289,8 @@ def ask_question(question, answers):
     answer = input(question + ' ' + str(answers) + '\n')
     while answer not in answers:
         answer = input('Please, answer question: "{}". Posible answers are: {}\n'.format(question, str(answers)))
-    return answer    
+    print(answers.get(answer))
+    return answers.get(answer)
 
 
 #def ask_formal_question(question, answers):
@@ -294,7 +308,7 @@ def ask_question(question, answers):
         
      
 if __name__ == '__main__':
-    USER_ID = 6
+    USER_ID = 23
     answer = None
     while True:
         rs = RS(USER_ID)

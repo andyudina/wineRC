@@ -1,6 +1,7 @@
 #FORMAL
 import re
 import datetime
+from numpy import percentile
 
 def _сut_aged_in_oak(style):
     if isinstance(style, list):
@@ -10,9 +11,11 @@ def _сut_aged_in_oak(style):
     aged_in_oak = 2
     for i in style:
         if re.search(r'.*не выдерж.*', i):
-            aged_in_oak = 2
+            #aged_in_oak = 2
+            aged_in_oak = 'нет'
         elif re.search(r'.*выдерж.*', i):
-            aged_in_oak = 1
+            #aged_in_oak = 1
+            aged_in_oak = 'да'
         elif i:
             features.append(i)
     features[0] = [f.strip() for f in features[0].split(' - ')][1]
@@ -31,6 +34,53 @@ def _cut_price_range(price_range, price):
         return True
     else:
         return False
+
+
+def get_price_ranges(tuples):
+    price_list = [float(t[22])/100 for t in tuples if t[22]]
+    percentiles = [int(round(percentile(price_list, percent),0) * 100) for percent in (25, 50, 75, 90, 100)]
+    percentiles.insert(0,0)
+    return {str(i) : (percentiles[i - 1], percentiles[i]) for i in range(1, len(percentiles))}
+
+def get_formal_answers(feature, expected_answers, tuples):
+    print(feature)
+    indexes = {'color': 2, 'sweetness': 3, 'aging': 11}
+    index = indexes.get(feature)
+    if feature == 'price':
+        result = get_price_ranges(tuples)
+    else:
+        result = get_answers(feature, index, expected_answers, tuples)
+    if len(result): result.update({ str(len(result) + 1) : 'все равно'})
+    return (feature, result)
+
+def cut_tuple(feature, answer, tuples):
+    print(feature, answer)
+    new_tuple = []
+    if answer == 0:
+        new_tuple = tuples
+    else:
+        indexes = {'color': 2, 'sweetness': 3, 'aging': 11}
+        index = indexes.get(feature)
+        for t in tuples:
+            if t[index] == answer:
+                new_tuple.append(t)
+    return new_tuple
+
+def get_answers(feature, index, expected_answers, tuples):
+    values = list(expected_answers.values())
+    values.remove('все равно')
+    result_answers = {}
+    i = 1
+    for t in tuples:
+        if len(values) == 0: break
+        temp = t[index]
+        if feature == 'aging': temp, style = _сut_aged_in_oak(t[index])
+        if temp in values:
+            result_answers.update({ str(i) : temp })
+            values.remove(temp)
+            i += 1
+    #if len(result_answers): result_answers.update({ i : 'все равно'})
+    return result_answers
 
 #'price', 'color', 'sweetness', 'aging', 'country', 'vintage' ,'styling'
 def select_wine(type, tuples):
