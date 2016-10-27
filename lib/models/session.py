@@ -29,7 +29,8 @@ class Session(Base):
         'current_relative_nodes',
         'answered_questions_number',
         
-        'results'
+        'results',
+        'price'
     ]
 
     formal_features = [
@@ -39,6 +40,7 @@ class Session(Base):
         'vintage', 
         'aging',
         'styling',
+        'price'
     ]
         
     _fields4deserialize = [
