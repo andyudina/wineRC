@@ -24,6 +24,7 @@ RELATIVE_NODES_MX_RATIO = 0.5
 FORMAL_FEATURES_DICT = {
     'color': ['Красное, белое или розовое?', {'1': 'белое', '2': 'красное', '3': 'розовое', '4': 'все равно'}],
     'sweetness': ['Что насчет сладости?', {'1': 'сухое', '2': 'сладкое', '3': 'полусладкое', '4': 'полусухое', '5': 'все равно'}],
+    'price':[],
     'aging': ['Любишь выдерженное вино?', {'2': 'да', '1': 'нет', '3': 'все равно'}]
 }
 
@@ -152,6 +153,10 @@ class RS:
         formal_feature = self._session.get_next_not_answered_formal_feature()
         if formal_feature:
             self._session.current_question = formal_feature
+            if formal_feature == 'price':
+                self._get_price_answers()
+                print('price')
+            print('aaa', self._filter_questions(formal_feature, FORMAL_FEATURES_DICT.get(formal_feature)))
             return self._filter_questions(formal_feature, FORMAL_FEATURES_DICT.get(formal_feature))
             
         #if formal features are answered but graph is not initialized
@@ -160,6 +165,10 @@ class RS:
             self._form_wine_graph()
             
         return self._find_next_taste_question()
+
+    def _get_price_answers(self):
+        tuples = [Wine.hash2tuple(wine.__dict__) for wine in self.wines.values()]
+        return
 
     def _remove_relative_nodes(self):
         for node in self._session.current_relative_nodes:
@@ -285,7 +294,7 @@ def ask_question(question, answers):
         
      
 if __name__ == '__main__':
-    USER_ID = 6
+    USER_ID = 1000
     answer = None
     while True:
         rs = RS(USER_ID)
