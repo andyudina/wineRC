@@ -13,7 +13,7 @@ from sklearn.preprocessing import normalize
 from scipy.spatial.distance import cdist
 
 from lib.models import Wine, Feature, Question, Session
-from lib.formal_features import select_wine
+from lib.formal_features import select_wine, get_price_ranges, select_by_price
 
 SHOW_WINES_NUMBER = 10
 QUESTIONS_NUMBER = 10
@@ -24,7 +24,7 @@ RELATIVE_NODES_MX_RATIO = 0.5
 FORMAL_FEATURES_DICT = {
     'color': ['Красное, белое или розовое?', {'1': 'белое', '2': 'красное', '3': 'розовое', '4': 'все равно'}],
     'sweetness': ['Что насчет сладости?', {'1': 'сухое', '2': 'сладкое', '3': 'полусладкое', '4': 'полусухое', '5': 'все равно'}],
-    'price':[],
+    'price':['Какая цена утроит?'],
     'aging': ['Любишь выдерженное вино?', {'2': 'да', '1': 'нет', '3': 'все равно'}]
 }
 
@@ -131,9 +131,9 @@ class RS:
         return category, DEFAULT_ANSWERS #question.get_random_question(), DEFAULT_ANSWERS
     
     def _form_wine_graph(self):
-        features = self._session.get_formal_features()
-        tuples = [Wine.hash2tuple(wine.__dict__) for wine in self.wines.values()]
-        self._session.wine_names = select_wine(features, tuples)
+        #features = self._session.get_formal_features()
+        #tuples = [Wine.hash2tuple(wine.__dict__) for wine in self.wines.values()]
+        #self._session.wine_names = select_wine(features, tuples)
         #raise ValueError(self._session.wine_names)
         #print(self._session.wine_names)
         self._session.features_x,  self._session.features_y = self._construct_features4wines(self._session.wine_names)
@@ -154,21 +154,26 @@ class RS:
         if formal_feature:
             self._session.current_question = formal_feature
             if formal_feature == 'price':
-                self._get_price_answers()
-                print('price')
-            print('aaa', self._filter_questions(formal_feature, FORMAL_FEATURES_DICT.get(formal_feature)))
+                self._session.price = self._get_price_answers()
+                return self._session.price
             return self._filter_questions(formal_feature, FORMAL_FEATURES_DICT.get(formal_feature))
             
         #if formal features are answered but graph is not initialized
         #TODO: dangerous: assume that wines filtered by formal featrues can never be empty
-        if not self._session.wine_names: 
+        if not self._session.graph:
             self._form_wine_graph()
             
         return self._find_next_taste_question()
 
     def _get_price_answers(self):
         tuples = [Wine.hash2tuple(wine.__dict__) for wine in self.wines.values()]
-        return
+        features = [self._session.color, self._session.sweetness, self._session.country, self._session.vintage, self._session.aging, self._session.styling]
+        tuples = select_wine(features, tuples)
+        price_answers = get_price_ranges(tuples)
+        price_answers.update({str(len(price_answers)) : 'все равно'})
+        self._session.wine_names  = tuples
+        #print(self._session.wine_names)
+        return ('price', price_answers)
 
     def _remove_relative_nodes(self):
         for node in self._session.current_relative_nodes:
@@ -200,10 +205,14 @@ class RS:
         self.commit_session(fields=['no_categories', 'graph'])
       
     def answer_current(self, answer):
-
         if FORMAL_FEATURES_DICT.get(self._session.current_question):
-            answer = FORMAL_FEATURES_DICT.get(self._session.current_question)[1].get(str(answer))
-            self._session.update_formal_feature(self._session.current_question, FORMAL_ANSWER_MAP.get(answer, answer))
+            answer = str(answer)
+            if self._session.current_question == 'price':
+                answer = self._session.price[1].get(answer)
+                self._session.wine_names = [t[0] for t in select_by_price(answer, self._session.wine_names)]
+            else:
+                answer = FORMAL_FEATURES_DICT.get(self._session.current_question)[1].get(str(answer))
+                self._session.update_formal_feature(self._session.current_question, FORMAL_ANSWER_MAP.get(answer, answer))
         else:
             answer = DEFAULT_ANSWERS.get(str(answer))
             if answer == 'да':
@@ -294,7 +303,7 @@ def ask_question(question, answers):
         
      
 if __name__ == '__main__':
-    USER_ID = 1000
+    USER_ID = 1009
     answer = None
     while True:
         rs = RS(USER_ID)

@@ -30,17 +30,17 @@ class Session(Base):
         'answered_questions_number',
         
         'results',
-        'price'
+        'price',
     ]
 
     formal_features = [
         'color',
         'sweetness',
         'country', 
-        'vintage', 
+        'vintage',
         'aging',
+        'price',
         'styling',
-        'price'
     ]
         
     _fields4deserialize = [
