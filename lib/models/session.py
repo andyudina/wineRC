@@ -7,6 +7,7 @@ import networkx as nx
 import numpy as np
 
 from lib.models.base import Base
+from lib.models.wine import Wine
 
 class Session(Base):
     fields = [
@@ -30,7 +31,9 @@ class Session(Base):
         'answered_questions_number',
         
         'results',
-        'price'
+        'price',
+        'tuples',
+        'formal_answers'
     ]
 
     formal_features = [

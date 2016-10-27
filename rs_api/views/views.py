@@ -41,7 +41,7 @@ def get_next(request):
             })            
         #print(question)
         answers_list = sorted([{ 'id': a , 'text' : possible_answers.get(a)} for a in possible_answers.keys()], key=lambda x: x.get('id'))
-        #print(answers_list)
+        print(answers_list)
         rs.commit_session()
         result = {
             'question': {
@@ -57,6 +57,7 @@ def get_next(request):
             "is_end": True
         }
         #rs.commit_session()
+        print(result)
     return JsonResponse(result)
 
 def get_wine_list(request, user_id):

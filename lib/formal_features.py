@@ -28,9 +28,10 @@ def _change_produced_year2vintage(year):
 
 def _cut_price_range(price_range, price):
     if price_range == 0: return True
+    if not price: return False
     bottom = float(price_range[0])
     top = float(price_range[1])
-    if (price <= top or top == 0) and price >= bottom:
+    if (float(price) <= top or top == 0) and float(price) >= bottom:
         return True
     else:
         return False
@@ -43,7 +44,6 @@ def get_price_ranges(tuples):
     return {str(i) : (percentiles[i - 1], percentiles[i]) for i in range(1, len(percentiles))}
 
 def get_formal_answers(feature, expected_answers, tuples):
-    print(feature)
     indexes = {'color': 2, 'sweetness': 3, 'aging': 11}
     index = indexes.get(feature)
     if feature == 'price':
@@ -51,18 +51,28 @@ def get_formal_answers(feature, expected_answers, tuples):
     else:
         result = get_answers(feature, index, expected_answers, tuples)
     if len(result): result.update({ str(len(result) + 1) : 'все равно'})
-    return (feature, result)
+    return result
+
+def cut_price(answer, tuples):
+    new_tuple = []
+    for t in tuples:
+        if _cut_price_range(answer, t[22]):
+            new_tuple.append(t)
+    return new_tuple
 
 def cut_tuple(feature, answer, tuples):
-    print(feature, answer)
-    new_tuple = []
-    if answer == 0:
+    if answer == 'все равно':
         new_tuple = tuples
+    elif feature == 'price':
+        new_tuple = cut_price(answer, tuples)
     else:
+        new_tuple = []
         indexes = {'color': 2, 'sweetness': 3, 'aging': 11}
         index = indexes.get(feature)
         for t in tuples:
-            if t[index] == answer:
+            temp = t[index]
+            if feature == 'aging': temp, style = _сut_aged_in_oak(t[index])
+            if temp == answer:
                 new_tuple.append(t)
     return new_tuple
 
@@ -84,7 +94,6 @@ def get_answers(feature, index, expected_answers, tuples):
 
 #'price', 'color', 'sweetness', 'aging', 'country', 'vintage' ,'styling'
 def select_wine(type, tuples):
-    print(type)
     wines  = []
     for i in tuples:
         oak, style = _сut_aged_in_oak(i[11])
