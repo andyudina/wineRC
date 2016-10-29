@@ -39,7 +39,8 @@ def _cut_price_range(price_range, price):
 
 def get_price_ranges(tuples):
     price_list = [float(t[22])/100 for t in tuples if t[22]]
-    percentiles = [int(round(percentile(price_list, percent),0) * 100) for percent in (25, 50, 75, 90, 100)]
+    #percentiles = [int(round(percentile(price_list, percent),0) * 100 + 100) for percent in (25, 50, 75, 90, 100)]
+    percentiles = [int(round(percentile(price_list, percent),0) * 100 + 100) for percent in (40, 70, 100)]
     percentiles.insert(0,0)
     return {str(i) : (percentiles[i - 1], percentiles[i]) for i in range(1, len(percentiles))}
 
@@ -50,7 +51,8 @@ def get_formal_answers(feature, expected_answers, tuples):
         result = get_price_ranges(tuples)
     else:
         result = get_answers(feature, index, expected_answers, tuples)
-    if len(result): result.update({ str(len(result) + 1) : 'все равно'})
+    if len(result) < 2 : return {'1' : 'все равно'}
+    result.update({ str(len(result) + 1) : 'все равно'})
     return result
 
 def cut_price(answer, tuples):

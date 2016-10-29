@@ -8,8 +8,6 @@ from itertools import chain
 import copy
 import numpy as np
 import networkx as nx
-from sklearn.metrics.pairwise import euclidean_distances
-from sklearn.preprocessing import normalize
 from scipy.spatial.distance import cdist
 
 from lib.models import Wine, Feature, Question, Session
@@ -17,7 +15,7 @@ from lib.formal_features import select_wine, get_formal_answers, cut_tuple
 
 SHOW_WINES_NUMBER = 10
 QUESTIONS_NUMBER = 10
-GRAPH_EDGES_TRESHOLD = 10
+GRAPH_EDGES_TRESHOLD = 3#10
 WINE_SUBSET_RANGE = range(20, 30)
 LOG_BASE = 5
 RELATIVE_NODES_MX_RATIO = 0.5
@@ -88,7 +86,6 @@ class RS:
             category_pairs.extend(wine.get_category_pairs())
             category_set.update(wine.characteristic_categories)
         return category_pairs, list(category_set)
-        
 
     def _create_graph(self, pairs, labels):
         word_graph = nx.MultiGraph(name="words")
@@ -105,7 +102,6 @@ class RS:
     def _round_degrees(self, degrees):
         #print(degrees)
         return [[d[0], int(math.log(d[1], LOG_BASE)) / 10 * 10] for d in degrees if d[1] > 0] + [d for d in degrees if d[1] <= 0]
-
         
     def _find_next_question_category_random(self, graph, selected_nodes):
         #return node with maximum degree
@@ -131,7 +127,7 @@ class RS:
         return category, DEFAULT_ANSWERS #question.get_random_question(), DEFAULT_ANSWERS
     
     def _form_wine_graph(self):
-        features = self._session.get_formal_features()
+        #features = self._session.get_formal_features()
         #tuples = [Wine.hash2tuple(wine.__dict__) for wine in self.wines.values()]
 
         #self._session.wine_names = select_wine(features, self.tuples)
@@ -155,15 +151,21 @@ class RS:
     def find_next_question(self):
         #check formal features first
         formal_feature = self._session.get_next_not_answered_formal_feature()
-        if formal_feature:
+        while formal_feature:
             self._session.current_question = formal_feature
             self._session.formal_answers = self._get_formal_answers()
-            return (formal_feature, self._session.formal_answers)
+            if len(self._session.formal_answers) > 1:
+                return (formal_feature, self._session.formal_answers)
+            answer = '1'
+            self._session.update_formal_feature(self._session.current_question, FORMAL_ANSWER_MAP.get(answer, answer))
+            self.commit_session()
+            formal_feature = self._session.get_next_not_answered_formal_feature()
             #return self._filter_questions(formal_feature, FORMAL_FEATURES_DICT.get(formal_feature))
-            
+        if len(self._session.tuples) <= 1:
+            return None
         #if formal features are answered but graph is not initialized
         #TODO: dangerous: assume that wines filtered by formal featrues can never be empty
-        if not self._session.wine_names: 
+        if not self._session.wine_names:
             self._form_wine_graph()
             
         if len(self._session.graph.nodes()) < GRAPH_EDGES_TRESHOLD: #don't ask questions if user has no actual choice
@@ -202,13 +204,14 @@ class RS:
       
     def answer_current(self, answer):
         if FORMAL_FEATURES_DICT.get(self._session.current_question):
-            if self._session.current_question == 'color':
+            if self._session.get_formal_features_index(self._session.current_question) == 0:
                 dict = [Wine.hash2tuple(wine.__dict__) for wine in self.wines.values()]
             else:
                 dict = self._session.tuples
             self._session.tuples = cut_tuple(self._session.current_question, self._session.formal_answers.get(str(answer)), dict)
             #answer = FORMAL_FEATURES_DICT.get(self._session.current_question)[1].get(str(answer))
             self._session.update_formal_feature(self._session.current_question, FORMAL_ANSWER_MAP.get(answer, answer))
+            self.commit_session()
         else:
             answer = DEFAULT_ANSWERS.get(str(answer))
             if answer == 'да':
@@ -259,6 +262,11 @@ class RS:
         ]
         
     def find_matches(self):
+        if not self._session.wine_names:
+            return [
+            self.wines.get(w[0]).__dict__
+            for w in self._session.tuples
+        ], [], []
         #print(self._session.yes_categories)
         #print(self._session.no_categories)
         answer_vector, indexes = self._form_vector(self._session.yes_categories, self._session.no_categories)
