@@ -2,7 +2,7 @@
 box.cfg {
     listen = 3311,
     logger = 'tarantool.log',
-    slab_alloc_maximal = 6291456 
+    slab_alloc_maximal = 1459392
 } 
 
 wine     = require 'wine'
