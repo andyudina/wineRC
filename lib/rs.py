@@ -158,10 +158,10 @@ class RS:
                 return (formal_feature, self._session.formal_answers)
             answer = '1'
             self._session.update_formal_feature(self._session.current_question, FORMAL_ANSWER_MAP.get(answer, answer))
-            self.commit_session()
+            #self.commit_session()
             formal_feature = self._session.get_next_not_answered_formal_feature()
             #return self._filter_questions(formal_feature, FORMAL_FEATURES_DICT.get(formal_feature))
-        if len(self._session.tuples) <= 1:
+        if len(self._session.tuples) <= 2:
             return None
         #if formal features are answered but graph is not initialized
         #TODO: dangerous: assume that wines filtered by formal featrues can never be empty
