@@ -38,6 +38,7 @@ def _cut_price_range(price_range, price):
 
 
 def get_price_ranges(tuples):
+    if len(tuples) < 4: return {}
     price_list = [float(t[22])/100 for t in tuples if t[22]]
     #percentiles = [int(round(percentile(price_list, percent),0) * 100 + 100) for percent in (25, 50, 75, 90, 100)]
     percentiles = [int(round(percentile(price_list, percent),0) * 100 + 100) for percent in (40, 70, 100)]
