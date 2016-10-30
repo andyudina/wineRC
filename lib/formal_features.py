@@ -7,12 +7,12 @@ def _сut_aged_in_oak(style):
         return
     style = [f.strip() for f in style.split(',')]
     features = []
-    aged_in_oak = 1
+    aged_in_oak = 2
     for i in style:
         if re.search(r'.*не выдерж.*', i):
-            aged_in_oak = 1
-        elif re.search(r'.*выдерж.*', i):
             aged_in_oak = 2
+        elif re.search(r'.*выдерж.*', i):
+            aged_in_oak = 1
         elif i:
             features.append(i)
     features[0] = [f.strip() for f in features[0].split(' - ')][1]
@@ -23,6 +23,12 @@ def _change_produced_year2vintage(year):
     if not produced_year: return
     return datetime.datetime.now().year - int(produced_year)
 
+def _cut_price_range(bottom, top, price):
+    if price <= top and price >= bottom:
+        return True
+    else:
+        return False
+
 def select_wine(type, tuples):
     #tnt = tarantool.connect(**TARANTOOL_CONNCTION)
     #offset = 0
@@ -30,12 +36,14 @@ def select_wine(type, tuples):
     wines  = []
     for i in tuples:
         oak, style = _сut_aged_in_oak(i[11])
-        wine = [i[0], i[2].lower(), i[3].lower(), i[5].lower(), _change_produced_year2vintage(i[10]), oak, style]
+        price = i[22] if i[22] else 0
+        wine = [i[0], i[2].lower(), i[3].lower(), i[5].lower(), _change_produced_year2vintage(i[10]), oak, style, price]
         wines.append(wine)
     suitable = []
     for wine in wines:
         temp = 1
-        for i in range(1, len(wine)):
+        #if _cut_price_range(1000, 200000, float(wine[7])):
+        for i in range(1, 6):
             if i == 6 and len(type[i - 1]) != 0 and temp != 0:
                 style = wine[i]
                 temp = check_style(type[i - 1], style)
@@ -51,8 +59,6 @@ def select_wine(type, tuples):
             wine.insert(0, temp)
             suitable.append(wine)
     suitable.sort(reverse=True)
-    #for wine in suitable:
-        #print(wine)
     results = [s[1] for s in suitable]
     return results
 
