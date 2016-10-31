@@ -36,22 +36,42 @@ def _cut_price_range(price_range, price):
     else:
         return False
 
+def merge_range(ranges, exist_ranges):
+    for key in exist_ranges.keys():
+        if ranges[1] == exist_ranges.get(key)[0]:
+            nearest = exist_ranges.get(key)
+            exist_ranges.update({key : (ranges[0], nearest[1])})
 
-def get_price_ranges(tuples):
+def get_price_ranges(expected_answers, tuples):
+    answers = expected_answers.copy()
     if len(tuples) < 4: return {}
-    price_list = [float(t[22])/100 for t in tuples if t[22]]
+    result_answers = {}
+    for t in tuples:
+        if len(answers) == 0: break
+        temp = t[22]
+        for k in list(answers):
+            if answers.get(k) and _cut_price_range(answers.get(k), temp):
+                result_answers.update({ k : answers.pop(k) })
+    if len(answers) != 0:
+        for k in answers.keys():
+            merge_range(answers.get(k), result_answers)
+    return result_answers
+    #price_list = [float(t[22])/100 for t in tuples if t[22]]
     #percentiles = [int(round(percentile(price_list, percent),0) * 100 + 100) for percent in (25, 50, 75, 90, 100)]
-    percentiles = [int(round(percentile(price_list, percent),0) * 100 + 100) for percent in (40, 70, 100)]
-    percentiles.insert(0,0)
-    return {str(i) : (percentiles[i - 1], percentiles[i]) for i in range(1, len(percentiles))}
+    #percentiles = [int(round(percentile(price_list, percent),0) * 100 + 100) for percent in (40, 70, 100)]
+    #percentiles.insert(0,0)
+    #return {str(i) : (percentiles[i - 1], percentiles[i]) for i in range(1, len(percentiles))}
+
 
 def get_formal_answers(feature, expected_answers, tuples):
+    answers = expected_answers.copy()
+    if len(tuples) < 5: return {'1' : 'все равно'}
     indexes = {'color': 2, 'sweetness': 3, 'aging': 11}
     index = indexes.get(feature)
     if feature == 'price':
-        result = get_price_ranges(tuples)
+        result = get_price_ranges(answers ,tuples)
     else:
-        result = get_answers(feature, index, expected_answers, tuples)
+        result = get_answers(feature, index, answers, tuples)
     if len(result) < 2 : return {'1' : 'все равно'}
     result.update({ str(len(result) + 1) : 'все равно'})
     return result
