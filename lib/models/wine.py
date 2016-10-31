@@ -63,4 +63,11 @@ class Wine(Base):
             #print([self.name, ] + values2update)
             self.tnt.call('wine.replace_local', [values2update])
         except tarantool.error.DatabaseError as e:
-            print(e)        
+            print(e)     
+
+    def delete(self):
+        try:
+            #print([self.name, ] + values2update)
+            self.tnt.call('wine.delete_by_pk', [self.name])
+        except tarantool.error.DatabaseError as e:
+            print(e)   
