@@ -41,7 +41,7 @@ def get_next(request):
             })            
         #print(question)
         if question == 'price':
-            parse_price(possible_answers)
+            possible_answers = parse_price(possible_answers)
         answers_list = sorted([{ 'id': a , 'text' : possible_answers.get(a)} for a in possible_answers.keys()], key=lambda x: x.get('id'))
         rs.commit_session()
         result = {
@@ -60,7 +60,8 @@ def get_next(request):
         #rs.commit_session()
     return JsonResponse(result)
 
-def parse_price(answers):
+def parse_price(price_answers):
+    answers = price_answers.copy()
     for k in list(answers):
         if answers.get(k) != 'все равно':
             pass
@@ -73,6 +74,7 @@ def parse_price(answers):
             else:
                 new_answer = { k : str(answers.get(k)[0]) + ' - ' + str(answers.get(k)[1])}
                 answers.update(new_answer)
+    return answers
 
 def get_wine_list(request, user_id):
     if request.method != 'GET':
