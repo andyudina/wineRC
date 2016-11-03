@@ -33,6 +33,32 @@ local function insert_feature(args, space)
     end
 end
 
+local function delete(name)
+    box.space.feature:delete{name}
+end
+
+local function find_by_chunk(offset, chunk_length)
+    offset = tonumber(offset)
+    chunk_length = tonumber(chunk_length)
+
+    local curr_length = 0
+    local res_table = {}
+
+
+    for _, tuple in box.space.feature.index.primary:pairs({iterator = box.index.ALL}) do
+        if curr_length >= chunk_length + offset then
+            break
+        end
+
+        if curr_length >= offset then
+            table.insert(res_table, tuple)
+        end
+        curr_length = curr_length + 1
+    end
+    return res_table
+end
+
+
 local function insert_feature_names(args)
     if #args == 0 then
         return
@@ -94,5 +120,7 @@ return {
     get_feature_table = get_feature_table,
     replace_feature_names = replace_feature_names,
     get_feature_names = get_feature_names,
-    get_features = get_features
+    get_features = get_features,
+    delete = delete,
+    find_by_chunk = find_by_chunk,
 }

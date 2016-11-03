@@ -74,6 +74,7 @@ class RS:
         self._session.update(**kwargs)    
      
     def _construct_features4wines(self, wine_names):
+        #raise Exception(self.features_raw.index.values)
         res = self.features_raw.loc[wine_names,].copy(deep=True)
         return res.as_matrix(), np.array([[val, ] for val in res.index.values])
         
