@@ -195,12 +195,14 @@ class RS:
         self.commit_session(fields=['yes_categories', 'graph'])
         
     def _answer_no(self):
-        #rm node from graph
-        self._session.no_categories[self._session.current_question] = 1
-        try:
-            self._session.graph.remove_node(self._session.current_question)
-        except nx.NetworkXError:
-            pass
+        #rm node from grap
+        for node in self._session.graph.nodes():
+            if not node.startswith(self._session.current_question): continue
+            self._session.no_categories[node] = 1
+            try:
+                self._session.graph.remove_node(node)
+            except nx.NetworkXError:
+                pass
         self.commit_session(fields=['no_categories', 'graph'])
       
     def answer_current(self, answer):
