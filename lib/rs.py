@@ -22,7 +22,7 @@ RELATIVE_NODES_MX_RATIO = 0.5
 FORMAL_FEATURES_DICT = {
     'color': ['Красное, белое или розовое?', {'1': 'белое', '2': 'красное', '3': 'розовое', '4': 'все равно'}],
     'sweetness': ['Что насчет сладости?', {'1': 'сухое', '2': 'сладкое', '3': 'полусладкое', '4': 'полусухое', '5': 'все равно'}],
-    'price': ['Какая цена тебя бы устроила?', {'1': (0, 500), '2': (500, 1500), '3': (1500, 3000), '4': (3000, 7000), '5': (7000, 15000),}],
+    'price': ['Какая цена тебя бы устроила?', {'1': (0, 500), '2': (500, 1500), '3': (1500, 3000), '4': (3000, 7000), '5': (7000, 15000), '6': (15000, 1000000)}],
     'aging': ['Любишь выдерженное вино?', {'2': 'да', '1': 'нет', '3': 'все равно'}]
 }
 
@@ -152,6 +152,7 @@ class RS:
     def find_next_question(self):
         #check formal features first
         formal_feature = self._session.get_next_not_answered_formal_feature()
+        #print('formal', formal_feature)
         while formal_feature:
             self._session.current_question = formal_feature
             self._session.formal_answers = self._get_formal_answers()
@@ -292,7 +293,7 @@ class RS:
 
     def _get_formal_answers(self):
         expected_answers = FORMAL_FEATURES_DICT.get(self._session.current_question)[1]
-        print( FORMAL_FEATURES_DICT)
+        #print( FORMAL_FEATURES_DICT)
         if self._session.current_question == 'color':
             dict = [Wine.hash2tuple(wine.__dict__) for wine in self.wines.values()]
         else:
