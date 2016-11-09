@@ -70,6 +70,7 @@ def get_formal_answers(feature, expected_answers, tuples):
     index = indexes.get(feature)
     if feature == 'price':
         result = get_price_ranges(answers ,tuples)
+        return result
     else:
         result = get_answers(feature, index, answers, tuples)
     if len(result) < 2 : return {'1' : 'все равно'}

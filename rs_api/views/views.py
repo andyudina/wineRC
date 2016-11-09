@@ -62,18 +62,22 @@ def get_next(request):
 
 def parse_price(price_answers):
     answers = price_answers.copy()
+    keys = [int(k) for k in answers.keys()]
+    min_key = str(min(keys))
+    max_key = str(max(keys))
     for k in list(answers):
         if answers.get(k) != 'все равно':
             pass
-            if k == '1':
+            if k == min_key:
                 new_answer = { k : 'меньше ' + str(answers.get(k)[1])}
                 answers.update(new_answer)
-            elif k == str(len(answers) - 1):
+            elif k == max_key:
                 new_answer = { k : 'от ' + str(answers.get(k)[0])}
                 answers.update(new_answer)
             else:
                 new_answer = { k : str(answers.get(k)[0]) + ' - ' + str(answers.get(k)[1])}
                 answers.update(new_answer)
+    #answers.update({ '7' : 'все равно'})
     return answers
 
 def get_wine_list(request, user_id):
