@@ -1,5 +1,5 @@
 import os
-
+#from lib.models import Wine, Feature, Question, Session
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -10,9 +10,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '&2ijn=jby_i0by%%7ab#b+%+3y9%0=j7uyn@93q4s$0f^o57l#'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "0.0.0.0", "78.155.218.63", "winematch.ru"]
 
 
 # Application definition
@@ -24,7 +24,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
 ]
 
 MIDDLEWARE = [
@@ -105,3 +104,9 @@ TARANTOOL_CONNCTION = {
 }
 
 CHUNK_LENGTH = 100
+
+try:
+    from localsettings import *
+except ImportError:
+    pass
+
