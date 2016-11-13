@@ -99,10 +99,13 @@ def get_wine_list(request, user_id):
                 for w in wines
             ]
         }
-        rs.commit_session()
     except Exception as e:
         result = {
             'wine': 0,
             'wines': []
         }
+    try:
+        rs.commit_session()
+    except Exception as e:
+        pass
     return JsonResponse(result)
