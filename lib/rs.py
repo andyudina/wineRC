@@ -10,8 +10,9 @@ import numpy as np
 import networkx as nx
 from scipy.spatial.distance import cdist
 
-from lib.models import Wine, Feature, Question, Session
+from lib.models import Wine, Session
 from lib.formal_features import select_wine, get_formal_answers, cut_tuple
+from urls import initial_data
 
 SHOW_WINES_NUMBER = 10
 QUESTIONS_NUMBER = 10
@@ -49,14 +50,14 @@ MAX_TRIES_NUMBER = 3
        
 class RS:
     #wine: {'wine': Wine(categories=[category1, category2], name='wine')}
-    wines = Wine.load_all()
+    wines = initial_data['wines'] #Wine.load_all()
     
     #features_raw: [['wine1', [0, 1, .. ]] ...
-    features_raw = Feature.load_all() # return pandas dataframe
-    features_names = Feature.load_all_names()
+    features_raw = initial_data['features_raw'] #Feature.load_all() # return pandas dataframe
+    features_names = initial_data['features_names'] #Feature.load_all_names()
     
     #questions = ['category': Question(categories=['cat1', 'cat2'])]
-    questions = Question.load_all()
+    questions = initial_data['questions'] #Question.load_all()
     
     def __init__(self, user_id):
         self._session = Session.get_session(user_id)
