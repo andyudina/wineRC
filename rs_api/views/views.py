@@ -30,7 +30,6 @@ def get_next(request):
     answer_id = request.GET.get('answer_id')
     rs = RS(user_id)
     if answer_id: 
-        print(answer_id)
         rs.answer_current(int(answer_id))
     if rs.has_next_question():
         try:
@@ -41,8 +40,9 @@ def get_next(request):
                 "is_end": True
             })            
         #print(question)
+        if question == 'price':
+            possible_answers = parse_price(possible_answers)
         answers_list = sorted([{ 'id': a , 'text' : possible_answers.get(a)} for a in possible_answers.keys()], key=lambda x: x.get('id'))
-        #print(answers_list)
         rs.commit_session()
         result = {
             'question': {
@@ -60,6 +60,26 @@ def get_next(request):
         #rs.commit_session()
     return JsonResponse(result)
 
+def parse_price(price_answers):
+    answers = price_answers.copy()
+    keys = [int(k) for k in answers.keys()]
+    min_key = str(min(keys))
+    max_key = str(max(keys))
+    for k in list(answers):
+        if answers.get(k) != 'все равно':
+            pass
+            if k == min_key:
+                new_answer = { k : 'меньше ' + str(answers.get(k)[1])}
+                answers.update(new_answer)
+            elif k == max_key:
+                new_answer = { k : 'от ' + str(answers.get(k)[0])}
+                answers.update(new_answer)
+            else:
+                new_answer = { k : str(answers.get(k)[0]) + ' - ' + str(answers.get(k)[1])}
+                answers.update(new_answer)
+    #answers.update({ '7' : 'все равно'})
+    return answers
+
 def get_wine_list(request, user_id):
     if request.method != 'GET':
         return HttpResponseNotAllowed('Method Not Allowed')
@@ -69,19 +89,23 @@ def get_wine_list(request, user_id):
         return HttpResponseNotAllowed('Invalid user_id')
     rs = RS(user_id)
     try:
-        wines = rs.find_matches()
+        wines, yes_nodes, no_nodes = rs.find_matches()
         result = {
             'wine': len(wines),
+            'yes_nodes': yes_nodes,
+            'no_nodes' : no_nodes,
             'wines': [
                 _form_wine_description(w)
                 for w in wines
             ]
         }
-        rs.commit_session()
     except Exception as e:
-        print(e)
         result = {
             'wine': 0,
             'wines': []
         }
+    try:
+        rs.commit_session()
+    except Exception as e:
+        pass
     return JsonResponse(result)

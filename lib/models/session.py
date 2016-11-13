@@ -7,6 +7,7 @@ import networkx as nx
 import numpy as np
 
 from lib.models.base import Base
+from lib.models.wine import Wine
 
 class Session(Base):
     fields = [
@@ -29,14 +30,18 @@ class Session(Base):
         'current_relative_nodes',
         'answered_questions_number',
         
-        'results'
+        'results',
+        'price',
+        'tuples',
+        'formal_answers'
     ]
 
     formal_features = [
         'color',
         'sweetness',
         'country', 
-        'vintage', 
+        'vintage',
+        'price',
         'aging',
         'styling',
     ]
@@ -136,7 +141,11 @@ class Session(Base):
     
     ## formal features                              
     def get_formal_features(self):
-        return [getattr(self, attr) for attr in self.formal_features]
+        return [getattr(self, 'price'), getattr(self, 'color'), getattr(self, 'sweetness'), getattr(self, 'aging'), getattr(self, 'country'), getattr(self, 'vintage'), getattr(self, 'styling')]
+        #return [getattr(self, attr) for attr in self.formal_features]
+
+    def get_formal_features_index(self, feature):
+        return self.formal_features.index(feature)
         
     def set_formal_default(self):
         self.sweetness = 0
@@ -147,20 +156,20 @@ class Session(Base):
         
     def get_next_not_answered_formal_feature(self):
         #не показываем другие вопросы розовому 
-        if self.color == 'розовое': 
-            self.set_formal_default()
-            return None
+        #if self.color == 'розовое':
+            #self.set_formal_default()
+            #return None
 
-        if self.color == 'красное' and self.sweetness == 'сладкое':
-            self.set_aging_default()
-            return None
+        #if self.color == 'красное' and self.sweetness == 'сладкое':
+            #self.set_aging_default()
+            #return None
         
         for feature in self.formal_features:
            if getattr(self, feature) is None: return feature
 
         return None   
         
-    def update_formal_feature(self, key, value): 
+    def update_formal_feature(self, key, value):
         #print(key)
         #print(value)
         setattr(self, key, value)
