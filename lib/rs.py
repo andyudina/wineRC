@@ -36,21 +36,6 @@ FORMAL_ANSWER_MAP = {
 
 MAX_TRIES_NUMBER = 3
 
-# хак для единовременной загрузки -- очень стремный
-def generate_initial_data():
-    return {
-    #wine: {'wine': Wine(categories=[category1, category2], name='wine')}
-        'wines': Wine.load_all(),
-
-    #features_raw: [['wine1', [0, 1, .. ]] ...
-        'features_raw': Feature.load_all(), # return pandas dataframe
-        'features_names': Feature.load_all_names(),
-
-    #questions = ['category': Question(categories=['cat1', 'cat2'])]
-        'questions': Question.load_all()
-        }
-    
-
 #TODO:
 #    Wine:
 #        load_all
@@ -65,18 +50,16 @@ def generate_initial_data():
        
 class RS:
     #wine: {'wine': Wine(categories=[category1, category2], name='wine')}
-    def init_class_objects(self):
-        self.wines = Wine.load_all()
+    wines = Wine.load_all()
     
     #features_raw: [['wine1', [0, 1, .. ]] ...
-        self.features_raw = Feature.load_all() # return pandas dataframe
-        self.features_names = Feature.load_all_names()
+    features_raw = Feature.load_all() # return pandas dataframe
+    features_names = Feature.load_all_names()
     
     #questions = ['category': Question(categories=['cat1', 'cat2'])]
-        self.questions = Question.load_all()
+    questions = Question.load_all()
     
     def __init__(self, user_id):
-        self.init_class_objects()
         self._session = Session.get_session(user_id)
         #self.features_x,  self.features_y = self._construct_features4wines(wine_names)
         #self._session.graph = self._build_subgraph_by_wines(wine_names)
@@ -307,7 +290,9 @@ class RS:
         wines = wines[np.argsort(wines[:, 0])][has_negatives][:, :SHOW_WINES_NUMBER]
         self._session.results = wines.tolist()
         #print(wines)
-        return self._get_wines_description(wines), list(self._session.yes_categories.keys()), list(self._session.no_categories.keys())
+        description =  self._get_wines_description(wines), list(self._session.yes_categories.keys()), list(self._session.no_categories.keys())
+        self._session.drop_graph()
+        return description
 
     def _get_formal_answers(self):
         expected_answers = FORMAL_FEATURES_DICT.get(self._session.current_question)[1]

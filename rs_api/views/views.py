@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import random
 from django.http import JsonResponse, HttpResponseNotAllowed
-from lib.rs import *
 #from lib.rs import ask_question
 
 def _form_wine_description(wine):
@@ -19,8 +18,29 @@ def _form_wine_description(wine):
     #'image': wine.get('image'),
     #'style': wine.get('style')
     }
-    
-def get_next(request):
+
+def parse_price(price_answers):
+    answers = price_answers.copy()
+    keys = [int(k) for k in answers.keys()]
+    min_key = str(min(keys))
+    max_key = str(max(keys))
+    for k in list(answers):
+        if answers.get(k) != 'все равно':
+            pass
+            if k == min_key:
+                new_answer = { k : 'меньше ' + str(answers.get(k)[1])}
+                answers.update(new_answer)
+            elif k == max_key:
+                new_answer = { k : 'от ' + str(answers.get(k)[0])}
+                answers.update(new_answer)
+            else:
+                new_answer = { k : str(answers.get(k)[0]) + ' - ' + str(answers.get(k)[1])}
+                answers.update(new_answer)
+    #answers.update({ '7' : 'все равно'})
+    return answers
+
+def views_factory(view_name, RS):    
+  def get_next(request):
     if request.method != 'GET':
         return HttpResponseNotAllowed('Method Not Allowed')
     try:
@@ -60,27 +80,7 @@ def get_next(request):
         #rs.commit_session()
     return JsonResponse(result)
 
-def parse_price(price_answers):
-    answers = price_answers.copy()
-    keys = [int(k) for k in answers.keys()]
-    min_key = str(min(keys))
-    max_key = str(max(keys))
-    for k in list(answers):
-        if answers.get(k) != 'все равно':
-            pass
-            if k == min_key:
-                new_answer = { k : 'меньше ' + str(answers.get(k)[1])}
-                answers.update(new_answer)
-            elif k == max_key:
-                new_answer = { k : 'от ' + str(answers.get(k)[0])}
-                answers.update(new_answer)
-            else:
-                new_answer = { k : str(answers.get(k)[0]) + ' - ' + str(answers.get(k)[1])}
-                answers.update(new_answer)
-    #answers.update({ '7' : 'все равно'})
-    return answers
-
-def get_wine_list(request, user_id):
+  def get_wine_list(request, user_id):
     if request.method != 'GET':
         return HttpResponseNotAllowed('Method Not Allowed')
     try:
@@ -109,3 +109,6 @@ def get_wine_list(request, user_id):
     except Exception as e:
         pass
     return JsonResponse(result)
+
+  if view_name == 'get_wine_list': return get_wine_list
+  return get_next 

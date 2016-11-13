@@ -75,7 +75,11 @@ class Session(Base):
     def _deserialize_inplace(self):
         for field in self._fields4deserialize:
             getattr(self, '_deserialize_{}'.format(field))()
-                 
+
+    def drop_graph(self):
+        self.graph = None
+        self.update(fields = ['graph'])
+              
     def update(self, **kwargs): 
         fields2update = self.fields #list(self._updated_fields.values())
         if kwargs.get('fields'):
@@ -109,8 +113,10 @@ class Session(Base):
         return self.graph
         
     def _serialize_graph(self):
-        return [self.graph.nodes(), self.graph.edges()]
- 
+        if self.graph:
+            return [self.graph.nodes(), self.graph.edges()]
+        return [[], []]
+
     def _deserialize_features_x(self):  
         self.features_x = np.array(self.features_x)
         return self.features_x
